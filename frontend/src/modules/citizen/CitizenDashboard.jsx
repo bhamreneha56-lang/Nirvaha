@@ -56,16 +56,16 @@ export default function CitizenDashboard() {
     if (!form.title) return;
     setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:5000/api/problems', {
+      // Use mock API from our api-client
+      const { fetchApi } = await import('../../shared/api-client');
+      const data = await fetchApi('/problems', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
           submitterDetails: { name: 'Suresh Munda', type: 'Citizen' },
           district: 'Ranchi',
         })
       });
-      const data = await res.json();
       dispatch({ type: 'ADD_PROBLEM', problem: data });
       setForm({ title: '', description: '' });
       setTab('history');

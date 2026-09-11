@@ -169,12 +169,12 @@ export default function CitizenDashboard() {
     }
 
     return (
-      <div className="flex gap-8">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Main Content Area */}
         <div className="flex-1 space-y-8">
           
           {/* Tabs */}
-          <div className="flex border-b border-slate-200 gap-8">
+          <div className="flex border-b border-slate-200 gap-4 sm:gap-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
             <button onClick={() => setTab('new')} className={`pb-4 text-sm font-bold transition-all ${tab === 'new' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-slate-500 hover:text-slate-800'}`}>
               Report a New Issue
             </button>
@@ -185,32 +185,32 @@ export default function CitizenDashboard() {
 
           {tab === 'new' && (
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-              <div className="bg-gradient-to-r from-[#FF9933] to-[#f97316] p-8 text-white relative overflow-hidden">
+              <div className="bg-gradient-to-r from-[#FF9933] to-[#f97316] p-6 sm:p-8 text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -mr-20 -mt-20"></div>
-                <h2 className="text-2xl font-extrabold mb-2 relative z-10">Voice Submission</h2>
-                <p className="text-orange-100 max-w-md relative z-10 font-medium">
+                <h2 className="text-xl sm:text-2xl font-extrabold mb-2 relative z-10">Voice Submission</h2>
+                <p className="text-orange-100 max-w-md relative z-10 font-medium text-sm sm:text-base">
                   Speak in Hindi, Santhali, or English. Our AI will automatically translate, structure, and categorize your problem.
                 </p>
-                  <div className="mt-8 flex items-center gap-6 relative z-10">
+                  <div className="mt-8 flex items-center gap-4 sm:gap-6 relative z-10">
                     <button 
                       type="button" 
                       onClick={handleListen}
-                      className={`w-20 h-20 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.4)] flex flex-col items-center justify-center transition-transform group relative ${isListening ? 'bg-red-500 text-white scale-110 shadow-[0_0_40px_rgba(239,68,68,0.6)]' : 'bg-white text-orange-600 hover:scale-105'}`}
+                      className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.4)] flex flex-col items-center justify-center transition-transform group relative ${isListening ? 'bg-red-500 text-white scale-110 shadow-[0_0_40px_rgba(239,68,68,0.6)]' : 'bg-white text-orange-600 hover:scale-105'}`}
                     >
                       {isListening && <span className="absolute inset-0 border-2 border-red-500 rounded-full animate-ping opacity-50"></span>}
                       {!isListening && <span className="absolute inset-0 border-2 border-white rounded-full animate-ping opacity-50"></span>}
-                      <span className="text-3xl">🎤</span>
+                      <span className="text-2xl sm:text-3xl">🎤</span>
                     </button>
-                    <div className="text-sm font-bold tracking-widest uppercase">
+                    <div className="text-xs sm:text-sm font-bold tracking-widest uppercase">
                       {isListening ? 'Listening... Speak now' : 'Tap to speak'}
                     </div>
                   </div>
               </div>
               
-              <div className="p-8">
+              <div className="p-6 sm:p-8">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex-1 border-t border-slate-200"></div>
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Or type manually</div>
+                  <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">Or type manually</div>
                   <div className="flex-1 border-t border-slate-200"></div>
                 </div>
                 
@@ -225,7 +225,7 @@ export default function CitizenDashboard() {
                     <textarea required value={form.description} onChange={e => setForm({...form, description: e.target.value})} rows="4" placeholder="Describe the issue, how long it has been going on, and who is affected..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all font-medium text-slate-800"></textarea>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-2">Upload Evidence (Photo/Video)</label>
                       <div className="border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 p-6 flex flex-col items-center justify-center text-slate-500 hover:bg-slate-100 hover:border-orange-400 transition-all cursor-pointer">
@@ -235,7 +235,7 @@ export default function CitizenDashboard() {
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-2">Location & GPS</label>
-                      <div className="border border-slate-200 rounded-xl bg-slate-50 p-6 flex flex-col items-center justify-center text-slate-500 relative overflow-hidden">
+                      <div className="border border-slate-200 rounded-xl bg-slate-50 p-6 flex flex-col items-center justify-center text-slate-500 relative overflow-hidden h-full">
                         <button type="button" className="bg-slate-800 hover:bg-black text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md transition-all z-10 flex items-center gap-2">
                           <span>📍</span> Auto-Detect GPS
                         </button>
@@ -244,7 +244,7 @@ export default function CitizenDashboard() {
                   </div>
 
                   <div className="pt-6 border-t border-slate-100 flex justify-end">
-                    <button disabled={submitting} type="submit" className="bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-0.5">
+                    <button disabled={submitting} type="submit" className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-0.5">
                       {submitting ? 'Submitting...' : 'Submit Challenge →'}
                     </button>
                   </div>
@@ -254,7 +254,7 @@ export default function CitizenDashboard() {
           )}
 
           {tab === 'history' && (
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[400px]">
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 min-h-[400px]">
               <h2 className="text-xl font-bold text-slate-900 mb-6">Your Recent Submissions</h2>
               
               {state.problems.length === 0 ? (
@@ -266,15 +266,15 @@ export default function CitizenDashboard() {
               ) : (
                 <div className="space-y-4">
                   {state.problems.map(p => (
-                    <div key={p.id} className="border border-slate-200 rounded-xl p-5 flex justify-between items-center hover:border-orange-300 transition-all">
+                    <div key={p.id} className="border border-slate-200 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-orange-300 transition-all">
                       <div>
                         <h4 className="font-bold text-slate-800 text-lg">{p.title}</h4>
-                        <div className="flex gap-4 mt-2">
+                        <div className="flex flex-wrap gap-2 mt-2">
                           <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">AI Category: {p.category}</span>
                           <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">Date: {new Date(p.reportedOn).toLocaleDateString()}</span>
                         </div>
                       </div>
-                      <span className="px-3 py-1 bg-orange-100 text-orange-800 text-xs font-bold rounded-full uppercase tracking-widest">{p.status}</span>
+                      <span className="w-fit px-3 py-1 bg-orange-100 text-orange-800 text-xs font-bold rounded-full uppercase tracking-widest">{p.status}</span>
                     </div>
                   ))}
                 </div>
@@ -284,7 +284,7 @@ export default function CitizenDashboard() {
         </div>
         
         {/* Right Sidebar */}
-        <div className="w-80 shrink-0 space-y-6">
+        <div className="w-full lg:w-80 shrink-0 space-y-6">
           <div className="bg-[#138808] text-white rounded-2xl p-6 shadow-lg shadow-green-900/20 relative overflow-hidden">
              <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl -mr-10 -mt-10"></div>
              <div className="flex justify-between items-start mb-6 relative z-10">

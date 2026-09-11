@@ -17,10 +17,10 @@ export default function Landing() {
       {/* SVG Filter for Cloth Waving Effect */}
       <svg width="0" height="0" className="absolute pointer-events-none">
         <filter id="wave-filter">
-          <feTurbulence type="fractalNoise" baseFrequency="0.003 0.006" numOctaves="1" result="noise">
-            <animate attributeName="baseFrequency" values="0.003 0.006; 0.005 0.01; 0.003 0.006" dur="16s" repeatCount="indefinite" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="1" result="noise">
+            <animate attributeName="baseFrequency" values="0.006 0.012; 0.008 0.016; 0.006 0.012" dur="10s" repeatCount="indefinite" />
           </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G" />
         </filter>
       </svg>
 
@@ -54,8 +54,8 @@ export default function Landing() {
         </div>
         
         <div className="flex items-center gap-4">
-          <button className="text-sm font-bold text-slate-800 hover:text-slate-900 drop-shadow-[0_0_4px_rgba(255,255,255,0.8)]">EN / HI</button>
-          <button onClick={() => setShowPortals(true)} className="px-5 py-1.5 bg-slate-900 hover:bg-black text-white rounded-lg text-sm font-bold shadow-md transition-all">
+          <button className="text-xs sm:text-sm font-bold text-slate-800 hover:text-slate-900 drop-shadow-[0_0_4px_rgba(255,255,255,0.8)]">EN / HI</button>
+          <button onClick={() => setShowPortals(true)} className="px-3 sm:px-5 py-1.5 bg-slate-900 hover:bg-black text-white rounded-lg text-xs sm:text-sm font-bold shadow-md transition-all">
             Access Portals
           </button>
         </div>
@@ -67,16 +67,16 @@ export default function Landing() {
           /* SLIDE 1: Welcome Screen */
           <div className="text-center mt-0 animate-in fade-in zoom-in duration-500">
             <h1 
-              className="text-7xl md:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-emerald-800 to-orange-800 mb-2 leading-none drop-shadow-[0_0_20px_rgba(255,255,255,1)]"
+              className="text-5xl sm:text-7xl md:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-emerald-800 to-orange-800 mb-2 leading-none drop-shadow-[0_0_20px_rgba(255,255,255,1)]"
               style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, letterSpacing: '0.04em' }}
             >
               NIRVAHA
             </h1>
-            <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 font-extrabold mb-5 inline-block text-3xl md:text-5xl tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
+            <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 font-extrabold mb-5 inline-block text-2xl sm:text-3xl md:text-5xl tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
               Turning Voices into Solutions
             </h2>
             
-            <p className="text-slate-900 text-lg md:text-xl font-bold max-w-5xl mx-auto drop-shadow-[0_0_10px_rgba(255,255,255,1)] leading-relaxed mb-8 px-4">
+            <p className="text-slate-900 text-base sm:text-lg md:text-xl font-bold max-w-5xl mx-auto drop-shadow-[0_0_10px_rgba(255,255,255,1)] leading-relaxed mb-8 px-4">
               A civic-tech ecosystem uniting Jharkhand's citizens, universities, and industries. Report community issues, match with experts, and deploy sustainable solutions.
             </p>
 

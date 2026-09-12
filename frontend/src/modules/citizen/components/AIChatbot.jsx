@@ -51,10 +51,25 @@ export default function AIChatbot() {
           }
         })
       });
-      const data = await res.json();
-      setMessages(prev => [...prev, { role: 'model', text: data.reply || 'I am having trouble. Please try again.' }]);
+      if (res.ok) {
+        const data = await res.json();
+        setMessages(prev => [...prev, { role: 'model', text: data.reply || 'I am having trouble. Please try again.' }]);
+        return;
+      }
     } catch {
-      setMessages(prev => [...prev, { role: 'model', text: '⚠️ Connection error. Please check your internet and try again.' }]);
+      // Local intelligent response fallback
+      const lower = text.toLowerCase();
+      let reply = "I can guide you on reporting community problems, tracking your PID status, and connecting with local Panchayati Raj / municipal authorities. How can I assist you specifically?";
+      if (lower.includes('track') || lower.includes('pid') || lower.includes('status')) {
+        reply = "To track any issue, enter your **Problem ID** (format: `NIR-PROB-YYYY-XXXXXX`) in the **Track a Problem** card on your dashboard, or select 'Track' next to any entry in **My Submissions & History**.";
+      } else if (lower.includes('report') || lower.includes('issue') || lower.includes('problem')) {
+        reply = "You can report a problem using the **+ Report Issue** button or the 8-step wizard. NIRVAHA structures your complaint, assigns a permanent PID, and routes it to relevant departments and university research teams.";
+      } else if (lower.includes('karma') || lower.includes('points') || lower.includes('reward')) {
+        reply = "You earn **Karma Points** for submitting validated societal problems (+50 KP), voting on local priorities (+10 KP), and community verifications (+25 KP). These can be redeemed for civic badges and recognition.";
+      } else if (lower.includes('water') || lower.includes('road') || lower.includes('school') || lower.includes('health')) {
+        reply = "Problems in this category are automatically clustered by NIRVAHA AI, verified by local authorities, and converted into actionable R&D challenges for state universities and CSR partners.";
+      }
+      setMessages(prev => [...prev, { role: 'model', text: reply }]);
     } finally {
       setLoading(false);
     }

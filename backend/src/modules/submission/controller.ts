@@ -7,7 +7,7 @@ import User from '../../shared/models/User';
 const generateProblemId = async () => {
   const count = await Problem.countDocuments();
   const year = new Date().getFullYear();
-  return `NRV-${year}-${String(count + 1).padStart(6, '0')}`;
+  return `NIR-PROB-${year}-${String(count + 1).padStart(6, '0')}`;
 };
 
 export const createProblem = async (req: Request, res: Response) => {
@@ -94,10 +94,16 @@ export const getMyProblems = async (req: Request, res: Response) => {
 export const getProblemById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const problem = await Problem.findById(id).populate('submittedBy', 'name role');
+    let problem;
+    if (id.startsWith('NIR-PROB-')) {
+      problem = await Problem.findOne({ problemIdReadable: id }).populate('submittedBy', 'name role');
+    } else {
+      problem = await Problem.findById(id).populate('submittedBy', 'name role');
+    }
+    
     if (!problem) return res.status(404).json({ error: 'Problem not found' });
     
-    const history = await StatusHistory.find({ problem: id }).sort({ timestamp: -1 }).populate('changedBy', 'name');
+    const history = await StatusHistory.find({ problem: problem._id }).sort({ timestamp: -1 }).populate('changedBy', 'name');
     
     res.json({ problem, history });
   } catch (error) {

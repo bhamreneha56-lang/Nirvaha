@@ -82,3 +82,87 @@ export const updateMe = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+// Register with email/password + citizen type
+export const register = async (req: Request, res: Response) => {
+  try {
+    const { name, email, phone, password, citizenType, district, block } = req.body;
+    if (!phone) return res.status(400).json({ error: 'Phone is required' });
+
+    let user = await User.findOne({ phone });
+    if (user) return res.status(409).json({ error: 'User already exists with this phone' });
+
+    user = await User.create({
+      phone,
+      email: email || '',
+      name: name || 'Citizen',
+      passwordHash: password || '',
+      role: citizenType || 'individual',
+      district: district || '',
+      block: block || '',
+      karmaTotal: 10 // Welcome bonus
+    });
+
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    res.status(201).json({ token, user });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Server error' });
+  }
+};
+
+// Login with phone/email + password
+export const loginWithPassword = async (req: Request, res: Response) => {
+  try {
+    const { phone, email, password } = req.body;
+
+    let user = phone
+      ? await User.findOne({ phone })
+      : await User.findOne({ email });
+
+    // Auto-create default test citizen if first time
+    if (!user && (email === 'neha@nirvaha.in' || phone === '+919876543210')) {
+      user = await User.create({
+        phone: phone || '+919876543210',
+        email: 'neha@nirvaha.in',
+        name: 'Neha Dilip Bhamare',
+        passwordHash: 'password123',
+        role: 'individual',
+        district: 'Ranchi',
+        block: 'Ward 14',
+        karmaTotal: 450
+      });
+    }
+
+    if (!user) return res.status(401).json({ error: 'User not found. Please register first.' });
+    // For prototype: accept any password OR matching passwordHash
+    // In production, use bcrypt
+    if (user.passwordHash && user.passwordHash !== password) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    res.json({ token, user });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Server error' });
+  }
+};
+
+// Anonymous / guest login
+export const anonymousLogin = async (req: Request, res: Response) => {
+  try {
+    const anonId = `anon_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    const user = await User.create({
+      phone: anonId,
+      name: 'Anonymous Citizen',
+      email: '',
+      passwordHash: '',
+      role: 'individual',
+      isVerified: false,
+      karmaTotal: 0
+    });
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
+    res.json({ token, user, anonymous: true });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Server error' });
+  }
+};

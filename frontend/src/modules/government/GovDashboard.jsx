@@ -1,194 +1,199 @@
 import React, { useState } from 'react';
-import SidebarLayout from '../shared/SidebarLayout';
+import { Routes, Route, NavLink, useNavigate, Navigate } from 'react-router-dom';
+import { SimulationProvider, useSimulation } from '../../context/SimulationContext';
 
-export default function GovDashboard() {
-  const [activeTab, setActiveTab] = useState('dashboard');
+// Government Portal Components
+import GovernmentNavbar from './Navbar';
+import CommandCenter from './CommandCenter';
+import Problems from './Problems';
+import Departments from './Departments';
+import Officers from './Officers';
+import GISDashboard from './GISDashboard';
+import KnowledgeGraph from './KnowledgeGraph';
+import MasterChallenges from './MasterChallenges';
+import UniversitiesCSR from './UniversitiesCSR';
+import AIIntelligence from './AIIntelligence';
+import ImpactDashboard from './ImpactDashboard';
+import GovernanceReports from './GovernanceReports';
+import Settings from './Settings';
+import Notifications from './Notifications';
 
-  const renderContent = () => {
-    if (activeTab === 'challenges') {
-      return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Challenge Verification Queue</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b border-slate-200 text-slate-500 text-sm">
-                  <th className="pb-3 font-semibold">AI Priority</th>
-                  <th className="pb-3 font-semibold">Problem Title</th>
-                  <th className="pb-3 font-semibold">Suggested Domain</th>
-                  <th className="pb-3 font-semibold">Action</th>
-                </tr>
-              </thead>
-              <tbody className="text-sm">
-                <tr className="border-b border-slate-100">
-                  <td className="py-4"><span className="px-2 py-1 bg-red-100 text-red-700 rounded-md font-bold text-xs">High</span></td>
-                  <td className="py-4 font-bold text-slate-800">Dengue outbreak in Morabadi</td>
-                  <td className="py-4">Healthcare</td>
-                  <td className="py-4"><button className="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Review</button></td>
-                </tr>
-                <tr className="border-b border-slate-100">
-                  <td className="py-4"><span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-md font-bold text-xs">Medium</span></td>
-                  <td className="py-4 font-bold text-slate-800">Broken Handpump</td>
-                  <td className="py-4">Water Management</td>
-                  <td className="py-4"><button className="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Review</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      );
-    }
+// Overlay Components (always rendered, controlled by state)
+import WorkflowModal from './WorkflowModal';
+import CaseDrawer from './CaseDrawer';
+import Toaster from './Toaster';
 
-    if (activeTab === 'proposals') {
-      return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">University Proposals & Projects</h2>
-          <div className="p-10 text-center border-2 border-dashed border-slate-200 rounded-xl">
-             <div className="text-4xl mb-4">📑</div>
-             <h3 className="font-bold text-lg text-slate-800">No Proposals Yet</h3>
-             <p className="text-sm text-slate-500 max-w-sm mx-auto">Universities have not submitted formal project proposals for the verified challenges yet.</p>
-          </div>
-        </div>
-      );
-    }
+import {
+  LayoutDashboard,
+  AlertTriangle,
+  Building2,
+  UserCheck,
+  Map,
+  Network,
+  Trophy,
+  GraduationCap,
+  Cpu,
+  BarChart3,
+  FileText,
+  Settings2,
+  Bell,
+  ChevronRight,
+  Radio,
+  Activity
+} from 'lucide-react';
 
-    if (activeTab === 'analytics') {
-      return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Statewide Analytics</h2>
-          <div className="grid grid-cols-2 gap-6">
-             <div className="border border-slate-200 rounded-xl p-6 flex flex-col items-center">
-                <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Problems by Domain</h3>
-                <div className="w-32 h-32 rounded-full border-[12px] border-slate-100 flex items-center justify-center relative">
-                   <div className="absolute inset-0 border-[12px] border-orange-500 rounded-full" style={{clipPath: 'polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0)'}}></div>
-                </div>
-             </div>
-             <div className="border border-slate-200 rounded-xl p-6 flex flex-col items-center justify-end">
-                <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Monthly Submissions</h3>
-                <div className="flex items-end gap-3 h-32 w-full justify-center">
-                   <div className="w-8 bg-slate-200 rounded-t-sm h-1/4"></div>
-                   <div className="w-8 bg-slate-200 rounded-t-sm h-2/4"></div>
-                   <div className="w-8 bg-slate-200 rounded-t-sm h-1/3"></div>
-                   <div className="w-8 bg-orange-400 rounded-t-sm h-full"></div>
-                </div>
-             </div>
-          </div>
-        </div>
-      );
-    }
+const navSections = [
+  {
+    label: 'OVERVIEW',
+    items: [
+      { id: 'command', label: 'Command Center', icon: LayoutDashboard, path: '/government/command' }
+    ]
+  },
+  {
+    label: 'OPERATIONS',
+    items: [
+      { id: 'problems', label: 'Problems & Cases', icon: AlertTriangle, path: '/government/problems' },
+      { id: 'departments', label: 'Departments', icon: Building2, path: '/government/departments' },
+      { id: 'officers', label: 'Field Officers', icon: UserCheck, path: '/government/officers' }
+    ]
+  },
+  {
+    label: 'INTELLIGENCE',
+    items: [
+      { id: 'gis', label: 'GIS Intelligence', icon: Map, path: '/government/gis' },
+      { id: 'knowledge', label: 'Knowledge Graph', icon: Network, path: '/government/knowledge' },
+      { id: 'ai', label: 'AI Analytics', icon: Cpu, path: '/government/ai' }
+    ]
+  },
+  {
+    label: 'COLLABORATION',
+    items: [
+      { id: 'challenges', label: 'Master Challenges', icon: Trophy, path: '/government/challenges' },
+      { id: 'universities', label: 'Universities & CSR', icon: GraduationCap, path: '/government/universities' },
+      { id: 'impact', label: 'Impact Dashboard', icon: BarChart3, path: '/government/impact' },
+      { id: 'reports', label: 'Gov. Reports', icon: FileText, path: '/government/reports' }
+    ]
+  },
+  {
+    label: 'SYSTEM',
+    items: [
+      { id: 'notifications', label: 'Notifications', icon: Bell, path: '/government/notifications' },
+      { id: 'settings', label: 'Settings', icon: Settings2, path: '/government/settings' }
+    ]
+  }
+];
 
-    if (activeTab === 'settings') {
-      return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 max-w-2xl">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Department Settings</h2>
-          <form className="space-y-4">
-            <div><label className="text-sm font-bold text-slate-700">Official Name</label><input type="text" defaultValue="Secretary, IT Dept" className="w-full p-3 border border-slate-200 rounded-lg mt-1" /></div>
-            <div><label className="text-sm font-bold text-slate-700">Department</label><input type="text" defaultValue="Information Technology" className="w-full p-3 border border-slate-200 rounded-lg mt-1" /></div>
-            <button type="button" className="bg-slate-900 text-white px-6 py-3 rounded-lg font-bold mt-4">Save Configuration</button>
-          </form>
-        </div>
-      );
-    }
-    
-    return (
-      <>
-      {/* Top Metrics Row */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform duration-500 text-5xl">📄</div>
-          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Submissions</div>
-          <div className="text-4xl font-black text-slate-900 mt-1">0</div>
-          <div className="flex items-center gap-1 text-xs text-slate-400 mt-3 font-semibold">
-            <span>Awaiting first submission</span>
-          </div>
-        </div>
-        
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform duration-500 text-5xl">⚙️</div>
-          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Active Projects</div>
-          <div className="text-4xl font-black text-slate-900 mt-1">0</div>
-          <div className="flex items-center gap-1 text-xs text-slate-400 mt-3 font-semibold">
-            <span>No projects deployed yet</span>
-          </div>
-        </div>
-        
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform duration-500 text-5xl">🎓</div>
-          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">HEI Participation</div>
-          <div className="text-4xl font-black text-slate-900 mt-1">30</div>
-          <div className="flex items-center gap-1 text-xs text-green-600 mt-3 font-semibold">
-            <span>Universities onboarded</span>
-          </div>
-        </div>
-        
-        <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-6 rounded-2xl shadow-lg relative overflow-hidden group text-white">
-          <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:scale-125 transition-transform duration-500 text-5xl">₹</div>
-          <div className="text-[11px] font-bold text-amber-100 uppercase tracking-widest mb-1">Industry Funds Mobilized</div>
-          <div className="text-4xl font-black mt-1">₹0</div>
-          <div className="flex items-center gap-1 text-xs text-amber-50 mt-3 font-semibold">
-            <span>CSR pool waiting for projects</span>
-          </div>
-        </div>
-      </div>
 
-      <div className="grid grid-cols-3 gap-8 mb-8">
-        
-        {/* Empty State Heatmap */}
-        <div className="col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col h-[450px]">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h2 className="font-extrabold text-lg text-slate-900">Live Operations Heatmap</h2>
-              <p className="text-sm text-slate-500">Real-time geographical distribution of verified problems.</p>
-            </div>
-            <div className="flex gap-2 bg-slate-100 p-1 rounded-lg">
-              <button className="px-4 py-1.5 text-xs font-bold bg-white rounded shadow-sm text-slate-800">All Districts</button>
-              <button className="px-4 py-1.5 text-xs font-bold text-slate-500 hover:text-slate-800">Critical Only</button>
-            </div>
-          </div>
-          <div className="flex-1 bg-slate-50 rounded-xl border-2 border-dashed border-slate-200 flex items-center justify-center relative overflow-hidden">
-             <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'radial-gradient(circle at center, black 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
-             <div className="text-center z-10">
-                <div className="text-4xl mb-3 opacity-50">🗺️</div>
-                <h3 className="font-bold text-slate-700">Waiting for Data</h3>
-                <p className="text-sm text-slate-400 mt-1">The 3D heatmap will render once citizens start submitting reports.</p>
-             </div>
-          </div>
-        </div>
-        
-        {/* Right column */}
-        <div className="space-y-8 h-[450px] flex flex-col">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex-1 flex flex-col">
-            <h2 className="font-extrabold text-sm text-slate-900 uppercase tracking-widest mb-4">Domain Analysis</h2>
-            <div className="flex-1 flex flex-col justify-center items-center text-center">
-              <div className="w-16 h-16 rounded-full border-4 border-slate-100 flex items-center justify-center text-slate-300 mb-3">
-                <span className="text-xl">📊</span>
-              </div>
-              <p className="text-sm font-medium text-slate-400">No AI classifications yet.</p>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex-1 flex flex-col">
-            <h2 className="font-extrabold text-sm text-slate-900 uppercase tracking-widest mb-4">Pipeline Status</h2>
-            <div className="flex-1 flex flex-col items-center justify-center gap-3 w-full">
-               <div className="w-full bg-slate-100 text-slate-400 text-[11px] font-bold tracking-widest uppercase text-center py-2.5 rounded-lg border border-slate-200">Submitted (0)</div>
-               <div className="w-[85%] bg-slate-100 text-slate-400 text-[11px] font-bold tracking-widest uppercase text-center py-2.5 rounded-lg border border-slate-200">Routed (0)</div>
-               <div className="w-[70%] bg-slate-100 text-slate-400 text-[11px] font-bold tracking-widest uppercase text-center py-2.5 rounded-lg border border-slate-200">In Progress (0)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      </>
-    );
-  };
+function GovSidebar({ sidebarOpen }) {
+  const { state } = useSimulation();
+  const unreadCount = (state.notifications || []).filter(n => n.unread).length;
 
   return (
-    <SidebarLayout 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} 
-      roleTitle="Master Command Center" 
-      userName="Secretary, IT Dept"
+    <aside
+      className={`${sidebarOpen ? 'w-60' : 'w-0 overflow-hidden'} transition-all duration-300 bg-white border-r border-slate-200 flex flex-col shrink-0 shadow-sm`}
+      style={{ minHeight: 'calc(100vh - 96px)' }}
     >
-      {renderContent()}
-    </SidebarLayout>
+      <div className="flex-1 overflow-y-auto py-4 px-3">
+        {navSections.map(section => (
+          <div key={section.label} className="mb-5">
+            <div className="text-[9px] font-mono font-black text-slate-400 tracking-widest uppercase px-3 mb-2">
+              {section.label}
+            </div>
+            <div className="space-y-0.5">
+              {section.items.map(item => (
+                <NavLink
+                  key={item.id}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-semibold transition-all group relative ${
+                      isActive
+                        ? 'bg-amber-500 text-white shadow-sm'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <item.icon
+                        size={15}
+                        className={isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-700'}
+                      />
+                      <span>{item.label}</span>
+                      {item.id === 'notifications' && unreadCount > 0 && (
+                        <span className={`ml-auto text-[9px] font-black px-1.5 py-0.5 rounded-full ${
+                          isActive ? 'bg-white text-amber-700' : 'bg-red-500 text-white'
+                        }`}>
+                          {unreadCount}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom: Live stream indicator */}
+      <div className="p-3 border-t border-slate-100">
+        <div className="flex items-center gap-2 px-2 py-1.5 bg-slate-50 rounded-lg">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
+          <span className="text-[10px] font-mono font-bold text-slate-500">Live Stream</span>
+          <Activity size={10} className="ml-auto text-emerald-500 animate-pulse" />
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+function GovPortalInner() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { state } = useSimulation();
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+      {/* Navbar */}
+      <GovernmentNavbar onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
+
+      {/* Body: Sidebar + Main Content */}
+      <div className="flex flex-1 overflow-hidden">
+        <GovSidebar sidebarOpen={sidebarOpen} />
+
+        <main className="flex-1 overflow-y-auto p-6">
+          <Routes>
+            <Route index element={<Navigate to="/government/command" replace />} />
+            <Route path="command" element={<CommandCenter />} />
+            <Route path="problems" element={<Problems />} />
+            <Route path="departments" element={<Departments />} />
+            <Route path="officers" element={<Officers />} />
+            <Route path="gis" element={<GISDashboard />} />
+            <Route path="knowledge" element={<KnowledgeGraph />} />
+            <Route path="ai" element={<AIIntelligence />} />
+            <Route path="challenges" element={<MasterChallenges />} />
+            <Route path="universities" element={<UniversitiesCSR />} />
+            <Route path="impact" element={<ImpactDashboard />} />
+            <Route path="reports" element={<GovernanceReports />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="*" element={<Navigate to="/government/command" replace />} />
+          </Routes>
+        </main>
+
+      </div>
+
+      {/* Global Overlays */}
+      <WorkflowModal />
+      <CaseDrawer />
+      <Toaster />
+    </div>
+  );
+}
+
+export default function GovDashboard() {
+  return (
+    <SimulationProvider>
+      <GovPortalInner />
+    </SimulationProvider>
   );
 }

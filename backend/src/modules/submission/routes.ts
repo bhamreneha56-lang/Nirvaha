@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createProblem, getNearbyProblems, getMyProblems, getProblemById, updateProblemStatus } from './controller';
+import { createProblem, getNearbyProblems, getMyProblems, getProblemById, updateProblemStatus, getAllProblems } from './controller';
 import { authMiddleware } from '../../shared/middleware/auth';
 
 const router = Router();
@@ -13,6 +13,7 @@ const optionalAuth = (req: any, res: any, next: any) => {
   next();
 };
 
+router.get('/', getAllProblems);
 router.post('/', optionalAuth, createProblem);
 router.get('/nearby', getNearbyProblems);
 router.get('/mine', authMiddleware, getMyProblems);

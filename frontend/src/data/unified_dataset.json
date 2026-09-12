@@ -1,0 +1,2314 @@
+{
+  "_readme": "This is the SINGLE SHARED dataset for all 4 NIRVAHA portals (Citizen, University, Industry, Government). Every portal reads/writes against these same entities via a common backend, so whichever team member builds which portal, they should seed and query against this file (or the DB tables it maps to) rather than inventing separate local data. University labsInfrastructure and incubationFacility fields are left as null/placeholder where real data was not confirmed — these should be completed by each university during onboarding (University Portal Page 1: Institution Profile), not fabricated. Two additional sections were appended: 'jharkhandIndustriesAndStartups' (67 real industries/startups/clusters from the uploaded Jharkhand dataset — raw reference data, not yet mapped to platform funding-capacity fields) and 'jharkhandNgoFunders' (9 real Jharkhand-active NGOs/foundations known to provide grants or CSR-linked funding — focus areas and funding type given, fundingCapacityBand left unset since real committed amounts vary per programme and should not be guessed).",
+  "citizenSubmitters": {
+    "individualCitizens": [
+      {
+        "id": "CIT-IND-001",
+        "name": "Rekha Devi",
+        "phone": "+91-98XXXXXX21",
+        "district": "Ranchi",
+        "village": "Ormanjhi",
+        "karmaPoints": 120
+      },
+      {
+        "id": "CIT-IND-002",
+        "name": "Sunil Mahato",
+        "phone": "+91-99XXXXXX87",
+        "district": "Dumka",
+        "village": "Shikaripara",
+        "karmaPoints": 55
+      },
+      {
+        "id": "CIT-IND-003",
+        "name": "Fulmani Kumari",
+        "phone": "+91-96XXXXXX33",
+        "district": "Gumla",
+        "village": "Ghaghra",
+        "karmaPoints": 78
+      }
+    ],
+    "communityGroups": [
+      {
+        "id": "CIT-CG-001",
+        "name": "Jharkhand Rural Development Society (NGO)",
+        "phone": "+91-90XXXXXX44",
+        "district": "Gumla",
+        "village": "Ghaghra",
+        "karmaPoints": 210,
+        "registrationDocUrl": "org_reg_JRDS.pdf"
+      },
+      {
+        "id": "CIT-CG-002",
+        "name": "Adivasi Mahila Sangathan (Self-Help Group)",
+        "phone": "+91-91XXXXXX55",
+        "district": "Khunti",
+        "village": "Murhu",
+        "karmaPoints": 95,
+        "registrationDocUrl": "org_reg_AMS.pdf"
+      }
+    ],
+    "panchayatiRajInstitutions": [
+      {
+        "id": "CIT-PRI-001",
+        "name": "Ormanjhi Panchayat Office",
+        "phone": "+91-94XXXXXX10",
+        "district": "Ranchi",
+        "village": "Ormanjhi",
+        "karmaPoints": 340,
+        "priLevel": "Gram Panchayat"
+      },
+      {
+        "id": "CIT-PRI-002",
+        "name": "Shikaripara Block Panchayat Samiti",
+        "phone": "+91-93XXXXXX18",
+        "district": "Dumka",
+        "village": "Shikaripara",
+        "karmaPoints": 150,
+        "priLevel": "Panchayat Samiti"
+      }
+    ],
+    "urbanLocalBodies": [
+      {
+        "id": "CIT-ULB-001",
+        "name": "Deoghar Municipal Corporation",
+        "phone": "+91-97XXXXXX02",
+        "district": "Deoghar",
+        "village": "Deoghar Town",
+        "karmaPoints": 400,
+        "ulbType": "Municipal Corporation"
+      },
+      {
+        "id": "CIT-ULB-002",
+        "name": "Jamshedpur Notified Area Committee",
+        "phone": "+91-92XXXXXX61",
+        "district": "East Singhbhum",
+        "village": "Jamshedpur",
+        "karmaPoints": 260,
+        "ulbType": "Notified Area Committee"
+      }
+    ],
+    "governmentDepartmentsAsSubmitters": [
+      {
+        "id": "CIT-GOV-001",
+        "name": "Block Development Office, Ormanjhi",
+        "phone": "+91-95XXXXXX70",
+        "district": "Ranchi",
+        "village": "Ormanjhi",
+        "karmaPoints": 500,
+        "department": "Rural Development"
+      }
+    ]
+  },
+  "governmentDepartments": [
+    {
+      "id": "GOVDEPT-01",
+      "name": "Department of Drinking Water & Sanitation",
+      "domainsHandled": [
+        "Water Resources"
+      ],
+      "linkedSchemes": [
+        "Jal Jeevan Mission"
+      ]
+    },
+    {
+      "id": "GOVDEPT-02",
+      "name": "Department of School Education & Literacy",
+      "domainsHandled": [
+        "Education"
+      ],
+      "linkedSchemes": [
+        "Samagra Shiksha Abhiyan"
+      ]
+    },
+    {
+      "id": "GOVDEPT-03",
+      "name": "Department of Health, Medical Education & Family Welfare",
+      "domainsHandled": [
+        "Healthcare"
+      ],
+      "linkedSchemes": [
+        "Ayushman Bharat"
+      ]
+    },
+    {
+      "id": "GOVDEPT-04",
+      "name": "Department of Agriculture, Animal Husbandry & Cooperative",
+      "domainsHandled": [
+        "Agriculture",
+        "Rural Livelihoods"
+      ],
+      "linkedSchemes": [
+        "PM-KISAN"
+      ]
+    },
+    {
+      "id": "GOVDEPT-05",
+      "name": "Department of Forest, Environment & Climate Change",
+      "domainsHandled": [
+        "Environment"
+      ],
+      "linkedSchemes": [
+        "Compensatory Afforestation Fund"
+      ]
+    },
+    {
+      "id": "GOVDEPT-06",
+      "name": "Department of Energy",
+      "domainsHandled": [
+        "Energy"
+      ],
+      "linkedSchemes": [
+        "Saubhagya Scheme"
+      ]
+    },
+    {
+      "id": "GOVDEPT-07",
+      "name": "Urban Development & Housing Department",
+      "domainsHandled": [
+        "Urban Infrastructure"
+      ],
+      "linkedSchemes": [
+        "AMRUT 2.0"
+      ]
+    },
+    {
+      "id": "GOVDEPT-08",
+      "name": "Department of Social Welfare, Women & Child Development",
+      "domainsHandled": [
+        "Accessibility",
+        "Public Administration"
+      ],
+      "linkedSchemes": [
+        "Divyangjan Sashaktikaran"
+      ]
+    },
+    {
+      "id": "GOVDEPT-09",
+      "name": "Department of Rural Development",
+      "domainsHandled": [
+        "Rural Livelihoods",
+        "Public Administration"
+      ],
+      "linkedSchemes": [
+        "MGNREGA"
+      ]
+    }
+  ],
+  "universities": [
+    {
+      "id": "UNI-01",
+      "name": "Central University of Jharkhand, Ranchi (Brambe)",
+      "type": "Central University",
+      "district": "Ranchi",
+      "established": 2009,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "B.Tech",
+        "MA",
+        "MSc",
+        "MCom",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Engineering",
+        "Management",
+        "Computer Applications"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-02",
+      "name": "Indian Institute of Technology (ISM), Dhanbad",
+      "type": "Institute of National Importance",
+      "district": "Dhanbad",
+      "established": 1926,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Mining",
+        "Petroleum",
+        "Mechanical",
+        "Civil",
+        "CSE",
+        "ECE",
+        "Electrical",
+        "Data Science"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-03",
+      "name": "All India Institute of Medical Sciences (AIIMS), Deoghar",
+      "type": "Institute of National Importance",
+      "district": "Deoghar",
+      "established": 2019,
+      "degreesOffered": [
+        "MBBS",
+        "MD",
+        "MS",
+        "DM",
+        "MCh",
+        "PhD"
+      ],
+      "specializations": [
+        "General Medicine",
+        "Surgery",
+        "Pediatrics",
+        "Cardiology",
+        "Neurology"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-04",
+      "name": "Indian Institute of Information Technology (IIIT), Ranchi",
+      "type": "Institute of National Importance",
+      "district": "Ranchi",
+      "established": 2016,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "PhD"
+      ],
+      "specializations": [
+        "CSE",
+        "ECE",
+        "AI & ML",
+        "Data Science",
+        "Cyber Security"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-05",
+      "name": "National Institute of Technology (NIT), Jamshedpur",
+      "type": "Institute of National Importance",
+      "district": "East Singhbhum",
+      "established": 1960,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MCA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Mechanical",
+        "Civil",
+        "CSE",
+        "ECE",
+        "Electrical",
+        "Metallurgy",
+        "Production"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-06",
+      "name": "Indian Institute of Management (IIM), Ranchi",
+      "type": "Institute of National Importance",
+      "district": "Ranchi",
+      "established": 2009,
+      "degreesOffered": [
+        "MBA",
+        "Executive MBA",
+        "PhD"
+      ],
+      "specializations": [
+        "General Management",
+        "Finance",
+        "Marketing",
+        "Operations",
+        "HR"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-07",
+      "name": "Central Institute of Psychiatry, Ranchi",
+      "type": "Institute of National Importance",
+      "district": "Ranchi",
+      "established": 1918,
+      "degreesOffered": [
+        "MD (Psychiatry)",
+        "PhD"
+      ],
+      "specializations": [
+        "Psychiatry",
+        "Clinical Psychology",
+        "Neurosciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-08",
+      "name": "Birla Institute of Technology, Mesra, Ranchi",
+      "type": "Deemed University",
+      "district": "Ranchi",
+      "established": 1986,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MCA",
+        "BPharm",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "CSE",
+        "IT",
+        "Mechanical",
+        "Civil",
+        "ECE",
+        "Biotechnology",
+        "Pharmacy"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-09",
+      "name": "National Institute of Advanced Manufacturing Technology (NIAMT), Ranchi",
+      "type": "Deemed University",
+      "district": "Ranchi",
+      "established": 1966,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Manufacturing",
+        "Mechanical",
+        "Industrial Engineering",
+        "Materials Science"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-10",
+      "name": "Ranchi University, Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 1960,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "LLB",
+        "MA",
+        "MSc",
+        "MCom",
+        "LLM",
+        "MPhil",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Law",
+        "Education",
+        "Social Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-11",
+      "name": "Kolhan University, Chaibasa",
+      "type": "State University (Government)",
+      "district": "West Singhbhum",
+      "established": 2009,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "MA",
+        "MSc",
+        "MCom",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Education",
+        "Tribal Studies"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-12",
+      "name": "Vinoba Bhave University, Hazaribagh",
+      "type": "State University (Government)",
+      "district": "Hazaribagh",
+      "established": 1993,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "LLB",
+        "MA",
+        "MSc",
+        "MCom",
+        "LLM",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Law",
+        "Education",
+        "Sanskrit"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-13",
+      "name": "Nilamber-Pitamber University, Medininagar (Palamu)",
+      "type": "State University (Government)",
+      "district": "Palamu",
+      "established": 2009,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Tribal & Regional Studies"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-14",
+      "name": "Birsa Agricultural University, Ranchi (Kanke)",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 1980,
+      "degreesOffered": [
+        "BSc (Agri)",
+        "BTech (Agri Engg)",
+        "MSc (Agri)",
+        "MTech",
+        "MBA (Agri)",
+        "PhD"
+      ],
+      "specializations": [
+        "Agronomy",
+        "Horticulture",
+        "Animal Husbandry",
+        "Dairy",
+        "Fisheries",
+        "Forestry"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-15",
+      "name": "Binod Bihari Mahto Koylanchal University, Dhanbad",
+      "type": "State University (Government)",
+      "district": "Dhanbad",
+      "established": 2017,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "MA",
+        "MSc",
+        "MCom",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Education",
+        "Mining-related studies"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-16",
+      "name": "Jharkhand University of Technology (JUT), Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2011,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MCA",
+        "BPharm",
+        "MPharm",
+        "BHMCT",
+        "BCA",
+        "BBA",
+        "PhD"
+      ],
+      "specializations": [
+        "CSE",
+        "Civil",
+        "Mechanical",
+        "Electrical",
+        "ECE",
+        "Mining",
+        "Polymer",
+        "Chemical"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-17",
+      "name": "Jharkhand State Open University (JSOU), Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2021,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MA",
+        "MSc",
+        "MCom",
+        "MBA",
+        "BEd",
+        "MEd"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Management",
+        "Education"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-18",
+      "name": "Jharkhand Raksha Shakti University, Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2016,
+      "degreesOffered": [
+        "BSc",
+        "MSc",
+        "MBA",
+        "PhD"
+      ],
+      "specializations": [
+        "Police Science",
+        "Security Management",
+        "Forensic Science",
+        "Cyber Security"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-19",
+      "name": "Sido Kanhu Murmu University, Dumka",
+      "type": "State University (Government)",
+      "district": "Dumka",
+      "established": 1992,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Tribal Studies",
+        "Santhali"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-20",
+      "name": "Dr. Shyama Prasad Mukherjee University, Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2017,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "MA",
+        "MSc",
+        "MCom",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Education",
+        "Vocational Studies"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-21",
+      "name": "Jamshedpur Women's University, Jamshedpur",
+      "type": "State University (Government)",
+      "district": "East Singhbhum",
+      "established": 2019,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "MA",
+        "MSc",
+        "MCom",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Education",
+        "Home Science"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": [],
+      "notes": "Women only"
+    },
+    {
+      "id": "UNI-22",
+      "name": "Kaushal Vidya Entrepreneurship, Digital and Skill University, Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2022,
+      "degreesOffered": [
+        "BBA",
+        "BCA",
+        "BSc",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Entrepreneurship",
+        "Digital Marketing",
+        "Skill Development",
+        "Vocational"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-23",
+      "name": "National University of Study and Research in Law (NUSRL), Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2010,
+      "degreesOffered": [
+        "BA LLB (Hons)",
+        "BBA LLB (Hons)",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Constitutional Law",
+        "Criminal Law",
+        "Corporate Law",
+        "Human Rights",
+        "IPR"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-24",
+      "name": "AISECT University, Hazaribagh",
+      "type": "State Private University",
+      "district": "Hazaribagh",
+      "established": 2016,
+      "degreesOffered": [
+        "BSc (Agri)",
+        "BCom",
+        "BBA",
+        "BCA",
+        "LLB",
+        "BSc",
+        "BA",
+        "MSc",
+        "MCom",
+        "MBA",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Agriculture",
+        "Commerce",
+        "Management",
+        "IT",
+        "Law",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-25",
+      "name": "Amity University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2016,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences",
+        "Humanities"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-26",
+      "name": "Arka Jain University, Seraikela Kharsawan",
+      "type": "State Private University",
+      "district": "Seraikela Kharsawan",
+      "established": 2017,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences",
+        "Media & Communication"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-27",
+      "name": "Babu Dinesh Singh University, Garhwa",
+      "type": "State Private University",
+      "district": "Garhwa",
+      "established": 2024,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BPharm",
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Health Sciences",
+        "Pharmacy",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-28",
+      "name": "Capital University, Koderma",
+      "type": "State Private University",
+      "district": "Koderma",
+      "established": 2018,
+      "degreesOffered": [
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Physiotherapy",
+        "Management",
+        "Commerce",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-29",
+      "name": "Durga Soren University, Deoghar",
+      "type": "State Private University",
+      "district": "Deoghar",
+      "established": 2023,
+      "degreesOffered": [
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Tribal Studies",
+        "Arts",
+        "Science",
+        "Commerce",
+        "Management"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-30",
+      "name": "ICFAI University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2008,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BCom",
+        "BA",
+        "BSc",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "IT",
+        "Law",
+        "Finance"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-31",
+      "name": "Jharkhand Rai University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2011,
+      "degreesOffered": [
+        "BPharm",
+        "BPT",
+        "BSc (Nursing)",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Pharmacy",
+        "Physiotherapy",
+        "Nursing",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-32",
+      "name": "Netaji Subhas University, Jamshedpur",
+      "type": "State Private University",
+      "district": "East Singhbhum",
+      "established": 2018,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BPT",
+        "BPharm",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MPharm",
+        "PhD"
+      ],
+      "specializations": [
+        "Health Sciences",
+        "Management",
+        "Commerce",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-33",
+      "name": "Pragyan International University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2016,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences",
+        "Education"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-34",
+      "name": "Radha Govind University, Ramgarh",
+      "type": "State Private University",
+      "district": "Ramgarh",
+      "established": 2018,
+      "degreesOffered": [
+        "BPharm",
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Pharmacy",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-35",
+      "name": "Ram Krishna Dharmarth Foundation (RKDF) University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2018,
+      "degreesOffered": [
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Management",
+        "Vocational"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-36",
+      "name": "Ramchandra Chandravansi University, Palamu",
+      "type": "State Private University",
+      "district": "Palamu",
+      "established": 2018,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Nursing",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-37",
+      "name": "Sai Nath University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2012,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BPT",
+        "BPharm",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Nursing",
+        "Pharmacy",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-38",
+      "name": "Sarala Birla University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2017,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences",
+        "Media"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-39",
+      "name": "Sona Devi University, East Singhbhum",
+      "type": "State Private University",
+      "district": "East Singhbhum",
+      "established": 2023,
+      "degreesOffered": [
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Management",
+        "Vocational"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-40",
+      "name": "Srinath University, Jamshedpur",
+      "type": "State Private University",
+      "district": "East Singhbhum",
+      "established": 2021,
+      "degreesOffered": [
+        "B.Tech",
+        "BPharm",
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Pharmacy",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-41",
+      "name": "Usha Martin University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2014,
+      "degreesOffered": [
+        "BSc (Agri)",
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Agriculture",
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-42",
+      "name": "YBN University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2017,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BEd",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Nursing",
+        "Education",
+        "Management",
+        "Sciences",
+        "Arts"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    }
+  ],
+  "industryStartupNgoPartners": [
+    {
+      "id": "IND-01",
+      "name": "TataTech Rural Innovations",
+      "type": "Industry (Corporate CSR arm)",
+      "sector": "Water & Sanitation Tech",
+      "technologyExpertise": [
+        "IoT sensors",
+        "solar hardware"
+      ],
+      "csrInterests": [
+        "Water access",
+        "rural livelihood"
+      ],
+      "fundingCapacity": "₹5L–₹20L per project",
+      "mentorshipCapacity": "10 hrs/month"
+    },
+    {
+      "id": "IND-02",
+      "name": "GreenFlow Environmental Solutions",
+      "type": "Startup",
+      "sector": "Environmental Engineering",
+      "technologyExpertise": [
+        "Effluent treatment systems",
+        "water quality sensors"
+      ],
+      "csrInterests": [
+        "Pollution control"
+      ],
+      "fundingCapacity": "₹2L–₹8L per project",
+      "mentorshipCapacity": "6 hrs/month"
+    },
+    {
+      "id": "IND-03",
+      "name": "Jharkhand Forest & Wildlife CSR Trust",
+      "type": "CSR Trust",
+      "sector": "Conservation / CSR",
+      "technologyExpertise": [
+        "GIS",
+        "acoustic/thermal deterrents"
+      ],
+      "csrInterests": [
+        "Human-wildlife conflict"
+      ],
+      "fundingCapacity": "₹3L–₹10L per project",
+      "mentorshipCapacity": "8 hrs/month"
+    },
+    {
+      "id": "IND-04",
+      "name": "Jharkhand Rural Livelihoods NGO Consortium",
+      "type": "NGO",
+      "sector": "Rural Livelihoods & Skilling",
+      "technologyExpertise": [
+        "Skill training delivery",
+        "market linkage"
+      ],
+      "csrInterests": [
+        "Employment generation",
+        "artisan support"
+      ],
+      "fundingCapacity": "₹1L–₹5L per project",
+      "mentorshipCapacity": "12 hrs/month"
+    },
+    {
+      "id": "IND-05",
+      "name": "EduBridge Foundation",
+      "type": "NGO",
+      "sector": "Education Infrastructure",
+      "technologyExpertise": [
+        "Digital classroom kits",
+        "teacher training"
+      ],
+      "csrInterests": [
+        "STEM access",
+        "school infrastructure"
+      ],
+      "fundingCapacity": "₹2L–₹6L per project",
+      "mentorshipCapacity": "8 hrs/month"
+    },
+    {
+      "id": "IND-06",
+      "name": "Jamshedpur Steel & Allied Industries CSR Cell",
+      "type": "Industry (Corporate CSR arm)",
+      "sector": "Manufacturing / Infrastructure",
+      "technologyExpertise": [
+        "Civil construction",
+        "materials engineering"
+      ],
+      "csrInterests": [
+        "Urban infrastructure",
+        "drainage systems"
+      ],
+      "fundingCapacity": "₹5L–₹25L per project",
+      "mentorshipCapacity": "5 hrs/month"
+    },
+    {
+      "id": "IND-07",
+      "name": "SolarSprint Energy Startup",
+      "type": "Startup",
+      "sector": "Renewable Energy",
+      "technologyExpertise": [
+        "Solar microgrids",
+        "battery storage"
+      ],
+      "csrInterests": [
+        "Rural electrification"
+      ],
+      "fundingCapacity": "₹3L–₹12L per project",
+      "mentorshipCapacity": "6 hrs/month"
+    }
+  ],
+  "problems": [
+    {
+      "id": "JH-WAT-2026-04021",
+      "submitterId": "CIT-IND-001",
+      "submitterType": "individualCitizens",
+      "description": "Hand pump near the primary school has been dry for 3 months, women and children walking 2km daily for water.",
+      "district": "Ranchi",
+      "domainAI": "Water Resources",
+      "status": "university_assigned",
+      "linkedGovDeptId": "GOVDEPT-01",
+      "linkedUniversityId": "UNI-01",
+      "linkedIndustryId": "IND-01"
+    },
+    {
+      "id": "JH-EDU-2026-04022",
+      "submitterId": "CIT-PRI-001",
+      "submitterType": "panchayatiRajInstitutions",
+      "description": "Government middle school has no functional science lab; students cannot do practicals for board prep.",
+      "district": "Ranchi",
+      "domainAI": "Education",
+      "status": "gov_verified",
+      "linkedGovDeptId": "GOVDEPT-02",
+      "linkedUniversityId": null,
+      "linkedIndustryId": "IND-05"
+    },
+    {
+      "id": "JH-AGR-2026-04023",
+      "submitterId": "CIT-IND-002",
+      "submitterType": "individualCitizens",
+      "description": "Paddy crops damaged repeatedly by wild elephant herds crossing from the forest, no early warning system exists.",
+      "district": "Dumka",
+      "domainAI": "Agriculture",
+      "status": "in_progress",
+      "linkedGovDeptId": "GOVDEPT-04",
+      "linkedUniversityId": "UNI-14",
+      "linkedIndustryId": "IND-03"
+    },
+    {
+      "id": "JH-ENV-2026-04024",
+      "submitterId": "CIT-CG-001",
+      "submitterType": "communityGroups",
+      "description": "Untreated dyeing-unit wastewater is being released into the local stream, contaminating irrigation water downstream.",
+      "district": "Gumla",
+      "domainAI": "Environment",
+      "status": "ai_processed",
+      "linkedGovDeptId": "GOVDEPT-05",
+      "linkedUniversityId": "UNI-08",
+      "linkedIndustryId": "IND-02"
+    },
+    {
+      "id": "JH-URB-2026-04025",
+      "submitterId": "CIT-ULB-001",
+      "submitterType": "urbanLocalBodies",
+      "description": "Waterlogging on Station Road every monsoon due to blocked and undersized stormwater drains.",
+      "district": "Deoghar",
+      "domainAI": "Urban Infrastructure",
+      "status": "submitted",
+      "linkedGovDeptId": "GOVDEPT-07",
+      "linkedUniversityId": null,
+      "linkedIndustryId": "IND-06"
+    }
+  ],
+  "projects": [
+    {
+      "id": "PRJ-501",
+      "problemId": "JH-WAT-2026-04021",
+      "universityId": "UNI-01",
+      "industryPartnerId": "IND-01",
+      "governmentDeptId": "GOVDEPT-01",
+      "title": "Solar IoT-monitored community water ATM, Ormanjhi",
+      "status": "prototyping",
+      "fundingCommitted": 650000,
+      "fundingDisbursed": 260000
+    },
+    {
+      "id": "PRJ-502",
+      "problemId": "JH-AGR-2026-04023",
+      "universityId": "UNI-14",
+      "industryPartnerId": "IND-03",
+      "governmentDeptId": "GOVDEPT-04",
+      "title": "IoT-based elephant early-warning system, Shikaripara corridor",
+      "status": "field_testing",
+      "fundingCommitted": 420000,
+      "fundingDisbursed": 420000
+    }
+  ],
+  "jharkhandIndustriesAndStartups": [
+    {
+      "id": "INDDS-001",
+      "name": "Tata Steel",
+      "location": "Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Iron & Steel",
+      "established": "1907",
+      "description": "India's oldest and largest private steel producer; integrated steel plant"
+    },
+    {
+      "id": "INDDS-002",
+      "name": "Bokaro Steel Plant (SAIL)",
+      "location": "Bokaro",
+      "type": "Large Industry (PSU)",
+      "sector": "Iron & Steel",
+      "established": "1964",
+      "description": "Major public sector steel plant under Steel Authority of India"
+    },
+    {
+      "id": "INDDS-003",
+      "name": "JSPL (Jindal Steel & Power)",
+      "location": "Angul (operates in Jharkhand)",
+      "type": "Large Industry",
+      "sector": "Steel, Power, Mining",
+      "established": "1982",
+      "description": "Leading player in steel, power, mining, oil & gas, cement"
+    },
+    {
+      "id": "INDDS-004",
+      "name": "Usha Martin Industries",
+      "location": "Ranchi/Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Steel Wire Ropes, Cables",
+      "established": "1986",
+      "description": "Manufactures steel wire ropes, strands, and speciality cables"
+    },
+    {
+      "id": "INDDS-005",
+      "name": "TRF Limited",
+      "location": "Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Engineering, Material Handling",
+      "established": "1969",
+      "description": "Material handling equipment, industrial structures, mining machinery"
+    },
+    {
+      "id": "INDDS-006",
+      "name": "Tata Motors",
+      "location": "Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Automotive",
+      "established": "1954",
+      "description": "Commercial vehicle manufacturing unit"
+    },
+    {
+      "id": "INDDS-007",
+      "name": "Tata Cummins",
+      "location": "Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Automotive (Engines)",
+      "established": "1993",
+      "description": "Diesel engine manufacturing joint venture"
+    },
+    {
+      "id": "INDDS-008",
+      "name": "Rungta Mines Ltd.",
+      "location": "East Singhbhum",
+      "type": "Large Industry",
+      "sector": "Sponge Iron, Steel",
+      "established": "2005",
+      "description": "Sponge Iron 1.2 MTPA, Steel 1.4 MTPA, Liquid Steel 1.25 MTPA"
+    },
+    {
+      "id": "INDDS-009",
+      "name": "Rungta Sons Pvt. Ltd.",
+      "location": "Saraikela-Kharsawan",
+      "type": "Large Industry",
+      "sector": "Steel, Mining",
+      "established": "1990s",
+      "description": "Steel and mining operations"
+    },
+    {
+      "id": "INDDS-010",
+      "name": "BMW Steel",
+      "location": "Bokaro",
+      "type": "Medium Industry",
+      "sector": "Steel",
+      "established": "2000s",
+      "description": "Steel manufacturing"
+    },
+    {
+      "id": "INDDS-011",
+      "name": "Ranchi Integrated Steel",
+      "location": "Ranchi",
+      "type": "Medium Industry",
+      "sector": "Steel",
+      "established": "2010s",
+      "description": "Integrated steel production"
+    },
+    {
+      "id": "INDDS-012",
+      "name": "Maa Chhinnmastika Cement & Ispat (MCCIPL)",
+      "location": "Ramgarh",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron, Steel, Cement",
+      "established": "2008",
+      "description": "Sponge Iron 90,000 TPA, Steel 72,000 TPA, TMT 67,500 TPA"
+    },
+    {
+      "id": "INDDS-013",
+      "name": "Balaji Electro Steel",
+      "location": "Ramgarh",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron, Steel",
+      "established": "2010s",
+      "description": "Sponge Iron 0.5 MTPA"
+    },
+    {
+      "id": "INDDS-014",
+      "name": "Ashirwad Steel",
+      "location": "Ramgarh",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron",
+      "established": "2010s",
+      "description": "Sponge Iron 0.21 MTPA"
+    },
+    {
+      "id": "INDDS-015",
+      "name": "B.K. Steel Industries",
+      "location": "Ramgarh",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron",
+      "established": "2010s",
+      "description": "Sponge Iron 0.5 MTPA"
+    },
+    {
+      "id": "INDDS-016",
+      "name": "GoelSponge Pvt. Ltd.",
+      "location": "East Singhbhum",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron, Steel",
+      "established": "2000s",
+      "description": "Sponge Iron 0.115 MTPA, Steel 0.09 MTPA"
+    },
+    {
+      "id": "INDDS-017",
+      "name": "Raj Refractories Pvt. Ltd.",
+      "location": "East Singhbhum",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron",
+      "established": "2000s",
+      "description": "Sponge Iron 0.51 MTPA"
+    },
+    {
+      "id": "INDDS-018",
+      "name": "Chintpurni Steel Pvt. Ltd.",
+      "location": "East Singhbhum",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron, Steel",
+      "established": "2000s",
+      "description": "Sponge Iron 0.6 MTPA, Steel 0.06 MTPA"
+    },
+    {
+      "id": "INDDS-019",
+      "name": "I.D.L. Ltd.",
+      "location": "East Singhbhum",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron, Pig Iron",
+      "established": "1990s",
+      "description": "Sponge Iron 0.225 MTPA, Pig Iron 0.12 MTPA"
+    },
+    {
+      "id": "INDDS-020",
+      "name": "Bisco Sponge Iron Ltd.",
+      "location": "East Singhbhum",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron",
+      "established": "2000s",
+      "description": "Sponge Iron 0.334 MTPA"
+    },
+    {
+      "id": "INDDS-021",
+      "name": "Metalite India Pvt. Ltd.",
+      "location": "East Singhbhum",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron",
+      "established": "2000s",
+      "description": "Sponge Iron 0.51 MTPA"
+    },
+    {
+      "id": "INDDS-022",
+      "name": "Hitech Chemicals Pvt. Ltd.",
+      "location": "East Singhbhum",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron",
+      "established": "2000s",
+      "description": "Sponge Iron 0.51 MTPA"
+    },
+    {
+      "id": "INDDS-023",
+      "name": "Dayal Steel & Casting Ltd.",
+      "location": "East Singhbhum",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron",
+      "established": "2000s",
+      "description": "Sponge Iron 0.51 MTPA"
+    },
+    {
+      "id": "INDDS-024",
+      "name": "Sri Sai ElectroCasting Ltd.",
+      "location": "Ramgarh",
+      "type": "Medium Industry",
+      "sector": "Sponge Iron",
+      "established": "2010s",
+      "description": "Sponge Iron 0.5 MTPA"
+    },
+    {
+      "id": "INDDS-025",
+      "name": "Coal India Limited (CIL)",
+      "location": "Ranchi (HQ)",
+      "type": "Large Industry (PSU)",
+      "sector": "Coal Mining",
+      "established": "1975",
+      "description": "Operates numerous coal mines across Jharkhand"
+    },
+    {
+      "id": "INDDS-026",
+      "name": "Central Coalfields Limited (CCL)",
+      "location": "Ranchi",
+      "type": "Large Industry (PSU)",
+      "sector": "Coal Mining",
+      "established": "1975",
+      "description": "Major coal mining subsidiary of CIL"
+    },
+    {
+      "id": "INDDS-027",
+      "name": "Bharat Coking Coal Limited (BCCL)",
+      "location": "Dhanbad",
+      "type": "Large Industry (PSU)",
+      "sector": "Coal Mining",
+      "established": "1975",
+      "description": "Coking coal mining operations"
+    },
+    {
+      "id": "INDDS-028",
+      "name": "Hindalco Industries",
+      "location": "Lohardaga/Gumla",
+      "type": "Large Industry",
+      "sector": "Bauxite Mining, Aluminum",
+      "established": "1958",
+      "description": "Bauxite mining and aluminum production"
+    },
+    {
+      "id": "INDDS-029",
+      "name": "Uranium Corporation of India (UCIL)",
+      "location": "Jaduguda (East Singhbhum)",
+      "type": "Large Industry (PSU)",
+      "sector": "Uranium Mining",
+      "established": "1967",
+      "description": "Uranium extraction and processing"
+    },
+    {
+      "id": "INDDS-030",
+      "name": "Rungta Mines Ltd.",
+      "location": "East Singhbhum",
+      "type": "Large Industry",
+      "sector": "Mining, Steel",
+      "established": "2005",
+      "description": "Iron ore mining and steel production"
+    },
+    {
+      "id": "INDDS-031",
+      "name": "ACC Limited",
+      "location": "Chaibasa",
+      "type": "Large Industry",
+      "sector": "Cement",
+      "established": "1936",
+      "description": "Large-scale cement manufacturing"
+    },
+    {
+      "id": "INDDS-032",
+      "name": "Ambuja Cements",
+      "location": "Saraikela-Kharsawan",
+      "type": "Large Industry",
+      "sector": "Cement",
+      "established": "1980s",
+      "description": "Cement production"
+    },
+    {
+      "id": "INDDS-033",
+      "name": "Lafarge Cement",
+      "location": "Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Cement",
+      "established": "1990s",
+      "description": "Cement manufacturing"
+    },
+    {
+      "id": "INDDS-034",
+      "name": "Rishi Cement Ltd.",
+      "location": "Ramgarh",
+      "type": "Medium Industry",
+      "sector": "Cement",
+      "established": "2000s",
+      "description": "Cement production"
+    },
+    {
+      "id": "INDDS-035",
+      "name": "JP Cement",
+      "location": "Bokaro",
+      "type": "Medium Industry",
+      "sector": "Cement",
+      "established": "2000s",
+      "description": "Cement manufacturing"
+    },
+    {
+      "id": "INDDS-036",
+      "name": "Bumpur Cement Ltd.",
+      "location": "Hazaribagh",
+      "type": "Medium Industry",
+      "sector": "Cement",
+      "established": "2000s",
+      "description": "Cement production"
+    },
+    {
+      "id": "INDDS-037",
+      "name": "Jupitar Cement Industries",
+      "location": "Hazaribagh",
+      "type": "Medium Industry",
+      "sector": "Cement",
+      "established": "2000s",
+      "description": "Cement manufacturing"
+    },
+    {
+      "id": "INDDS-038",
+      "name": "Rajrappa Steel Pvt. Ltd. (Cement Div.)",
+      "location": "Hazaribagh",
+      "type": "Medium Industry",
+      "sector": "Cement",
+      "established": "2000s",
+      "description": "Cement division"
+    },
+    {
+      "id": "INDDS-039",
+      "name": "Chandrapura Thermal Power Station",
+      "location": "Bokaro",
+      "type": "Large Industry (PSU)",
+      "sector": "Power Generation",
+      "established": "1960s",
+      "description": "Coal-based thermal power plant"
+    },
+    {
+      "id": "INDDS-040",
+      "name": "Patratu Thermal Power Station",
+      "location": "Ramgarh",
+      "type": "Large Industry (PSU)",
+      "sector": "Power Generation",
+      "established": "1960s",
+      "description": "Coal-based thermal power plant"
+    },
+    {
+      "id": "INDDS-041",
+      "name": "Damodar Valley Corporation (DVC)",
+      "location": "Multiple locations",
+      "type": "Large Industry (PSU)",
+      "sector": "Power Generation",
+      "established": "1948",
+      "description": "Hydro and thermal power generation"
+    },
+    {
+      "id": "INDDS-042",
+      "name": "Heavy Engineering Corporation (HEC)",
+      "location": "Ranchi (Dhurwa)",
+      "type": "Large Industry (PSU)",
+      "sector": "Heavy Engineering",
+      "established": "1958",
+      "description": "Integrated foundry, forge, fabrication for steel, mining, railways, defence, space"
+    },
+    {
+      "id": "INDDS-043",
+      "name": "MECON Limited",
+      "location": "Ranchi",
+      "type": "Large Industry (PSU)",
+      "sector": "Engineering Consultancy",
+      "established": "1973",
+      "description": "Steel, mining, infrastructure engineering consultancy"
+    },
+    {
+      "id": "INDDS-044",
+      "name": "CMPDI (Central Mine Planning & Design Institute)",
+      "location": "Ranchi",
+      "type": "Large Industry (PSU)",
+      "sector": "Mining Consultancy",
+      "established": "1975",
+      "description": "Mine planning and design for coal sector"
+    },
+    {
+      "id": "INDDS-045",
+      "name": "Indian Explosive Limited",
+      "location": "Gomia (Bokaro)",
+      "type": "Large Industry",
+      "sector": "Explosives",
+      "established": "1960s",
+      "description": "Industrial explosives for mining"
+    },
+    {
+      "id": "INDDS-046",
+      "name": "BOC Gases",
+      "location": "Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Industrial Gases",
+      "established": "1940s",
+      "description": "Industrial and medical gases"
+    },
+    {
+      "id": "INDDS-047",
+      "name": "Praxair",
+      "location": "Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Industrial Gases",
+      "established": "1990s",
+      "description": "Industrial gases and services"
+    },
+    {
+      "id": "INDDS-048",
+      "name": "Hindustan Coca-Cola Beverages",
+      "location": "Multiple locations",
+      "type": "Large Industry",
+      "sector": "Beverages",
+      "established": "1990s",
+      "description": "Bottling and distribution"
+    },
+    {
+      "id": "INDDS-049",
+      "name": "Osam Dairy (acquired by Dodla Dairy)",
+      "location": "Ranchi",
+      "type": "Startup (Acquired)",
+      "sector": "Dairy/Food Processing",
+      "established": "2012",
+      "description": "Milk processing; acquired 2025 for ~Rs 225 Cr revenue"
+    },
+    {
+      "id": "INDDS-050",
+      "name": "Puresh Daily",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "Dairy",
+      "established": "2018",
+      "description": "Fresh milk subscription service across Ranchi, Ramgarh, Bokaro"
+    },
+    {
+      "id": "INDDS-051",
+      "name": "JHARCRAFT (JSLPS - Palash)",
+      "location": "State-wide",
+      "type": "Govt Initiative",
+      "sector": "Tribal Produce, Handicrafts",
+      "established": "2020",
+      "description": "Umbrella brand for rural/tribal women SHG products (29+ categories)"
+    },
+    {
+      "id": "INDDS-052",
+      "name": "Grid (Pragyaam Data Technologies)",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "SaaS (Industrial Data)",
+      "established": "2018",
+      "description": "B2B data-management platform for mining, manufacturing, infrastructure; raised ~$3.5M"
+    },
+    {
+      "id": "INDDS-053",
+      "name": "SafEarth Clean Technologies",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "Cleantech (Solar)",
+      "established": "2017",
+      "description": "Industrial solar procurement, financing, project management, O&M platform"
+    },
+    {
+      "id": "INDDS-054",
+      "name": "1Stay Technology",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "Proptech",
+      "established": "2019",
+      "description": "Long-term rental/stay accommodation platform; featured in Rising 25 startups"
+    },
+    {
+      "id": "INDDS-055",
+      "name": "Bulk Mockup",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "SaaS (E-commerce)",
+      "established": "2020",
+      "description": "Print-on-demand mockup automation tool; Rising 25 startup"
+    },
+    {
+      "id": "INDDS-056",
+      "name": "Bevendee (Surya Bharti Electronics)",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "D2C/E-commerce",
+      "established": "2019",
+      "description": "Consumer products brand"
+    },
+    {
+      "id": "INDDS-057",
+      "name": "LogicLens",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "Analytics/SaaS",
+      "established": "2020",
+      "description": "Eureka! 2025 finalist"
+    },
+    {
+      "id": "INDDS-058",
+      "name": "Natureship",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "Sustainability/Cleantech",
+      "established": "2021",
+      "description": "Eureka! 2025 finalist"
+    },
+    {
+      "id": "INDDS-059",
+      "name": "Roxonic Private Limited",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "Electronics/IoT",
+      "established": "2020",
+      "description": "Electronics and IoT solutions"
+    },
+    {
+      "id": "INDDS-060",
+      "name": "Hirenex HR Solutions",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "HR Tech",
+      "established": "2019",
+      "description": "HR and recruitment solutions"
+    },
+    {
+      "id": "INDDS-061",
+      "name": "Srijan Handicrafts",
+      "location": "Ranchi",
+      "type": "Startup",
+      "sector": "Handicrafts",
+      "established": "2010s",
+      "description": "Tribal art dolls (clay, sawdust, cloth) by Shobha Kumari"
+    },
+    {
+      "id": "INDDS-062",
+      "name": "Pipal Tree",
+      "location": "Jharkhand (HQ elsewhere)",
+      "type": "Social Enterprise",
+      "sector": "Handicrafts/Livelihood",
+      "established": "2016",
+      "description": "Empowers tribal women through craft-based livelihoods"
+    },
+    {
+      "id": "INDDS-063",
+      "name": "Steel, Power & Cement Cluster",
+      "location": "Saraikela-Kharsawan",
+      "type": "Industrial Cluster",
+      "sector": "Multi-sector",
+      "established": "2020s",
+      "description": "Integrated industrial zone for steel, power, cement"
+    },
+    {
+      "id": "INDDS-064",
+      "name": "Mining & Mineral Belt",
+      "location": "Dhanbad, Bokaro, Giridih, Singhbhum",
+      "type": "Industrial Region",
+      "sector": "Mining",
+      "established": "1900s",
+      "description": "Coal, iron ore, bauxite, uranium mining hub"
+    },
+    {
+      "id": "INDDS-065",
+      "name": "Automotive Hub",
+      "location": "Jamshedpur",
+      "type": "Industrial Cluster",
+      "sector": "Automotive",
+      "established": "1950s",
+      "description": "Tata Motors, auto components, engineering"
+    },
+    {
+      "id": "INDDS-066",
+      "name": "IT Park",
+      "location": "Ranchi",
+      "type": "Tech Park",
+      "sector": "IT/ITES, AI",
+      "established": "2010s",
+      "description": "IT/ITES hub; proposed AI innovation centre under AI Policy 2026"
+    },
+    {
+      "id": "INDDS-067",
+      "name": "J-Hub Incubation Centre",
+      "location": "Ranchi",
+      "type": "Incubator",
+      "sector": "Startup Support",
+      "established": "2026 (Proposed)",
+      "description": "State incubation centre for mentorship, funding, industry linkages"
+    }
+  ],
+  "jharkhandNgoFunders": [
+    {
+      "id": "NGOF-01",
+      "name": "PRADAN (Professional Assistance for Development Action)",
+      "focusAreas": [
+        "Livelihood promotion",
+        "Women's Self-Help Groups",
+        "Agriculture & natural resource management"
+      ],
+      "fundingType": "Grants + on-ground implementation support",
+      "presence": "Multi-district, strong presence across rural Jharkhand",
+      "notes": "One of the most established rural livelihood NGOs operating in Jharkhand; works closely with SHGs of women."
+    },
+    {
+      "id": "NGOF-02",
+      "name": "Nav Bharat Jagriti Kendra (NBJK)",
+      "focusAreas": [
+        "Education",
+        "Healthcare",
+        "Livelihood",
+        "Rural development"
+      ],
+      "fundingType": "Grants + CSR-partnered project implementation",
+      "presence": "Hazaribagh and surrounding districts",
+      "notes": "Long-running grassroots development organisation active in education and health projects."
+    },
+    {
+      "id": "NGOF-03",
+      "name": "Gram Vikas Kendra",
+      "focusAreas": [
+        "Rural development",
+        "Education",
+        "Healthcare"
+      ],
+      "fundingType": "Grants",
+      "presence": "Jharkhand-wide",
+      "notes": "Community-based rural development NGO."
+    },
+    {
+      "id": "NGOF-04",
+      "name": "Vikas Bharti Bishunpur",
+      "focusAreas": [
+        "Education",
+        "Health",
+        "Agriculture",
+        "Tribal welfare"
+      ],
+      "fundingType": "Grants + government scheme convergence",
+      "presence": "Gumla district",
+      "notes": "Well-known Gumla-based NGO working on integrated tribal development."
+    },
+    {
+      "id": "NGOF-05",
+      "name": "LEADS (Life Education and Development Support)",
+      "focusAreas": [
+        "Education",
+        "Empowerment of rural & urban-slum poor"
+      ],
+      "fundingType": "Grants, FCRA-registered (can receive foreign funding)",
+      "presence": "Rural areas and urban slums across Jharkhand",
+      "notes": "Trust with full legal/FCRA registration, active in education and empowerment programmes."
+    },
+    {
+      "id": "NGOF-06",
+      "name": "Society for Upliftment of People with People's Organization & Rural Technology (SUPPORT)",
+      "focusAreas": [
+        "Rural technology",
+        "Skill-building",
+        "Health & education",
+        "Self-governance"
+      ],
+      "fundingType": "Grants + technology-transfer support",
+      "presence": "Jharkhand-wide",
+      "notes": "Focuses on rural technology and building self-governing community institutions."
+    },
+    {
+      "id": "NGOF-07",
+      "name": "Integrated Livelihood Development Center (ILDC)",
+      "focusAreas": [
+        "Unemployment",
+        "Rural-urban migration",
+        "Livelihood generation"
+      ],
+      "fundingType": "Grants + skill-training programmes",
+      "presence": "Jharkhand-wide",
+      "notes": "Community-led livelihood and employment-focused NGO."
+    },
+    {
+      "id": "NGOF-08",
+      "name": "Tata Steel Rural Development Society / Tata Steel Foundation",
+      "focusAreas": [
+        "Tribal welfare",
+        "Rural livelihoods",
+        "Health",
+        "Education"
+      ],
+      "fundingType": "Large-scale CSR grants, government MoU partnerships",
+      "presence": "Jamshedpur, Gumla, and wider Jharkhand",
+      "notes": "CSR foundation arm of Tata Steel; has run conservation-cum-development plans with the state government and MoUs with Jharkhand State Livelihood Promotion Society. Distinct funding entity from Tata Steel the industry (already listed separately)."
+    },
+    {
+      "id": "NGOF-09",
+      "name": "Jharkhand State Livelihood Promotion Society (JSLPS)",
+      "focusAreas": [
+        "Women's SHGs",
+        "Rural livelihoods",
+        "Tribal produce & handicrafts (via JHARCRAFT)"
+      ],
+      "fundingType": "Government-backed livelihood mission funding",
+      "presence": "State-wide",
+      "notes": "State government livelihoods mission; runs the JHARCRAFT umbrella brand already listed in the industries dataset."
+    }
+  ]
+}

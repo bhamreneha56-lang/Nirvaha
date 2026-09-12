@@ -23,17 +23,24 @@ export const createProblem = async (req: Request, res: Response) => {
       submittedBy: userId || null
     });
 
+    // If duplicateOf provided, increment original problem's validationCount
+    if (data.duplicateOf) {
+      await Problem.findOneAndUpdate(
+        { problemIdReadable: data.duplicateOf },
+        { $inc: { validationCount: 1 } }
+      );
+    }
+
     await StatusHistory.create({
       problem: problem._id,
       changedBy: userId || null,
       fromStatus: null,
       toStatus: 'submitted',
-      note: 'Initial submission'
+      note: data.duplicateOf ? `Reported as duplicate of ${data.duplicateOf}` : 'Initial submission'
     });
 
     if (userId) {
       await User.findByIdAndUpdate(userId, { $inc: { karmaTotal: 10 } });
-      // Would also add a KarmaLedgerEntry here in a full implementation
     }
 
     res.status(201).json(problem);
@@ -120,6 +127,15 @@ export const updateProblemStatus = async (req: Request, res: Response) => {
     });
 
     res.json(problem);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+export const getAllProblems = async (req: Request, res: Response) => {
+  try {
+    const problems = await Problem.find().sort({ createdAt: -1 });
+    res.json(problems);
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }

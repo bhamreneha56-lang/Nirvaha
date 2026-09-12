@@ -99,3 +99,34 @@ export const getMyKarma = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+export const getDemoAnalytics = async (req: Request, res: Response) => {
+  try {
+    const neha = await User.findOne({ name: 'Neha Dilip Bhamare' });
+    if (!neha) return res.status(404).json({ error: 'User not found' });
+    
+    const validations = await KarmaLedgerEntry.countDocuments({ user: neha._id, reason: 'Validated a problem' });
+    const ledger = await KarmaLedgerEntry.find({ user: neha._id }).sort({ createdAt: -1 }).limit(10);
+    res.json({ karmaTotal: neha.karmaTotal, validations, ledger });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+export const getCitizenStats = async (req: Request, res: Response) => {
+  try {
+    const total = await Problem.countDocuments();
+    const underReview = await Problem.countDocuments({ status: { $in: ['submitted', 'verified'] } });
+    const inProgress = await Problem.countDocuments({ status: { $in: ['assigned', 'in_progress'] } });
+    const resolved = await Problem.countDocuments({ status: { $in: ['deployed', 'closed'] } });
+    
+    res.json({
+      myChallenges: total,
+      underReview,
+      inProgress,
+      resolved
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};

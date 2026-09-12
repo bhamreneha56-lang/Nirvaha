@@ -1,345 +1,1212 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import SidebarLayout from '../shared/SidebarLayout';
 import { AppContext } from '../../context/AppContext';
+import ReportChallengeWizard from './components/ReportChallengeWizard';
+import ChallengeJourney from './components/ChallengeJourney';
+import CitizenChallengesMap from './components/CitizenChallengesMap';
+import AIChatbot from './components/AIChatbot';
+import { useAuth } from '../../context/AuthContext';
+import { problems, getPriorityColor } from '../university/mockData';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 
-export default function CitizenDashboard() {
-  const { state, dispatch } = useContext(AppContext);
-  const [activeTab, setActiveTab] = useState('dashboard'); // sidebar active tab
-  const [tab, setTab] = useState('new'); // inner tab
-  
-  const [form, setForm] = useState({ title: '', description: '' });
-  const [submitting, setSubmitting] = useState(false);
-  const [isListening, setIsListening] = useState(false);
 
-  const handleListen = () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Your browser doesn't support voice recognition. Try Chrome or Edge.");
-      return;
-    }
-    
-    if (isListening) return; // Prevent multiple instances
+const PersonalImpactAnalytics = () => {
+  const [analytics, setAnalytics] = useState({ validations: 14, karmaTotal: 450, ledger: [] });
+  const [loading, setLoading] = useState(true);
 
-    const recognition = new SpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = 'en-IN'; // Works great for Hinglish too
-
-    recognition.onstart = () => setIsListening(true);
-    
-    recognition.onresult = (event) => {
-      let currentTranscript = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        currentTranscript += event.results[i][0].transcript;
-      }
-      // Update form description with the recognized text
-      setForm(prev => ({ ...prev, description: currentTranscript }));
-    };
-
-    recognition.onerror = (event) => {
-      console.error(event.error);
-      setIsListening(false);
-    };
-
-    recognition.onend = () => setIsListening(false);
-
-    recognition.start();
-    
-    // Auto stop after 10 seconds of listening for demo purposes
-    setTimeout(() => {
-      recognition.stop();
-    }, 10000);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!form.title) return;
-    setSubmitting(true);
-    try {
-      // Use mock API from our api-client
-      const { fetchApi } = await import('../../shared/api-client');
-      const data = await fetchApi('/problems', {
-        method: 'POST',
-        body: JSON.stringify({
-          ...form,
-          submitterDetails: { name: 'Suresh Munda', type: 'Citizen' },
-          district: 'Ranchi',
-        })
+  useEffect(() => {
+    fetch('http://localhost:5000/api/analytics/demo')
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data.validations !== 'undefined') {
+          setAnalytics(data);
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("API error:", err);
+        setLoading(false);
       });
-      dispatch({ type: 'ADD_PROBLEM', problem: data });
-      setForm({ title: '', description: '' });
-      setTab('history');
-    } catch (err) {
-      console.error(err);
-    }
-    setSubmitting(false);
-  };
+  }, []);
 
-  const renderContent = () => {
-    if (activeTab === 'challenges') {
-      return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Community Challenges Map</h2>
-          <div className="grid grid-cols-3 gap-6">
-            <div className="col-span-2 bg-slate-100 rounded-xl border border-slate-200 h-96 flex items-center justify-center relative overflow-hidden">
-               <div className="absolute inset-0 opacity-[0.05]" style={{backgroundImage: 'radial-gradient(circle at center, black 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
-               <div className="text-6xl absolute z-10">🗺️</div>
+  const leaderboard = [
+    { rank: 1, name: "Rahul Verma", karma: 1250, badge: "🥇 Civic Hero" },
+    { rank: 2, name: "Sneha Kumari", karma: 1120, badge: "🥈 Top Verifier" },
+    { rank: 3, name: "Neha Dilip Bhamare (You)", karma: 450, badge: "🥉 Active Citizen" },
+    { rank: 4, name: "Arif Khan", karma: 390, badge: "🌟 Contributor" },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+        <h2 className="text-2xl font-bold text-slate-900 mb-6">Impact & Karma Rewards</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200 shadow-sm relative overflow-hidden">
+            <div className="absolute right-0 top-0 text-9xl opacity-10 translate-x-4 -translate-y-4">🏆</div>
+            <div className="text-5xl font-black text-orange-600 mb-2">{loading ? '...' : analytics.karmaTotal}</div>
+            <div className="text-sm font-bold text-orange-800 uppercase tracking-wider">Total Karma Points</div>
+            <button className="mt-4 bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold px-4 py-2 rounded-lg shadow-md transition-all">Redeem Rewards</button>
+          </div>
+          <div className="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200 shadow-sm relative overflow-hidden">
+            <div className="absolute right-0 top-0 text-9xl opacity-10 translate-x-4 -translate-y-4">✅</div>
+            <div className="text-5xl font-black text-green-600 mb-2">{loading ? '...' : analytics.validations}</div>
+            <div className="text-sm font-bold text-green-800 uppercase tracking-wider">Community Validations</div>
+            <div className="mt-4 text-xs font-medium text-green-700 bg-green-200/50 inline-block px-3 py-1 rounded-full border border-green-300">Top 15% in your District</div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">⭐ Local Leaderboard</h3>
+            <div className="space-y-3">
+              {leaderboard.map((user) => (
+                <div key={user.rank} className={`flex items-center justify-between p-3 rounded-lg border ${user.name.includes('(You)') ? 'bg-orange-50 border-orange-200 shadow-sm' : 'bg-slate-50 border-slate-100'}`}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">#{user.rank}</div>
+                    <div>
+                      <div className="font-bold text-slate-800 text-sm">{user.name}</div>
+                      <div className="text-xs text-slate-500 font-medium">{user.badge}</div>
+                    </div>
+                  </div>
+                  <div className="font-black text-orange-600">{user.karma} <span className="text-[10px] text-orange-400">KP</span></div>
+                </div>
+              ))}
             </div>
-            <div className="space-y-4">
-              <h3 className="font-bold text-slate-700">Nearby Issues</h3>
-              <div className="p-4 border border-slate-100 rounded-lg bg-slate-50">
-                <div className="text-sm font-bold text-slate-800">Water pipeline burst</div>
-                <div className="text-xs text-slate-500 mt-1">Sector 2 • High Priority</div>
-              </div>
-              <div className="p-4 border border-slate-100 rounded-lg bg-slate-50">
-                <div className="text-sm font-bold text-slate-800">Streetlights non-functional</div>
-                <div className="text-xs text-slate-500 mt-1">Main Road • Medium Priority</div>
-              </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">📜 Karma Ledger</h3>
+            <div className="overflow-x-auto bg-slate-50 rounded-xl border border-slate-100 p-4 h-64 overflow-y-auto">
+              <table className="w-full text-left border-collapse">
+                <tbody className="text-sm">
+                  {loading ? (
+                    <tr><td className="py-4 text-center text-slate-500">Loading database...</td></tr>
+                  ) : analytics.ledger && analytics.ledger.length > 0 ? (
+                    analytics.ledger.map((entry, idx) => (
+                      <tr key={idx} className="border-b border-slate-200/60 last:border-0">
+                        <td className="py-3 text-slate-500 text-xs w-24">{new Date(entry.createdAt || Date.now()).toLocaleDateString()}</td>
+                        <td className="py-3 font-medium text-slate-700">{entry.reason}</td>
+                        <td className="py-3 text-right font-bold text-green-600">+{entry.points}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr><td className="py-4 text-center text-slate-500">No records found.</td></tr>
+                  )}
+                  {/* Mock Data to make ledger look good if empty */}
+                  {!loading && (!analytics.ledger || analytics.ledger.length === 0) && (
+                    <>
+                      <tr className="border-b border-slate-200/60"><td className="py-3 text-slate-500 text-xs">Today</td><td className="py-3 font-medium text-slate-700">Voted on local issue</td><td className="py-3 text-right font-bold text-green-600">+10</td></tr>
+                      <tr className="border-b border-slate-200/60"><td className="py-3 text-slate-500 text-xs">Yesterday</td><td className="py-3 font-medium text-slate-700">Verified nearby problem</td><td className="py-3 text-right font-bold text-green-600">+25</td></tr>
+                      <tr className="border-b border-slate-200/60"><td className="py-3 text-slate-500 text-xs">10 Sep</td><td className="py-3 font-medium text-slate-700">Reported a new challenge</td><td className="py-3 text-right font-bold text-green-600">+50</td></tr>
+                    </>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      );
+      </div>
+    </div>
+  );
+};
+
+const CitizenChallengesView = () => {
+  const [search, setSearch] = useState("");
+  const [domain, setDomain] = useState("All");
+  const [priority, setPriority] = useState("All");
+
+  const DOMAINS = ["All", ...Array.from(new Set(problems.map(p => p.domain)))];
+  const PRIORITIES = ["All", "Critical", "High", "Medium", "Low"];
+
+  const filtered = problems.filter(p => {
+    if (search && !p.title.toLowerCase().includes(search.toLowerCase()) && !p.id.toLowerCase().includes(search.toLowerCase())) return false;
+    if (domain !== "All" && p.domain !== domain) return false;
+    if (priority !== "All" && p.priority !== priority) return false;
+    return true;
+  });
+
+  return (
+    <div className="space-y-8">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+        <h2 className="text-2xl font-bold text-slate-900 mb-6">Community Challenges Map</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 rounded-xl border border-slate-200 h-96 overflow-hidden">
+             <CitizenChallengesMap problems={filtered} />
+          </div>
+          <div className="space-y-4 overflow-y-auto h-96 pr-2">
+            <h3 className="font-bold text-slate-700 sticky top-0 bg-white py-2 z-10">Highlighted Issues</h3>
+            {filtered.slice(0, 5).map(p => (
+              <div key={p.id} className="p-4 border border-slate-100 rounded-lg bg-slate-50 hover:border-orange-200 transition-all cursor-pointer">
+                <div className="text-sm font-bold text-slate-800">{p.title}</div>
+                <div className="text-xs text-slate-500 mt-1">{p.district} • <span className={getPriorityColor(p.priority).split(' ')[1] || 'text-slate-600'}>{p.priority} Priority</span></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+          <h2 className="text-xl font-bold text-slate-900">All Reported Challenges</h2>
+          <div className="flex flex-wrap gap-3 items-center">
+            <input type="text" placeholder="Search issues..." value={search} onChange={e => setSearch(e.target.value)}
+              className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-300" />
+            <select value={domain} onChange={e => setDomain(e.target.value)} className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white outline-none">
+              {DOMAINS.map(d => <option key={d} value={d}>{d === 'All' ? 'All Domains' : d}</option>)}
+            </select>
+            <select value={priority} onChange={e => setPriority(e.target.value)} className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white outline-none">
+              {PRIORITIES.map(p => <option key={p} value={p}>{p === 'All' ? 'All Priorities' : p}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-slate-200 text-slate-500">
+                <th className="pb-3 font-semibold px-4">Problem ID</th>
+                <th className="pb-3 font-semibold px-4">Title & Location</th>
+                <th className="pb-3 font-semibold px-4">Domain</th>
+                <th className="pb-3 font-semibold px-4">Priority</th>
+                <th className="pb-3 font-semibold px-4">Status</th>
+                <th className="pb-3 font-semibold px-4">Posted Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map(p => (
+                <tr key={p.id} className="border-b border-slate-100 hover:bg-orange-50/30 transition-colors cursor-pointer">
+                  <td className="py-4 px-4 font-mono text-xs text-slate-500 font-semibold whitespace-nowrap">{p.id}</td>
+                  <td className="py-4 px-4">
+                    <p className="font-semibold text-slate-800 max-w-xs truncate">{p.title}</p>
+                    <p className="text-xs text-slate-400 mt-1">{p.district}</p>
+                  </td>
+                  <td className="py-4 px-4">
+                    <span className="text-xs bg-slate-100 text-slate-700 rounded-full px-2 py-1 whitespace-nowrap">{p.domain}</span>
+                  </td>
+                  <td className="py-4 px-4">
+                    <span className={`text-xs px-2 py-1 rounded-full border font-semibold whitespace-nowrap ${getPriorityColor(p.priority)}`}>{p.priority}</span>
+                  </td>
+                  <td className="py-4 px-4">
+                    <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2 py-1 whitespace-nowrap">{p.status}</span>
+                  </td>
+                  <td className="py-4 px-4 text-xs text-slate-500 whitespace-nowrap">{p.postedDate}</td>
+                </tr>
+              ))}
+              {filtered.length === 0 && (
+                <tr>
+                  <td colSpan="6" className="py-8 text-center text-slate-400 font-medium">No challenges found matching your filters.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CitizenVoteView = () => {
+  const [votes, setVotes] = useState(
+    problems.reduce((acc, p) => ({ ...acc, [p.id]: p.communityConfirmations || 0 }), {})
+  );
+  const [votedFor, setVotedFor] = useState({});
+
+  const handleVote = (id) => {
+    if (votedFor[id]) {
+      setVotes(prev => ({ ...prev, [id]: prev[id] - 1 }));
+      setVotedFor(prev => ({ ...prev, [id]: false }));
+    } else {
+      setVotes(prev => ({ ...prev, [id]: prev[id] + 1 }));
+      setVotedFor(prev => ({ ...prev, [id]: true }));
     }
-    
+  };
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-slate-900">Vote on Community Problems</h2>
+        <p className="text-slate-500 mt-2">Your votes help the government prioritize which challenges need immediate attention and funding.</p>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {problems.map(p => (
+          <div key={p.id} className={`border rounded-xl p-5 flex flex-col justify-between transition-all duration-300 ${votedFor[p.id] ? 'border-orange-500 shadow-md bg-orange-50/30' : 'border-slate-200 bg-white hover:shadow-md'}`}>
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getPriorityColor(p.priority)}`}>
+                  {p.priority} Priority
+                </span>
+                <span className="text-xs text-slate-400 font-medium">{p.district}</span>
+              </div>
+              <h3 className="font-bold text-slate-800 text-lg leading-tight mb-2">{p.title}</h3>
+              <p className="text-sm text-slate-600 line-clamp-3 mb-4">{p.description}</p>
+            </div>
+            
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div className="flex flex-col">
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">Total Votes</span>
+                <span className={`text-xl font-black ${votedFor[p.id] ? 'text-orange-600' : 'text-slate-700'}`}>
+                  {votes[p.id]?.toLocaleString() || 0}
+                </span>
+              </div>
+              <button 
+                onClick={() => handleVote(p.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all ${votedFor[p.id] ? 'bg-orange-100 text-orange-700 hover:bg-orange-200' : 'bg-slate-900 text-white hover:bg-black'}`}
+              >
+                {votedFor[p.id] ? (
+                  <><span>✅</span> Voted</>
+                ) : (
+                  <><span>👍</span> Upvote</>
+                )}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const CitizenVolunteerView = () => {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
+      <h2 className="text-2xl font-bold text-slate-900 mb-2">Volunteer for Ongoing Projects</h2>
+      <p className="text-slate-500 mb-8">Join hands with universities and industry partners to help solve community problems.</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="border border-slate-200 rounded-xl p-5 hover:border-orange-300 transition-colors bg-orange-50/20">
+          <div className="text-[10px] font-bold uppercase tracking-wider bg-orange-100 text-orange-800 px-2 py-1 rounded-md w-fit mb-3">Data Collection</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-2">Rural Road Erosion Mapping</h3>
+          <p className="text-sm text-slate-600 mb-4">University team needs 5 local volunteers to help capture photos and measure road damage in Giridih district after the recent monsoons.</p>
+          <div className="flex justify-between items-center pt-4 border-t border-slate-100">
+            <span className="text-xs text-slate-500 font-medium">📍 Giridih • BIT Mesra</span>
+            <button className="bg-slate-900 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-black">Sign Up</button>
+          </div>
+        </div>
+        <div className="border border-slate-200 rounded-xl p-5 hover:border-blue-300 transition-colors bg-blue-50/20">
+          <div className="text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 px-2 py-1 rounded-md w-fit mb-3">Community Outreach</div>
+          <h3 className="font-bold text-slate-900 text-lg mb-2">Digital Literacy for Teachers</h3>
+          <p className="text-sm text-slate-600 mb-4">Looking for tech-savvy citizens to assist in a weekend training workshop for government school teachers in Dumka.</p>
+          <div className="flex justify-between items-center pt-4 border-t border-slate-100">
+            <span className="text-xs text-slate-500 font-medium">📍 Dumka • JUT Ranchi</span>
+            <button className="bg-slate-900 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-black">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+const StoryCard = ({ story }) => {
+  const [liked, setLiked] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [likeCount, setLikeCount] = useState(story.likes);
+
+  const handleLike = () => {
+    setLiked((v) => {
+      setLikeCount((c) => v ? c - 1 : c + 1);
+      return !v;
+    });
+  };
+
+  return (
+    <div className="border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white flex flex-col group">
+      {/* Before / After reveal */}
+      <div className="h-52 flex relative overflow-hidden">
+        {/* Before panel */}
+        <div className="flex-1 relative overflow-hidden group-hover:flex-[0.45] transition-all duration-500 ease-in-out">
+          <div className="absolute inset-0 bg-red-900/30 mix-blend-multiply z-10" />
+          <img src={story.beforeImg} alt="Before" className="w-full h-full object-cover grayscale saturate-50" />
+          <span className="absolute bottom-3 left-3 z-20 bg-black/70 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded backdrop-blur-sm">Before</span>
+        </div>
+        {/* Divider line */}
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 group-hover:left-[30%] z-30 transition-all duration-500 flex items-center pointer-events-none">
+          <div className="w-0.5 h-full bg-white/80 shadow-lg" />
+          <div className="absolute w-7 h-7 rounded-full bg-white shadow-xl flex items-center justify-center text-slate-700 text-[10px] font-black border border-slate-200">
+            ↔
+          </div>
+        </div>
+        {/* After panel */}
+        <div className="flex-1 relative overflow-hidden group-hover:flex-[1.55] transition-all duration-500 ease-in-out">
+          <div className="absolute inset-0 bg-emerald-900/10 mix-blend-overlay z-10" />
+          <img src={story.afterImg} alt="After" className="w-full h-full object-cover" />
+          <span className="absolute bottom-3 right-3 z-20 bg-emerald-500/95 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded backdrop-blur-sm">After</span>
+        </div>
+        {/* Partner badge */}
+        <div className="absolute top-3 right-3 z-30 bg-white/90 backdrop-blur-sm border border-slate-200 rounded-lg px-2.5 py-1 text-[10px] font-bold text-slate-700 shadow-sm">
+          🤝 {story.partner}
+        </div>
+      </div>
+
+      {/* Card body */}
+      <div className="p-5 flex flex-col flex-1">
+        {/* Domain + date */}
+        <div className="flex items-center gap-2 mb-3">
+          <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full ${story.domainColor}`}>
+            {story.domain}
+          </span>
+          <span className="text-xs font-semibold text-slate-400">✅ Resolved {story.resolvedDate}</span>
+        </div>
+
+        {/* Title */}
+        <h4 className="font-black text-slate-900 text-lg mb-2 leading-snug group-hover:text-orange-700 transition-colors">
+          {story.title}
+        </h4>
+
+        {/* Description */}
+        <p className="text-sm text-slate-600 leading-relaxed mb-4">{story.description}</p>
+
+        {/* Impact metrics strip */}
+        <div className="grid grid-cols-3 gap-2 mb-4">
+          {story.metrics.map((m) => (
+            <div key={m.label} className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 text-center">
+              <div className="text-lg mb-0.5">{m.icon}</div>
+              <div className="font-black text-slate-900 text-sm leading-none">{m.value}</div>
+              <div className="text-[9px] font-semibold text-slate-400 mt-0.5 leading-tight">{m.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Citizen quote */}
+        <blockquote className="border-l-3 border-orange-300 bg-orange-50/60 px-4 py-2.5 rounded-r-xl text-xs text-slate-600 italic font-medium mb-4 border-l-4">
+          {story.quote}
+        </blockquote>
+
+        {/* Actions row */}
+        <div className="flex items-center gap-2 mt-auto pt-3 border-t border-slate-100">
+          <button
+            onClick={handleLike}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${
+              liked ? 'bg-rose-50 border-rose-200 text-rose-600' : 'border-slate-200 text-slate-500 hover:border-rose-200 hover:text-rose-500'
+            }`}
+          >
+            {liked ? '❤️' : '🤍'} {likeCount}
+          </button>
+          <button
+            onClick={() => setBookmarked((v) => !v)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${
+              bookmarked ? 'bg-amber-50 border-amber-200 text-amber-600' : 'border-slate-200 text-slate-500 hover:border-amber-200 hover:text-amber-500'
+            }`}
+          >
+            {bookmarked ? '🔖' : '📑'} {bookmarked ? 'Saved' : 'Save'}
+          </button>
+          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-200 text-slate-500 hover:border-blue-200 hover:text-blue-600 transition-all">
+            🔗 Share
+          </button>
+          <button className="ml-auto text-orange-600 font-bold text-xs hover:underline transition-all">
+            Read full story →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CitizenCommunityView = () => {
+  const [tab, setTab] = useState('forums');
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[600px]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div>
+          <h2 className="text-3xl font-black text-slate-900 mb-2">Community Hub</h2>
+          <p className="text-slate-500 font-medium">Discuss ideas, participate in decisions, and celebrate local wins.</p>
+        </div>
+        {tab === 'forums' && (
+          <button className="bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md shadow-orange-500/20 transition-all flex items-center gap-2">
+            <span>+</span> New Topic
+          </button>
+        )}
+      </div>
+
+      <div className="flex border-b border-slate-200 gap-8 mb-8 overflow-x-auto scrollbar-hide">
+        <button onClick={() => setTab('forums')} className={`pb-4 text-sm font-bold transition-all whitespace-nowrap ${tab === 'forums' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-slate-500 hover:text-slate-800'}`}>Discussion Forums</button>
+        <button onClick={() => setTab('surveys')} className={`pb-4 text-sm font-bold transition-all whitespace-nowrap ${tab === 'surveys' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-slate-500 hover:text-slate-800'}`}>Active Micro-Surveys</button>
+        <button onClick={() => setTab('success')} className={`pb-4 text-sm font-bold transition-all whitespace-nowrap ${tab === 'success' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-slate-500 hover:text-slate-800'}`}>Success Stories</button>
+      </div>
+
+      {tab === 'forums' && (
+        <div className="space-y-4">
+          {/* Forum Item 1 */}
+          <div className="border border-slate-100 rounded-2xl p-5 bg-white hover:border-orange-200 hover:shadow-md transition-all cursor-pointer group">
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-700">RV</div>
+                <div>
+                  <div className="font-bold text-slate-800 text-sm">Rahul Verma</div>
+                  <div className="text-xs text-slate-400">Ward 14 • 2 hours ago</div>
+                </div>
+              </div>
+              <span className="bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md">Sanitation</span>
+            </div>
+            <h4 className="font-bold text-slate-900 text-lg mb-2 group-hover:text-orange-600 transition-colors">Proposal for new waste segregation rules</h4>
+            <p className="text-sm text-slate-600 mb-4 line-clamp-2">Let's discuss if we want separate bins for dry/wet or a common sorting facility at the end of the street. The municipal corporation is asking for our input by next week.</p>
+            <div className="flex items-center gap-6 text-sm font-bold text-slate-500 pt-3 border-t border-slate-50">
+              <span className="flex items-center gap-1.5 hover:text-orange-600"><span className="text-lg">💬</span> 24 Replies</span>
+              <span className="flex items-center gap-1.5"><span className="text-lg">🔥</span> 15 Upvotes</span>
+              <span className="flex items-center gap-1.5"><span className="text-lg">👁️</span> 156 Views</span>
+            </div>
+          </div>
+
+          {/* Forum Item 2 */}
+          <div className="border border-slate-100 rounded-2xl p-5 bg-white hover:border-orange-200 hover:shadow-md transition-all cursor-pointer group">
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center font-bold text-purple-700">SK</div>
+                <div>
+                  <div className="font-bold text-slate-800 text-sm">Sneha Kumari</div>
+                  <div className="text-xs text-slate-400">Sector 2 • 1 day ago</div>
+                </div>
+              </div>
+              <span className="bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md">Infrastructure</span>
+            </div>
+            <h4 className="font-bold text-slate-900 text-lg mb-2 group-hover:text-orange-600 transition-colors">Safety concerns regarding the new highway crossing</h4>
+            <p className="text-sm text-slate-600 mb-4 line-clamp-2">The new crossing near the school lacks proper pedestrian signals. We should petition the authorities to install a foot overbridge before the monsoon starts.</p>
+            <div className="flex items-center gap-6 text-sm font-bold text-slate-500 pt-3 border-t border-slate-50">
+              <span className="flex items-center gap-1.5 hover:text-orange-600"><span className="text-lg">💬</span> 45 Replies</span>
+              <span className="flex items-center gap-1.5"><span className="text-lg">🔥</span> 89 Upvotes</span>
+              <span className="flex items-center gap-1.5"><span className="text-lg">👁️</span> 312 Views</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {tab === 'surveys' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="border border-orange-200 rounded-2xl p-6 bg-gradient-to-br from-orange-50 to-amber-50/50 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-20 text-6xl">📊</div>
+            <div className="relative z-10">
+              <div className="flex justify-between items-center mb-4">
+                <span className="bg-orange-200 text-orange-800 text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md">Closes in 2 days</span>
+                <span className="text-xs font-bold text-slate-500">75% Voted</span>
+              </div>
+              <h4 className="font-black text-slate-900 text-xl mb-3">Water Filter Placement</h4>
+              <p className="text-sm text-slate-600 font-medium mb-6">The university team has built the prototype. Where should the community water filter be placed?</p>
+              
+              <div className="space-y-3">
+                <label className="flex items-center gap-3 p-3 rounded-xl border border-orange-200 bg-white cursor-pointer hover:bg-orange-50/50 transition-colors">
+                  <input type="radio" name="survey1" className="w-5 h-5 accent-orange-600" />
+                  <span className="font-bold text-slate-700">Near Panchayat Bhawan</span>
+                </label>
+                <label className="flex items-center gap-3 p-3 rounded-xl border border-orange-200 bg-white cursor-pointer hover:bg-orange-50/50 transition-colors">
+                  <input type="radio" name="survey1" className="w-5 h-5 accent-orange-600" />
+                  <span className="font-bold text-slate-700">Next to Primary School</span>
+                </label>
+              </div>
+              <button className="w-full mt-6 bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-black transition-colors shadow-lg shadow-slate-900/20">Submit Vote</button>
+            </div>
+          </div>
+          
+          <div className="border border-blue-200 rounded-2xl p-6 bg-gradient-to-br from-blue-50 to-cyan-50/50 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-20 text-6xl">🚦</div>
+            <div className="relative z-10">
+              <div className="flex justify-between items-center mb-4">
+                <span className="bg-blue-200 text-blue-800 text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md">New</span>
+                <span className="text-xs font-bold text-slate-500">12% Voted</span>
+              </div>
+              <h4 className="font-black text-slate-900 text-xl mb-3">Traffic Calming Measures</h4>
+              <p className="text-sm text-slate-600 font-medium mb-6">Which solution do you prefer for reducing vehicle speed on Market Road?</p>
+              
+              <div className="space-y-3">
+                <label className="flex items-center gap-3 p-3 rounded-xl border border-blue-200 bg-white cursor-pointer hover:bg-blue-50/50 transition-colors">
+                  <input type="radio" name="survey2" className="w-5 h-5 accent-blue-600" />
+                  <span className="font-bold text-slate-700">Install Speed Breakers</span>
+                </label>
+                <label className="flex items-center gap-3 p-3 rounded-xl border border-blue-200 bg-white cursor-pointer hover:bg-blue-50/50 transition-colors">
+                  <input type="radio" name="survey2" className="w-5 h-5 accent-blue-600" />
+                  <span className="font-bold text-slate-700">Add Zebra Crossings</span>
+                </label>
+              </div>
+              <button className="w-full mt-6 bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-black transition-colors shadow-lg shadow-slate-900/20">Submit Vote</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {tab === 'success' && (() => {
+        const STORIES = [
+          {
+            id: 1,
+            domain: 'Water',
+            domainColor: 'bg-blue-100 text-blue-700',
+            resolvedDate: 'Dec 2025',
+            title: 'Smart Water Management in Hazaribagh',
+            description: 'Resolved a 3-year-long water leakage issue using low-cost IoT sensors developed by NIT Jamshedpur students. Real-time data reduced wastage by 62%.',
+            beforeImg: 'https://images.unsplash.com/photo-1541888081628-98e91848bb44?q=80&w=800&auto=format&fit=crop',
+            afterImg: 'https://images.unsplash.com/photo-1518174143717-b64bb9392cc1?q=80&w=800&auto=format&fit=crop',
+            partner: 'NIT Jamshedpur',
+            metrics: [
+              { label: 'Households Benefited', value: '2,400', icon: '🏠' },
+              { label: 'Water Saved / Month', value: '1.2M L', icon: '💧' },
+              { label: 'Resolution Time', value: '4 months', icon: '⏱️' },
+            ],
+            likes: 312,
+            quote: '"For the first time in 3 years, clean water runs all day." – Panchayat Head, Ward 5',
+          },
+          {
+            id: 2,
+            domain: 'Education',
+            domainColor: 'bg-purple-100 text-purple-700',
+            resolvedDate: 'Aug 2025',
+            title: 'Digital Literacy Labs in Dumka',
+            description: 'Deployed refurbished computers and educational software to 15 rural schools with the help of BIT Mesra volunteers. Student digital-skills scores tripled.',
+            beforeImg: 'https://images.unsplash.com/photo-1621415270104-5f56f4d54605?q=80&w=800&auto=format&fit=crop',
+            afterImg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop',
+            partner: 'BIT Mesra',
+            metrics: [
+              { label: 'Schools Upgraded', value: '15', icon: '🏫' },
+              { label: 'Students Impacted', value: '3,200', icon: '🎓' },
+              { label: 'Cost per Student', value: '₹180', icon: '💰' },
+            ],
+            likes: 218,
+            quote: '"Our kids now know things we never imagined." – Teacher, Dumka Govt School',
+          },
+          {
+            id: 3,
+            domain: 'Roads',
+            domainColor: 'bg-amber-100 text-amber-700',
+            resolvedDate: 'Oct 2025',
+            title: 'Polymer Pothole Sealing in Bokaro',
+            description: 'BIT Mesra Innovation Lab developed polymer-based sealant that outlasted traditional bitumen by 5x. 23 km of arterial roads restored permanently.',
+            beforeImg: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop',
+            afterImg: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop',
+            partner: 'BIT Mesra Innovation Lab',
+            metrics: [
+              { label: 'Road Restored', value: '23 km', icon: '🛣️' },
+              { label: 'Accident Reduction', value: '41%', icon: '⚠️' },
+              { label: 'Lifespan vs Bitumen', value: '5×', icon: '🔬' },
+            ],
+            likes: 189,
+            quote: '"Finally, roads that survive monsoon." – Commuter, Sector 4',
+          },
+          {
+            id: 4,
+            domain: 'Health',
+            domainColor: 'bg-rose-100 text-rose-700',
+            resolvedDate: 'Jun 2025',
+            title: 'Mobile TB Screening in Palamu',
+            description: 'AI-assisted portable X-ray units deployed in 8 remote blocks of Palamu. Early detection rate jumped to 89%, saving hundreds of lives annually.',
+            beforeImg: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=800&auto=format&fit=crop',
+            afterImg: 'https://images.unsplash.com/photo-1631217872822-4b3e0c482ffe?q=80&w=800&auto=format&fit=crop',
+            partner: 'AIIMS Patna + IIT Dhanbad',
+            metrics: [
+              { label: 'Blocks Covered', value: '8', icon: '📍' },
+              { label: 'Early Detection', value: '89%', icon: '🩺' },
+              { label: 'Patients Treated', value: '1,140', icon: '❤️‍🩹' },
+            ],
+            likes: 275,
+            quote: '"I was diagnosed early and fully cured. This unit saved my life." – Patient, Chainpur',
+          },
+        ];
+
+        return (
+          <div className="space-y-10">
+            {/* ── Hero Impact Banner ── */}
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 p-8 text-white shadow-xl">
+              <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #10b981 0%, transparent 60%), radial-gradient(circle at 80% 20%, #f97316 0%, transparent 50%)' }} />
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-emerald-400 text-xs font-black uppercase tracking-widest">Live Impact Dashboard</span>
+                  </div>
+                  <h3 className="text-2xl font-black mb-1">Jharkhand Citizens Changed the Story</h3>
+                  <p className="text-slate-400 text-sm font-medium">Every resolved challenge is a community victory. Here's what we've achieved together.</p>
+                </div>
+                <div className="grid grid-cols-3 gap-4 shrink-0">
+                  {[
+                    { val: '47', label: 'Issues Resolved', color: 'text-emerald-400' },
+                    { val: '1.2L+', label: 'People Impacted', color: 'text-amber-400' },
+                    { val: '₹3.8Cr', label: 'Value Generated', color: 'text-blue-400' },
+                  ].map((s) => (
+                    <div key={s.label} className="text-center bg-white/5 backdrop-blur-sm rounded-xl p-3 border border-white/10">
+                      <div className={`text-2xl font-black ${s.color}`}>{s.val}</div>
+                      <div className="text-[10px] text-slate-400 font-semibold mt-0.5 leading-tight">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* ── Story Cards Grid ── */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
+              {STORIES.map((story) => (
+                <StoryCard key={story.id} story={story} />
+              ))}
+            </div>
+
+            {/* ── Load More ── */}
+            <div className="text-center pt-2">
+              <button className="border border-slate-200 hover:border-orange-300 hover:bg-orange-50 text-slate-600 hover:text-orange-700 font-bold px-8 py-3 rounded-xl text-sm transition-all shadow-sm">
+                Load More Stories ↓
+              </button>
+              <p className="text-xs text-slate-400 mt-2 font-medium">Showing 4 of 47 resolved challenges</p>
+            </div>
+          </div>
+        );
+      })()}
+
+    </div>
+  );
+};
+
+const CitizenAlertsView = () => {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
+      <h2 className="text-2xl font-bold text-slate-900 mb-6">Local Alerts & Announcements</h2>
+      <div className="space-y-4">
+        <div className="border-l-4 border-red-500 bg-red-50 p-4 rounded-r-lg">
+          <div className="flex justify-between items-center mb-1">
+            <h4 className="font-bold text-red-900">Heavy Rainfall Warning (Red Alert)</h4>
+            <span className="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">Urgent</span>
+          </div>
+          <p className="text-sm text-red-800">Severe waterlogging expected in low-lying areas of Dhanbad. Municipal teams are on standby.</p>
+          <div className="text-xs text-red-600 mt-2 font-medium">Issued by IMD & District Administration • 1 hour ago</div>
+        </div>
+        <div className="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r-lg">
+          <div className="flex justify-between items-center mb-1">
+            <h4 className="font-bold text-blue-900">New Solar Scheme Enrolment</h4>
+            <span className="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">Info</span>
+          </div>
+          <p className="text-sm text-blue-800">Applications open for PM-KUSUM subsidized solar pumps for farmers in Hazaribagh.</p>
+          <div className="text-xs text-blue-600 mt-2 font-medium">Issued by JREDA • 1 day ago</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CitizenSettingsView = () => {
+  const [activeSettingsTab, setActiveSettingsTab] = useState('profile');
+  const { logout } = useAuth();
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm min-h-[600px] flex overflow-hidden">
+      {/* Settings Sidebar */}
+      <div className="w-64 bg-slate-50 border-r border-slate-200 p-6 flex flex-col gap-2">
+        <h2 className="text-lg font-black text-slate-900 mb-4 px-3">Settings</h2>
+        <button onClick={() => setActiveSettingsTab('profile')} className={`text-left px-4 py-2.5 rounded-lg font-bold text-sm transition-all ${activeSettingsTab === 'profile' ? 'bg-white shadow-sm border border-slate-200 text-orange-600' : 'text-slate-500 hover:bg-slate-100'}`}>👤 Profile & KYC</button>
+        <button onClick={() => setActiveSettingsTab('notifications')} className={`text-left px-4 py-2.5 rounded-lg font-bold text-sm transition-all ${activeSettingsTab === 'notifications' ? 'bg-white shadow-sm border border-slate-200 text-orange-600' : 'text-slate-500 hover:bg-slate-100'}`}>🔔 Notifications</button>
+        <button onClick={() => setActiveSettingsTab('location')} className={`text-left px-4 py-2.5 rounded-lg font-bold text-sm transition-all ${activeSettingsTab === 'location' ? 'bg-white shadow-sm border border-slate-200 text-orange-600' : 'text-slate-500 hover:bg-slate-100'}`}>📍 Location & Ward</button>
+        <button onClick={() => setActiveSettingsTab('privacy')} className={`text-left px-4 py-2.5 rounded-lg font-bold text-sm transition-all ${activeSettingsTab === 'privacy' ? 'bg-white shadow-sm border border-slate-200 text-orange-600' : 'text-slate-500 hover:bg-slate-100'}`}>🔒 Privacy</button>
+        
+        <div className="mt-auto pt-6 border-t border-slate-200">
+          <button onClick={logout} className="w-full text-left px-4 py-2.5 rounded-lg font-bold text-sm text-red-600 hover:bg-red-50 transition-all border border-transparent hover:border-red-100">
+            🚪 Sign Out
+          </button>
+        </div>
+      </div>
+
+      {/* Settings Content */}
+      <div className="flex-1 p-8">
+        {activeSettingsTab === 'profile' && (
+          <div className="max-w-2xl animate-fade-in">
+            <h3 className="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-4">Profile & KYC</h3>
+            
+            <div className="flex items-center gap-6 mb-8">
+              <div className="w-20 h-20 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-3xl font-bold shadow-inner">N</div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="text-lg font-bold text-slate-900">Neha Dilip Bhamare</h4>
+                  <span className="bg-green-100 text-green-700 text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full flex items-center gap-1">✅ Verified</span>
+                </div>
+                <p className="text-sm text-slate-500">Citizen Account • Member since 2024</p>
+                <button className="text-sm font-bold text-orange-600 mt-2 hover:underline">Change Avatar</button>
+              </div>
+            </div>
+
+            <form className="space-y-5">
+              <div className="grid grid-cols-2 gap-5">
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
+                  <input type="text" defaultValue="Neha Dilip Bhamare" className="w-full p-2.5 border border-slate-200 rounded-lg mt-1 font-medium bg-slate-50" readOnly />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Mobile Number</label>
+                  <input type="text" defaultValue="+91 98765 43210" className="w-full p-2.5 border border-slate-200 rounded-lg mt-1 font-medium" />
+                </div>
+              </div>
+              
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Govt ID Link (Aadhaar / Voter ID)</label>
+                <div className="flex items-center gap-3 mt-1">
+                  <input type="text" value="XXXX-XXXX-4321" readOnly className="flex-1 p-2.5 border border-green-200 bg-green-50 text-green-800 rounded-lg font-medium" />
+                  <button type="button" className="px-4 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-bold text-sm hover:bg-slate-200">Re-verify</button>
+                </div>
+                <p className="text-xs text-slate-400 mt-1">Your ID is encrypted and only used to prevent duplicate reports.</p>
+              </div>
+              
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Platform Language</label>
+                <select className="w-full p-2.5 border border-slate-200 rounded-lg mt-1 font-medium">
+                  <option>English</option>
+                  <option>Hindi (हिंदी)</option>
+                  <option>Santhali (ᱥᱟᱱᱛᱟᱲᱤ)</option>
+                </select>
+              </div>
+
+              <div className="pt-6 border-t border-slate-100 mt-6">
+                <button type="button" className="bg-slate-900 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-black transition-colors shadow-lg shadow-slate-900/20">Save Profile Changes</button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {activeSettingsTab === 'notifications' && (
+          <div className="max-w-2xl animate-fade-in">
+            <h3 className="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-4">Notification Preferences</h3>
+            <div className="space-y-6">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-bold text-slate-800">Emergency & Local Alerts</div>
+                  <div className="text-sm text-slate-500">Get SMS for Red Alerts (Weather, Power Cuts) in your district.</div>
+                </div>
+                <input type="checkbox" defaultChecked className="w-5 h-5 accent-orange-500 mt-1" />
+              </div>
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-bold text-slate-800">Proposal Updates</div>
+                  <div className="text-sm text-slate-500">Notify me when a university submits a solution for a problem I voted on.</div>
+                </div>
+                <input type="checkbox" defaultChecked className="w-5 h-5 accent-orange-500 mt-1" />
+              </div>
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-bold text-slate-800">Community Surveys</div>
+                  <div className="text-sm text-slate-500">Email me when a new micro-survey is available in my Ward.</div>
+                </div>
+                <input type="checkbox" className="w-5 h-5 accent-orange-500 mt-1" />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeSettingsTab === 'location' && (
+          <div className="max-w-2xl animate-fade-in">
+            <h3 className="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-4">Location & Ward Setup</h3>
+            <p className="text-sm text-slate-500 mb-6">Setting your exact location helps us filter challenges and alerts relevant to you.</p>
+            <form className="space-y-5">
+              <div className="grid grid-cols-2 gap-5">
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">District</label>
+                  <select className="w-full p-2.5 border border-slate-200 rounded-lg mt-1 font-medium">
+                    <option>Ranchi</option>
+                    <option>Dhanbad</option>
+                    <option>Hazaribagh</option>
+                    <option>Giridih</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Ward / Block</label>
+                  <input type="text" defaultValue="Ward 14" className="w-full p-2.5 border border-slate-200 rounded-lg mt-1 font-medium" />
+                </div>
+              </div>
+              <button type="button" className="bg-slate-900 text-white px-6 py-2.5 rounded-lg font-bold mt-4">Update Location</button>
+            </form>
+          </div>
+        )}
+
+        {activeSettingsTab === 'privacy' && (
+          <div className="max-w-2xl animate-fade-in">
+            <h3 className="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-4">Privacy & Anonymity</h3>
+            <div className="space-y-6">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-bold text-slate-800">Post Anonymously by Default</div>
+                  <div className="text-sm text-slate-500">Hide your real name when reporting new issues.</div>
+                </div>
+                <input type="checkbox" className="w-5 h-5 accent-orange-500 mt-1" />
+              </div>
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-bold text-slate-800">Public Profile</div>
+                  <div className="text-sm text-slate-500">Allow others to see your Karma score and verification badge.</div>
+                </div>
+                <input type="checkbox" defaultChecked className="w-5 h-5 accent-orange-500 mt-1" />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default function CitizenDashboard() {
+  const { state, dispatch } = useContext(AppContext);
+  const { user, logout } = useAuth();
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [tab, setTab] = useState('overview'); // overview, new, history, track
+  
+  const [submitting, setSubmitting] = useState(false);
+
+  const [stats, setStats] = useState({ myChallenges: 0, underReview: 0, inProgress: 0, resolved: 0 });
+
+  useEffect(() => {
+    const userId = user?.id || user?._id || '';
+    fetch(`http://localhost:5000/api/analytics/citizen-stats?userId=${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data.myChallenges !== 'undefined') {
+          setStats(data);
+        }
+      })
+      .catch(err => console.error("Error fetching stats:", err));
+  }, [user]);
+
+  const renderContent = () => {
+    if (activeTab === 'vote') return <CitizenVoteView />;
+    if (activeTab === 'challenges') return <CitizenChallengesView />;
+    if (activeTab === 'volunteer') return <CitizenVolunteerView />;
+    if (activeTab === 'community') return <CitizenCommunityView />;
+    if (activeTab === 'alerts') return <CitizenAlertsView />;
+    if (activeTab === 'report') return <ReportChallengeWizard onComplete={(t) => { setActiveTab('dashboard'); if (t) setTab(t); }} />;
+    if (activeTab === 'settings') return <CitizenSettingsView />;
+
     if (activeTab === 'proposals') {
+      const proposalsData = [
+        { 
+          id: 1, 
+          issue: "Water contamination in Sector 4", 
+          uni: "IIT ISM Dhanbad", 
+          phase: "Prototyping", 
+          progress: 60, 
+          eta: "Oct 2026", 
+          iconBg: "bg-blue-100",
+          pillBg: "bg-blue-100 text-blue-700",
+          barBg: "bg-blue-500", 
+          uniLogo: "💧" 
+        },
+        { 
+          id: 2, 
+          issue: "Potholes on Main Road", 
+          uni: "BIT Mesra", 
+          phase: "Ideation", 
+          progress: 25, 
+          eta: "Nov 2026", 
+          iconBg: "bg-orange-100",
+          pillBg: "bg-orange-100 text-orange-700",
+          barBg: "bg-orange-500", 
+          uniLogo: "🚧" 
+        }
+      ];
+
       return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Solution Proposals</h2>
-          <p className="text-slate-500 mb-6">Track the progress of solutions being built for the problems you reported.</p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b border-slate-200 text-slate-500 text-sm">
-                  <th className="pb-3 font-semibold">Related Issue</th>
-                  <th className="pb-3 font-semibold">Assigned University</th>
-                  <th className="pb-3 font-semibold">Phase</th>
-                  <th className="pb-3 font-semibold">ETA</th>
-                </tr>
-              </thead>
-              <tbody className="text-sm">
-                <tr className="border-b border-slate-100">
-                  <td className="py-4 font-bold text-slate-800">Water contamination</td>
-                  <td className="py-4">IIT ISM Dhanbad</td>
-                  <td className="py-4"><span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-md font-bold text-xs">Prototyping</span></td>
-                  <td className="py-4">Oct 2026</td>
-                </tr>
-                <tr className="border-b border-slate-100">
-                  <td className="py-4 font-bold text-slate-800">Traffic Congestion</td>
-                  <td className="py-4">BIT Mesra</td>
-                  <td className="py-4"><span className="px-2 py-1 bg-green-100 text-green-700 rounded-md font-bold text-xs">Pilot Deployment</span></td>
-                  <td className="py-4">Nov 2026</td>
-                </tr>
-              </tbody>
-            </table>
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <h1 className="text-2xl font-black text-slate-900">University Proposals</h1>
+              <p className="text-sm text-slate-500 font-medium">Solutions being developed by students for your reported problems.</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {proposalsData.map(prop => (
+              <div key={prop.id} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col hover:border-orange-300 hover:shadow-md transition-all group">
+                <div className="flex justify-between items-start mb-4">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${prop.iconBg}`}>
+                    {prop.uniLogo}
+                  </div>
+                  <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full ${prop.pillBg}`}>
+                    {prop.phase}
+                  </span>
+                </div>
+                
+                <h3 className="font-bold text-slate-900 text-lg mb-1 leading-snug group-hover:text-orange-600 transition-colors">{prop.issue}</h3>
+                <p className="text-slate-500 text-sm font-medium mb-6">Developing: <span className="font-bold text-slate-700">{prop.uni}</span></p>
+                
+                <div className="mt-auto">
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl p-4">
+                    <div className="flex justify-between items-end mb-2 text-xs font-bold text-slate-600">
+                      <span>Development Progress</span>
+                      <span>{prop.progress}%</span>
+                    </div>
+                    <div className="w-full bg-slate-200 rounded-full h-2 mb-1 overflow-hidden">
+                      <div className={`${prop.barBg} h-2 rounded-full transition-all duration-1000`} style={{ width: `${prop.progress}%` }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       );
     }
 
     if (activeTab === 'analytics') {
-      return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[500px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Personal Impact Analytics</h2>
-          <div className="grid grid-cols-2 gap-6 mb-8">
-            <div className="p-6 bg-orange-50 rounded-xl border border-orange-100">
-              <div className="text-4xl font-black text-orange-600">14</div>
-              <div className="text-sm font-bold text-orange-800 mt-2">Community Validations</div>
-            </div>
-            <div className="p-6 bg-green-50 rounded-xl border border-green-100">
-              <div className="text-4xl font-black text-green-600">450</div>
-              <div className="text-sm font-bold text-green-800 mt-2">Total Karma Points</div>
-            </div>
-          </div>
-        </div>
-      );
+      return <PersonalImpactAnalytics />;
     }
 
-    if (activeTab === 'settings') {
-      return (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 max-w-2xl">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Account Settings</h2>
-          <form className="space-y-4">
-            <div><label className="text-sm font-bold text-slate-700">Full Name</label><input type="text" defaultValue="Suresh Munda" className="w-full p-3 border border-slate-200 rounded-lg mt-1" /></div>
-            <div><label className="text-sm font-bold text-slate-700">Phone Number</label><input type="text" defaultValue="+91 98765 43210" className="w-full p-3 border border-slate-200 rounded-lg mt-1" /></div>
-            <div><label className="text-sm font-bold text-slate-700">Language Preference</label><select className="w-full p-3 border border-slate-200 rounded-lg mt-1"><option>English</option><option>Hindi</option><option>Santhali</option></select></div>
-            <button type="button" className="bg-slate-900 text-white px-6 py-3 rounded-lg font-bold mt-4">Save Changes</button>
-          </form>
-        </div>
-      );
-    }
-
+    // Default: Dashboard Active Tab
     return (
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Main Content Area */}
-        <div className="flex-1 space-y-8">
-          
-          {/* Tabs */}
-          <div className="flex border-b border-slate-200 gap-4 sm:gap-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
-            <button onClick={() => setTab('new')} className={`pb-4 text-sm font-bold transition-all ${tab === 'new' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-slate-500 hover:text-slate-800'}`}>
-              Report a New Issue
-            </button>
-            <button onClick={() => setTab('history')} className={`pb-4 text-sm font-bold transition-all ${tab === 'history' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-slate-500 hover:text-slate-800'}`}>
-              My Submissions & History
-            </button>
-          </div>
-
-          {tab === 'new' && (
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-              <div className="bg-gradient-to-r from-[#FF9933] to-[#f97316] p-6 sm:p-8 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -mr-20 -mt-20"></div>
-                <h2 className="text-xl sm:text-2xl font-extrabold mb-2 relative z-10">Voice Submission</h2>
-                <p className="text-orange-100 max-w-md relative z-10 font-medium text-sm sm:text-base">
-                  Speak in Hindi, Santhali, or English. Our AI will automatically translate, structure, and categorize your problem.
-                </p>
-                  <div className="mt-8 flex items-center gap-4 sm:gap-6 relative z-10">
-                    <button 
-                      type="button" 
-                      onClick={handleListen}
-                      className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-[0_0_40px_rgba(255,255,255,0.4)] flex flex-col items-center justify-center transition-transform group relative ${isListening ? 'bg-red-500 text-white scale-110 shadow-[0_0_40px_rgba(239,68,68,0.6)]' : 'bg-white text-orange-600 hover:scale-105'}`}
-                    >
-                      {isListening && <span className="absolute inset-0 border-2 border-red-500 rounded-full animate-ping opacity-50"></span>}
-                      {!isListening && <span className="absolute inset-0 border-2 border-white rounded-full animate-ping opacity-50"></span>}
-                      <span className="text-2xl sm:text-3xl">🎤</span>
-                    </button>
-                    <div className="text-xs sm:text-sm font-bold tracking-widest uppercase">
-                      {isListening ? 'Listening... Speak now' : 'Tap to speak'}
-                    </div>
-                  </div>
-              </div>
-              
-              <div className="p-6 sm:p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex-1 border-t border-slate-200"></div>
-                  <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">Or type manually</div>
-                  <div className="flex-1 border-t border-slate-200"></div>
+      <div className="flex flex-col gap-8">
+        {/* Header Section */}
+        {tab === 'overview' && (
+          <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100 rounded-3xl p-8 sm:p-10 relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500 opacity-5 rounded-full blur-3xl"></div>
+            <div className="relative z-10 text-center md:text-left">
+              <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mb-2">Good Morning, {user?.name?.split(' ')[0] || 'Citizen'} 👋</h1>
+              <p className="text-lg text-slate-600 font-medium max-w-xl">Help turn your community's challenges into solutions by reporting, tracking, and validating real-world issues.</p>
+            </div>
+            <div className="relative z-10 shrink-0">
+              <div className="flex gap-4">
+                <div className="bg-white/80 backdrop-blur-sm px-6 py-4 rounded-2xl border border-orange-200/50 shadow-sm text-center">
+                  <div className="text-3xl font-black text-orange-600 mb-1">{user?.karmaTotal || 0}</div>
+                  <div className="text-[10px] font-bold text-orange-800 uppercase tracking-widest">Karma Points</div>
                 </div>
-                
-                <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Problem Title</label>
-                    <input required value={form.title} onChange={e => setForm({...form, title: e.target.value})} type="text" placeholder="E.g., Broken handpump in Sector 4" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all font-medium text-slate-800" />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Quick Actions Grid (Restored) */}
+        {tab === 'overview' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div onClick={() => setTab('new')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-orange-200 transition-all cursor-pointer group">
+              <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">📢</div>
+              <h3 className="text-sm font-bold text-slate-900 mb-1">Report a Challenge</h3>
+              <p className="text-xs text-slate-500 font-medium leading-relaxed">Submit a societal problem with text, voice, photos.</p>
+            </div>
+            
+            <div onClick={() => setTab('history')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all cursor-pointer group">
+              <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">🔍</div>
+              <h3 className="text-sm font-bold text-slate-900 mb-1">Track a Problem</h3>
+              <p className="text-xs text-slate-500 font-medium leading-relaxed">Enter your PID and see the complete status.</p>
+            </div>
+
+            <div onClick={() => setActiveTab('challenges')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-green-200 transition-all cursor-pointer group">
+              <div className="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">📍</div>
+              <h3 className="text-sm font-bold text-slate-900 mb-1">Nearby Challenges</h3>
+              <p className="text-xs text-slate-500 font-medium leading-relaxed">See problems reported around your community.</p>
+            </div>
+
+            <div onClick={() => setActiveTab('analytics')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-purple-200 transition-all cursor-pointer group">
+              <div className="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">🌟</div>
+              <h3 className="text-sm font-bold text-slate-900 mb-1">Community Impact</h3>
+              <p className="text-xs text-slate-500 font-medium leading-relaxed">See problems that have already become solutions.</p>
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex-1 space-y-8">
+            {/* Tabs Navigation (Visible when not in overview to easily switch back) */}
+            {tab !== 'overview' && (
+              <div className="flex border-b border-slate-200 gap-4 sm:gap-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
+                <button onClick={() => setTab('overview')} className="pb-4 text-sm font-bold text-slate-500 hover:text-slate-800 transition-all">&larr; Back to Dashboard</button>
+                <button onClick={() => setTab('new')} className={`pb-4 text-sm font-bold transition-all ${tab === 'new' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-slate-500 hover:text-slate-800'}`}>Report a New Issue</button>
+                <button onClick={() => setTab('history')} className={`pb-4 text-sm font-bold transition-all ${tab === 'history' || tab === 'track' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-slate-500 hover:text-slate-800'}`}>My Submissions & History</button>
+              </div>
+            )}
+
+            {/* Dashboard Overview Content */}
+            {tab === 'overview' && (
+              <div className="space-y-8">
+                {/* Stats */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <div className="text-3xl font-black text-slate-800">{stats.myChallenges}</div>
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-2">My Challenges</div>
+                  </div>
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <div className="text-3xl font-black text-amber-600">{stats.underReview}</div>
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-2">Under Review</div>
+                  </div>
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <div className="text-3xl font-black text-blue-600">{stats.inProgress}</div>
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-2">In Progress</div>
+                  </div>
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <div className="text-3xl font-black text-green-600">{stats.resolved}</div>
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-2">Resolved</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                    <h2 className="text-xl font-bold text-slate-900 mb-6">Status Breakdown</h2>
+                    <div className="h-64">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={[
+                              { name: 'Under Review', value: stats.underReview, color: '#f59e0b' },
+                              { name: 'In Progress', value: stats.inProgress, color: '#3b82f6' },
+                              { name: 'Resolved', value: stats.resolved, color: '#10b981' }
+                            ]}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={80}
+                            paddingAngle={5}
+                            dataKey="value"
+                          >
+                            {[
+                               { name: 'Under Review', value: stats.underReview, color: '#f59e0b' },
+                               { name: 'In Progress', value: stats.inProgress, color: '#3b82f6' },
+                               { name: 'Resolved', value: stats.resolved, color: '#10b981' }
+                            ].map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                          <Legend />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
                   </div>
                   
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                    <h2 className="text-xl font-bold text-slate-900 mb-6">Weekly Activity</h2>
+                    <div className="h-64">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={[
+                          { name: 'Mon', submissions: 2, resolved: 0 },
+                          { name: 'Tue', submissions: 4, resolved: 1 },
+                          { name: 'Wed', submissions: 1, resolved: 2 },
+                          { name: 'Thu', submissions: 3, resolved: 0 },
+                          { name: 'Fri', submissions: 5, resolved: 3 },
+                          { name: 'Sat', submissions: 2, resolved: 1 },
+                          { name: 'Sun', submissions: 0, resolved: 0 }
+                        ]}>
+                          <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
+                          <YAxis fontSize={12} tickLine={false} axisLine={false} />
+                          <Tooltip cursor={{ fill: '#f8fafc' }} />
+                          <Legend />
+                          <Bar dataKey="submissions" name="Submissions" fill="#94a3b8" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="resolved" name="Resolved" fill="#10b981" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recent Problems List */}
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-bold text-slate-900">Recent Problems</h2>
+                    <button onClick={() => setTab('history')} className="text-sm font-bold text-orange-600 hover:underline">View All</button>
+                  </div>
+                  <div className="space-y-4">
+                    <div onClick={() => setTab('track')} className="border border-slate-200 rounded-xl p-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-orange-300 hover:shadow-md transition-all cursor-pointer bg-slate-50/50">
+                      <div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="text-xs font-bold bg-slate-900 text-white px-2 py-1 rounded">PID: NIR-2026-000241</span>
+                          <span className="text-xs font-bold text-slate-500">Submitted: 8 Sep 2026</span>
+                        </div>
+                        <h4 className="font-bold text-slate-800 text-lg">Unsafe drinking water facility</h4>
+                        <div className="text-sm text-slate-500 mt-1">📍 Nashik / Ward 4</div>
+                      </div>
+                      <span className="w-fit px-3 py-1.5 bg-amber-100 text-amber-800 text-xs font-bold rounded-full uppercase tracking-widest whitespace-nowrap">Under Gov Review</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {tab === 'new' && (
+              <ReportChallengeWizard onComplete={setTab} />
+            )}
+
+            {tab === 'history' && (
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 min-h-[400px]">
+                <h2 className="text-xl font-bold text-slate-900 mb-6">Your Challenge History</h2>
+                
+                <div className="space-y-4">
+                  <div className="border border-slate-200 rounded-xl p-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-orange-300 transition-all">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs font-bold bg-slate-200 text-slate-800 px-2 py-1 rounded">NIR-2026-000241</span>
+                        <span className="text-xs text-slate-500">08 Sep 2026</span>
+                      </div>
+                      <h4 className="font-bold text-slate-800 text-lg">Unsafe drinking water facility</h4>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="w-fit px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full uppercase tracking-widest">Reviewing</span>
+                      <button onClick={() => setTab('track')} className="text-sm font-bold text-white bg-slate-900 px-4 py-2 rounded-lg hover:bg-black transition-colors">Track</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {tab === 'track' && (
+              <ChallengeJourney />
+            )}
+          </div>
+          
+          {/* Right Sidebar */}
+          {tab === 'overview' && (
+            <div className="w-full lg:w-80 shrink-0 space-y-6">
+              {/* Profile Card */}
+              <div className="bg-[#138808] text-white rounded-2xl p-6 shadow-lg shadow-green-900/20 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                <div className="flex justify-between items-start mb-6 relative z-10">
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Detailed Description</label>
-                    <textarea required value={form.description} onChange={e => setForm({...form, description: e.target.value})} rows="4" placeholder="Describe the issue, how long it has been going on, and who is affected..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all font-medium text-slate-800"></textarea>
+                    <h3 className="font-extrabold text-lg">Citizen Profile</h3>
+                    <div className="text-green-200 text-xs font-semibold uppercase tracking-wider mt-1">Individual Citizen</div>
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                    <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-2">Upload Evidence (Photo/Video)</label>
-                      <div className="border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 p-6 flex flex-col items-center justify-center text-slate-500 hover:bg-slate-100 hover:border-orange-400 transition-all cursor-pointer">
-                        <span className="text-2xl mb-2">📸</span>
-                        <span className="text-sm font-bold">Browse or drag files</span>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-2">Location & GPS</label>
-                      <div className="border border-slate-200 rounded-xl bg-slate-50 p-6 flex flex-col items-center justify-center text-slate-500 relative overflow-hidden h-full">
-                        <button type="button" className="bg-slate-800 hover:bg-black text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md transition-all z-10 flex items-center gap-2">
-                          <span>📍</span> Auto-Detect GPS
-                        </button>
-                      </div>
-                    </div>
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-xl">👤</div>
+                </div>
+                
+                <div className="space-y-3 relative z-10">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-green-100">Problems Reported</span>
+                    <span className="font-bold text-xl">12</span>
                   </div>
-
-                  <div className="pt-6 border-t border-slate-100 flex justify-end">
-                    <button disabled={submitting} type="submit" className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-0.5">
-                      {submitting ? 'Submitting...' : 'Submit Challenge →'}
-                    </button>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-green-100">Verified</span>
+                    <span className="font-bold text-xl">8</span>
                   </div>
-                </form>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-green-100">Under Solution</span>
+                    <span className="font-bold text-xl">3</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-green-100">Resolved</span>
+                    <span className="font-bold text-xl">5</span>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-green-700/50 flex justify-between items-center text-sm">
+                    <span className="text-green-100 font-bold">People Impacted</span>
+                    <span className="font-black text-2xl text-green-300">850+</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <h3 className="font-bold text-slate-900 mb-4">Verification Needed</h3>
+                <p className="text-sm text-slate-500 mb-4 leading-relaxed">
+                  Help validate other problems reported in your area to earn Karma points and ensure accurate data.
+                </p>
+                <div className="border border-slate-100 bg-slate-50 p-4 rounded-xl mb-4">
+                  <h4 className="font-bold text-slate-800 text-sm mb-1">Dengue outbreak in Morabadi</h4>
+                  <p className="text-xs text-slate-500 mb-3">Reported 2 days ago • 1.2km away</p>
+                  <div className="flex gap-2">
+                    <button className="flex-1 bg-white border border-slate-200 text-slate-700 text-xs font-bold py-2 rounded-lg hover:bg-green-50 hover:text-green-700 transition-all">Verify 👍</button>
+                    <button className="flex-1 bg-white border border-slate-200 text-slate-700 text-xs font-bold py-2 rounded-lg hover:bg-red-50 hover:text-red-700 transition-all">Reject 👎</button>
+                  </div>
+                </div>
+                <button className="w-full text-center text-xs font-bold text-orange-600 hover:underline">View all nearby reports</button>
               </div>
             </div>
           )}
-
-          {tab === 'history' && (
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 min-h-[400px]">
-              <h2 className="text-xl font-bold text-slate-900 mb-6">Your Recent Submissions</h2>
-              
-              {state.problems.length === 0 ? (
-                <div className="flex flex-col items-center justify-center text-center mt-12">
-                  <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center text-5xl mb-6 border border-slate-100">📭</div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">No Reports Yet</h3>
-                  <p className="text-slate-500 max-w-md mx-auto">You haven't submitted any problems yet. When you report an issue, you can track its progress here.</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {state.problems.map(p => (
-                    <div key={p.id} className="border border-slate-200 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-orange-300 transition-all">
-                      <div>
-                        <h4 className="font-bold text-slate-800 text-lg">{p.title}</h4>
-                        <div className="flex flex-wrap gap-2 mt-2">
-                          <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">AI Category: {p.category}</span>
-                          <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">Date: {new Date(p.reportedOn).toLocaleDateString()}</span>
-                        </div>
-                      </div>
-                      <span className="w-fit px-3 py-1 bg-orange-100 text-orange-800 text-xs font-bold rounded-full uppercase tracking-widest">{p.status}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-        
-        {/* Right Sidebar */}
-        <div className="w-full lg:w-80 shrink-0 space-y-6">
-          <div className="bg-[#138808] text-white rounded-2xl p-6 shadow-lg shadow-green-900/20 relative overflow-hidden">
-             <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl -mr-10 -mt-10"></div>
-             <div className="flex justify-between items-start mb-6 relative z-10">
-               <div>
-                 <h3 className="font-extrabold text-lg">Karma Profile</h3>
-                 <div className="text-green-200 text-xs font-semibold uppercase tracking-wider mt-1">Top 5% in Ranchi</div>
-               </div>
-               <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-xl">
-                 🏅
-               </div>
-             </div>
-             
-             <div className="text-5xl font-black mb-1 relative z-10">450</div>
-             <div className="text-green-200 text-sm font-medium mb-6 relative z-10">Total points earned</div>
-             
-             <div className="space-y-3 relative z-10">
-               <div className="flex justify-between items-center text-sm">
-                 <span className="text-green-100">Problems Verified</span>
-                 <span className="font-bold">2</span>
-               </div>
-               <div className="flex justify-between items-center text-sm">
-                 <span className="text-green-100">Community Validations</span>
-                 <span className="font-bold">14</span>
-               </div>
-             </div>
-          </div>
-          
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-            <h3 className="font-bold text-slate-900 mb-4">Verification Needed</h3>
-            <p className="text-sm text-slate-500 mb-4 leading-relaxed">
-              Help validate other problems reported in your area to earn Karma points and ensure accurate data.
-            </p>
-            <div className="border border-slate-100 bg-slate-50 p-4 rounded-xl mb-4">
-               <h4 className="font-bold text-slate-800 text-sm mb-1">Dengue outbreak in Morabadi</h4>
-               <p className="text-xs text-slate-500 mb-3">Reported 2 days ago • 1.2km away</p>
-               <div className="flex gap-2">
-                 <button className="flex-1 bg-white border border-slate-200 text-slate-700 text-xs font-bold py-2 rounded-lg hover:bg-green-50 hover:text-green-700 hover:border-green-200 transition-all">Verify 👍</button>
-                 <button className="flex-1 bg-white border border-slate-200 text-slate-700 text-xs font-bold py-2 rounded-lg hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-all">Reject 👎</button>
-               </div>
-            </div>
-            <button className="w-full text-center text-xs font-bold text-orange-600 hover:underline">View all nearby reports</button>
-          </div>
         </div>
       </div>
     );
   };
 
   return (
-    <SidebarLayout 
-      activeTab={activeTab} 
-      setActiveTab={setActiveTab} 
-      roleTitle="Citizen Community Portal" 
-      userName="Suresh Munda"
-    >
-      {renderContent()}
-    </SidebarLayout>
+    <>
+      <SidebarLayout 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        roleTitle="Citizen & Community Portal" 
+        userName={user?.name || 'Citizen'}
+      >
+        {renderContent()}
+      </SidebarLayout>
+      <AIChatbot />
+    </>
   );
 }
+

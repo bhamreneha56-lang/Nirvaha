@@ -7,6 +7,7 @@ import CitizenChallengesMap from './components/CitizenChallengesMap';
 import AIChatbot from './components/AIChatbot';
 import { useAuth } from '../../context/AuthContext';
 import { problems, getPriorityColor } from '../university/mockData';
+import { getStoredProblems } from '../../utils/mockStorage';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 
 
@@ -833,26 +834,54 @@ const CitizenSettingsView = () => {
 };
 
 export default function CitizenDashboard() {
-  const { state, dispatch } = useContext(AppContext);
-  const { user, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [tab, setTab] = useState('overview'); // overview, new, history, track
+  const { user, token } = useAuth();
+  const [activeTab, setActiveTab] = useState('overview');
+  const [tab, setTab] = useState('overview'); // inner tabs
+  const [myProblems, setMyProblems] = useState([]);
+  const [loadingProblems, setLoadingProblems] = useState(false);
+  const [trackerPid, setTrackerPid] = useState('');
+
+  // Fetch my problems
+  useEffect(() => {
+    if (activeTab === 'overview' || activeTab === 'dashboard' || tab === 'overview' || tab === 'history') {
+      const fetchMyProblems = async () => {
+        setLoadingProblems(true);
+        try {
+          if (token) {
+            const res = await fetch('http://localhost:5000/api/problems/my', {
+              headers: { Authorization: `Bearer ${token}` }
+            });
+            if (res.ok) {
+              const data = await res.json();
+              if (Array.isArray(data) && data.length > 0) {
+                setMyProblems(data);
+                setLoadingProblems(false);
+                return;
+              }
+            }
+          }
+        } catch (err) {
+          console.warn('Backend unavailable, loading local problem records:', err);
+        }
+
+        // Fallback to local storage
+        const localProbs = getStoredProblems();
+        setMyProblems(localProbs);
+        setLoadingProblems(false);
+      };
+      fetchMyProblems();
+    }
+  }, [activeTab, tab, token]);
   
   const [submitting, setSubmitting] = useState(false);
 
-  const [stats, setStats] = useState({ myChallenges: 0, underReview: 0, inProgress: 0, resolved: 0 });
-
-  useEffect(() => {
-    const userId = user?.id || user?._id || '';
-    fetch(`http://localhost:5000/api/analytics/citizen-stats?userId=${userId}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data && typeof data.myChallenges !== 'undefined') {
-          setStats(data);
-        }
-      })
-      .catch(err => console.error("Error fetching stats:", err));
-  }, [user]);
+  // Compute stats dynamically from problems so they are always accurate
+  const stats = {
+    myChallenges: myProblems.length,
+    underReview: myProblems.filter(p => p.status === 'submitted' || p.status === 'under_review').length,
+    inProgress: myProblems.filter(p => p.status === 'verified' || p.status === 'assigned' || p.status === 'in_progress').length,
+    resolved: myProblems.filter(p => p.status === 'deployed' || p.status === 'resolved' || p.status === 'closed').length
+  };
 
   const renderContent = () => {
     if (activeTab === 'vote') return <CitizenVoteView />;
@@ -962,25 +991,25 @@ export default function CitizenDashboard() {
         {/* Quick Actions Grid (Restored) */}
         {tab === 'overview' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div onClick={() => setTab('new')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-orange-200 transition-all cursor-pointer group">
-              <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">📢</div>
+            <div onClick={() => setTab('new')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-orange-200 transition-all cursor-pointer group flex flex-col h-full">
+              <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">📝</div>
               <h3 className="text-sm font-bold text-slate-900 mb-1">Report a Challenge</h3>
               <p className="text-xs text-slate-500 font-medium leading-relaxed">Submit a societal problem with text, voice, photos.</p>
             </div>
             
-            <div onClick={() => setTab('history')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all cursor-pointer group">
+            <div onClick={() => setTab('track')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all cursor-pointer group flex flex-col h-full">
               <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">🔍</div>
               <h3 className="text-sm font-bold text-slate-900 mb-1">Track a Problem</h3>
               <p className="text-xs text-slate-500 font-medium leading-relaxed">Enter your PID and see the complete status.</p>
             </div>
 
-            <div onClick={() => setActiveTab('challenges')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-green-200 transition-all cursor-pointer group">
+            <div onClick={() => setActiveTab('challenges')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-green-200 transition-all cursor-pointer group flex flex-col h-full">
               <div className="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">📍</div>
               <h3 className="text-sm font-bold text-slate-900 mb-1">Nearby Challenges</h3>
               <p className="text-xs text-slate-500 font-medium leading-relaxed">See problems reported around your community.</p>
             </div>
 
-            <div onClick={() => setActiveTab('analytics')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-purple-200 transition-all cursor-pointer group">
+            <div onClick={() => setActiveTab('analytics')} className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-purple-200 transition-all cursor-pointer group flex flex-col h-full">
               <div className="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">🌟</div>
               <h3 className="text-sm font-bold text-slate-900 mb-1">Community Impact</h3>
               <p className="text-xs text-slate-500 font-medium leading-relaxed">See problems that have already become solutions.</p>
@@ -1113,25 +1142,48 @@ export default function CitizenDashboard() {
                 <h2 className="text-xl font-bold text-slate-900 mb-6">Your Challenge History</h2>
                 
                 <div className="space-y-4">
-                  <div className="border border-slate-200 rounded-xl p-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-orange-300 transition-all">
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xs font-bold bg-slate-200 text-slate-800 px-2 py-1 rounded">NIR-2026-000241</span>
-                        <span className="text-xs text-slate-500">08 Sep 2026</span>
+                  {loadingProblems ? (
+                    <div className="text-center py-8 text-slate-500 font-medium">Loading your submissions...</div>
+                  ) : myProblems.length > 0 ? (
+                    myProblems.map(problem => (
+                      <div key={problem._id} className="border border-slate-200 rounded-xl p-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-orange-300 transition-all">
+                        <div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-xs font-bold bg-slate-200 text-slate-800 px-2 py-1 rounded font-mono uppercase">{problem.problemIdReadable}</span>
+                            <span className="text-xs text-slate-500">{new Date(problem.createdAt).toLocaleDateString()}</span>
+                          </div>
+                          <h4 className="font-bold text-slate-800 text-lg">{problem.title}</h4>
+                          <p className="text-xs text-slate-500 mt-1">{problem.category} • {problem.district || 'Location not specified'}</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <span className={`w-fit px-3 py-1 text-xs font-bold rounded-full uppercase tracking-widest ${problem.status === 'resolved' || problem.status === 'closed' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}`}>
+                            {problem.status.replace('_', ' ')}
+                          </span>
+                          <button 
+                            onClick={() => {
+                              setTrackerPid(problem.problemIdReadable);
+                              setTab('track');
+                            }} 
+                            className="text-sm font-bold text-white bg-slate-900 px-4 py-2 rounded-lg hover:bg-black transition-colors"
+                          >
+                            Track
+                          </button>
+                        </div>
                       </div>
-                      <h4 className="font-bold text-slate-800 text-lg">Unsafe drinking water facility</h4>
+                    ))
+                  ) : (
+                    <div className="text-center py-12 border-2 border-dashed border-slate-200 rounded-xl">
+                      <div className="text-4xl mb-3">📝</div>
+                      <p className="text-slate-500 font-medium">You haven't submitted any problems yet.</p>
+                      <button onClick={() => setTab('new')} className="mt-4 bg-orange-100 text-orange-700 hover:bg-orange-200 px-4 py-2 rounded-lg font-bold text-sm transition-colors">Report a Problem</button>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <span className="w-fit px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full uppercase tracking-widest">Reviewing</span>
-                      <button onClick={() => setTab('track')} className="text-sm font-bold text-white bg-slate-900 px-4 py-2 rounded-lg hover:bg-black transition-colors">Track</button>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             )}
 
             {tab === 'track' && (
-              <ChallengeJourney />
+              <ChallengeJourney pid={trackerPid} />
             )}
           </div>
           

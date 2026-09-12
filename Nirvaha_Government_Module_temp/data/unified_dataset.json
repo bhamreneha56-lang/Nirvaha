@@ -1,0 +1,1623 @@
+{
+  "_readme": "This is the SINGLE SHARED dataset for all 4 NIRVAHA portals (Citizen, University, Industry, Government). Every portal reads/writes against these same entities via a common backend, so whichever team member builds which portal, they should seed and query against this file (or the DB tables it maps to) rather than inventing separate local data. University labsInfrastructure and incubationFacility fields are left as null/placeholder where real data was not confirmed — these should be completed by each university during onboarding (University Portal Page 1: Institution Profile), not fabricated. Two additional sections were appended: 'jharkhandIndustriesAndStartups' (67 real industries/startups/clusters from the uploaded Jharkhand dataset — raw reference data, not yet mapped to platform funding-capacity fields) and 'jharkhandNgoFunders' (9 real Jharkhand-active NGOs/foundations known to provide grants or CSR-linked funding — focus areas and funding type given, fundingCapacityBand left unset since real committed amounts vary per programme and should not be guessed).",
+  "citizenSubmitters": {
+    "individualCitizens": [
+      {
+        "id": "CIT-IND-001",
+        "name": "Rekha Devi",
+        "phone": "+91-98XXXXXX21",
+        "district": "Ranchi",
+        "village": "Ormanjhi",
+        "karmaPoints": 120
+      },
+      {
+        "id": "CIT-IND-002",
+        "name": "Sunil Mahato",
+        "phone": "+91-99XXXXXX87",
+        "district": "Dumka",
+        "village": "Shikaripara",
+        "karmaPoints": 55
+      },
+      {
+        "id": "CIT-IND-003",
+        "name": "Fulmani Kumari",
+        "phone": "+91-96XXXXXX33",
+        "district": "Gumla",
+        "village": "Ghaghra",
+        "karmaPoints": 78
+      }
+    ],
+    "communityGroups": [
+      {
+        "id": "CIT-CG-001",
+        "name": "Jharkhand Rural Development Society (NGO)",
+        "phone": "+91-90XXXXXX44",
+        "district": "Gumla",
+        "village": "Ghaghra",
+        "karmaPoints": 210,
+        "registrationDocUrl": "org_reg_JRDS.pdf"
+      },
+      {
+        "id": "CIT-CG-002",
+        "name": "Adivasi Mahila Sangathan (Self-Help Group)",
+        "phone": "+91-91XXXXXX55",
+        "district": "Khunti",
+        "village": "Murhu",
+        "karmaPoints": 95,
+        "registrationDocUrl": "org_reg_AMS.pdf"
+      }
+    ],
+    "panchayatiRajInstitutions": [
+      {
+        "id": "CIT-PRI-001",
+        "name": "Ormanjhi Panchayat Office",
+        "phone": "+91-94XXXXXX10",
+        "district": "Ranchi",
+        "village": "Ormanjhi",
+        "karmaPoints": 340,
+        "priLevel": "Gram Panchayat"
+      },
+      {
+        "id": "CIT-PRI-002",
+        "name": "Shikaripara Block Panchayat Samiti",
+        "phone": "+91-93XXXXXX18",
+        "district": "Dumka",
+        "village": "Shikaripara",
+        "karmaPoints": 150,
+        "priLevel": "Panchayat Samiti"
+      }
+    ],
+    "urbanLocalBodies": [
+      {
+        "id": "CIT-ULB-001",
+        "name": "Deoghar Municipal Corporation",
+        "phone": "+91-97XXXXXX02",
+        "district": "Deoghar",
+        "village": "Deoghar Town",
+        "karmaPoints": 400,
+        "ulbType": "Municipal Corporation"
+      },
+      {
+        "id": "CIT-ULB-002",
+        "name": "Jamshedpur Notified Area Committee",
+        "phone": "+91-92XXXXXX61",
+        "district": "East Singhbhum",
+        "village": "Jamshedpur",
+        "karmaPoints": 260,
+        "ulbType": "Notified Area Committee"
+      }
+    ],
+    "governmentDepartmentsAsSubmitters": [
+      {
+        "id": "CIT-GOV-001",
+        "name": "Block Development Office, Ormanjhi",
+        "phone": "+91-95XXXXXX70",
+        "district": "Ranchi",
+        "village": "Ormanjhi",
+        "karmaPoints": 500,
+        "department": "Rural Development"
+      }
+    ]
+  },
+  "governmentDepartments": [
+    {
+      "id": "GOVDEPT-01",
+      "name": "Department of Drinking Water & Sanitation",
+      "domainsHandled": [
+        "Water Resources"
+      ],
+      "linkedSchemes": [
+        "Jal Jeevan Mission"
+      ]
+    },
+    {
+      "id": "GOVDEPT-02",
+      "name": "Department of School Education & Literacy",
+      "domainsHandled": [
+        "Education"
+      ],
+      "linkedSchemes": [
+        "Samagra Shiksha Abhiyan"
+      ]
+    },
+    {
+      "id": "GOVDEPT-03",
+      "name": "Department of Health, Medical Education & Family Welfare",
+      "domainsHandled": [
+        "Healthcare"
+      ],
+      "linkedSchemes": [
+        "Ayushman Bharat"
+      ]
+    },
+    {
+      "id": "GOVDEPT-04",
+      "name": "Department of Agriculture, Animal Husbandry & Cooperative",
+      "domainsHandled": [
+        "Agriculture",
+        "Rural Livelihoods"
+      ],
+      "linkedSchemes": [
+        "PM-KISAN"
+      ]
+    },
+    {
+      "id": "GOVDEPT-05",
+      "name": "Department of Forest, Environment & Climate Change",
+      "domainsHandled": [
+        "Environment"
+      ],
+      "linkedSchemes": [
+        "Compensatory Afforestation Fund"
+      ]
+    },
+    {
+      "id": "GOVDEPT-06",
+      "name": "Department of Energy",
+      "domainsHandled": [
+        "Energy"
+      ],
+      "linkedSchemes": [
+        "Saubhagya Scheme"
+      ]
+    },
+    {
+      "id": "GOVDEPT-07",
+      "name": "Urban Development & Housing Department",
+      "domainsHandled": [
+        "Urban Infrastructure"
+      ],
+      "linkedSchemes": [
+        "AMRUT 2.0"
+      ]
+    },
+    {
+      "id": "GOVDEPT-08",
+      "name": "Department of Social Welfare, Women & Child Development",
+      "domainsHandled": [
+        "Accessibility",
+        "Public Administration"
+      ],
+      "linkedSchemes": [
+        "Divyangjan Sashaktikaran"
+      ]
+    },
+    {
+      "id": "GOVDEPT-09",
+      "name": "Department of Rural Development",
+      "domainsHandled": [
+        "Rural Livelihoods",
+        "Public Administration"
+      ],
+      "linkedSchemes": [
+        "MGNREGA"
+      ]
+    }
+  ],
+  "universities": [
+    {
+      "id": "UNI-01",
+      "name": "Central University of Jharkhand, Ranchi (Brambe)",
+      "type": "Central University",
+      "district": "Ranchi",
+      "established": 2009,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "B.Tech",
+        "MA",
+        "MSc",
+        "MCom",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Engineering",
+        "Management",
+        "Computer Applications"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-02",
+      "name": "Indian Institute of Technology (ISM), Dhanbad",
+      "type": "Institute of National Importance",
+      "district": "Dhanbad",
+      "established": 1926,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Mining",
+        "Petroleum",
+        "Mechanical",
+        "Civil",
+        "CSE",
+        "ECE",
+        "Electrical",
+        "Data Science"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-03",
+      "name": "All India Institute of Medical Sciences (AIIMS), Deoghar",
+      "type": "Institute of National Importance",
+      "district": "Deoghar",
+      "established": 2019,
+      "degreesOffered": [
+        "MBBS",
+        "MD",
+        "MS",
+        "DM",
+        "MCh",
+        "PhD"
+      ],
+      "specializations": [
+        "General Medicine",
+        "Surgery",
+        "Pediatrics",
+        "Cardiology",
+        "Neurology"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-04",
+      "name": "Indian Institute of Information Technology (IIIT), Ranchi",
+      "type": "Institute of National Importance",
+      "district": "Ranchi",
+      "established": 2016,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "PhD"
+      ],
+      "specializations": [
+        "CSE",
+        "ECE",
+        "AI & ML",
+        "Data Science",
+        "Cyber Security"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-05",
+      "name": "National Institute of Technology (NIT), Jamshedpur",
+      "type": "Institute of National Importance",
+      "district": "East Singhbhum",
+      "established": 1960,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MCA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Mechanical",
+        "Civil",
+        "CSE",
+        "ECE",
+        "Electrical",
+        "Metallurgy",
+        "Production"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-06",
+      "name": "Indian Institute of Management (IIM), Ranchi",
+      "type": "Institute of National Importance",
+      "district": "Ranchi",
+      "established": 2009,
+      "degreesOffered": [
+        "MBA",
+        "Executive MBA",
+        "PhD"
+      ],
+      "specializations": [
+        "General Management",
+        "Finance",
+        "Marketing",
+        "Operations",
+        "HR"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-07",
+      "name": "Central Institute of Psychiatry, Ranchi",
+      "type": "Institute of National Importance",
+      "district": "Ranchi",
+      "established": 1918,
+      "degreesOffered": [
+        "MD (Psychiatry)",
+        "PhD"
+      ],
+      "specializations": [
+        "Psychiatry",
+        "Clinical Psychology",
+        "Neurosciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-08",
+      "name": "Birla Institute of Technology, Mesra, Ranchi",
+      "type": "Deemed University",
+      "district": "Ranchi",
+      "established": 1986,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MCA",
+        "BPharm",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "CSE",
+        "IT",
+        "Mechanical",
+        "Civil",
+        "ECE",
+        "Biotechnology",
+        "Pharmacy"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-09",
+      "name": "National Institute of Advanced Manufacturing Technology (NIAMT), Ranchi",
+      "type": "Deemed University",
+      "district": "Ranchi",
+      "established": 1966,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Manufacturing",
+        "Mechanical",
+        "Industrial Engineering",
+        "Materials Science"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-10",
+      "name": "Ranchi University, Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 1960,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "LLB",
+        "MA",
+        "MSc",
+        "MCom",
+        "LLM",
+        "MPhil",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Law",
+        "Education",
+        "Social Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-11",
+      "name": "Kolhan University, Chaibasa",
+      "type": "State University (Government)",
+      "district": "West Singhbhum",
+      "established": 2009,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "MA",
+        "MSc",
+        "MCom",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Education",
+        "Tribal Studies"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-12",
+      "name": "Vinoba Bhave University, Hazaribagh",
+      "type": "State University (Government)",
+      "district": "Hazaribagh",
+      "established": 1993,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "LLB",
+        "MA",
+        "MSc",
+        "MCom",
+        "LLM",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Law",
+        "Education",
+        "Sanskrit"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-13",
+      "name": "Nilamber-Pitamber University, Medininagar (Palamu)",
+      "type": "State University (Government)",
+      "district": "Palamu",
+      "established": 2009,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Tribal & Regional Studies"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-14",
+      "name": "Birsa Agricultural University, Ranchi (Kanke)",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 1980,
+      "degreesOffered": [
+        "BSc (Agri)",
+        "BTech (Agri Engg)",
+        "MSc (Agri)",
+        "MTech",
+        "MBA (Agri)",
+        "PhD"
+      ],
+      "specializations": [
+        "Agronomy",
+        "Horticulture",
+        "Animal Husbandry",
+        "Dairy",
+        "Fisheries",
+        "Forestry"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-15",
+      "name": "Binod Bihari Mahto Koylanchal University, Dhanbad",
+      "type": "State University (Government)",
+      "district": "Dhanbad",
+      "established": 2017,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "MA",
+        "MSc",
+        "MCom",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Education",
+        "Mining-related studies"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-16",
+      "name": "Jharkhand University of Technology (JUT), Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2011,
+      "degreesOffered": [
+        "B.Tech",
+        "M.Tech",
+        "MBA",
+        "MCA",
+        "BPharm",
+        "MPharm",
+        "BHMCT",
+        "BCA",
+        "BBA",
+        "PhD"
+      ],
+      "specializations": [
+        "CSE",
+        "Civil",
+        "Mechanical",
+        "Electrical",
+        "ECE",
+        "Mining",
+        "Polymer",
+        "Chemical"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-17",
+      "name": "Jharkhand State Open University (JSOU), Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2021,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MA",
+        "MSc",
+        "MCom",
+        "MBA",
+        "BEd",
+        "MEd"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Management",
+        "Education"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-18",
+      "name": "Jharkhand Raksha Shakti University, Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2016,
+      "degreesOffered": [
+        "BSc",
+        "MSc",
+        "MBA",
+        "PhD"
+      ],
+      "specializations": [
+        "Police Science",
+        "Security Management",
+        "Forensic Science",
+        "Cyber Security"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-19",
+      "name": "Sido Kanhu Murmu University, Dumka",
+      "type": "State University (Government)",
+      "district": "Dumka",
+      "established": 1992,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Tribal Studies",
+        "Santhali"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-20",
+      "name": "Dr. Shyama Prasad Mukherjee University, Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2017,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "MA",
+        "MSc",
+        "MCom",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Education",
+        "Vocational Studies"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-21",
+      "name": "Jamshedpur Women's University, Jamshedpur",
+      "type": "State University (Government)",
+      "district": "East Singhbhum",
+      "established": 2019,
+      "degreesOffered": [
+        "BA",
+        "BSc",
+        "BCom",
+        "BBA",
+        "BCA",
+        "BEd",
+        "MA",
+        "MSc",
+        "MCom",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Education",
+        "Home Science"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": [],
+      "notes": "Women only"
+    },
+    {
+      "id": "UNI-22",
+      "name": "Kaushal Vidya Entrepreneurship, Digital and Skill University, Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2022,
+      "degreesOffered": [
+        "BBA",
+        "BCA",
+        "BSc",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Entrepreneurship",
+        "Digital Marketing",
+        "Skill Development",
+        "Vocational"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-23",
+      "name": "National University of Study and Research in Law (NUSRL), Ranchi",
+      "type": "State University (Government)",
+      "district": "Ranchi",
+      "established": 2010,
+      "degreesOffered": [
+        "BA LLB (Hons)",
+        "BBA LLB (Hons)",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Constitutional Law",
+        "Criminal Law",
+        "Corporate Law",
+        "Human Rights",
+        "IPR"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-24",
+      "name": "AISECT University, Hazaribagh",
+      "type": "State Private University",
+      "district": "Hazaribagh",
+      "established": 2016,
+      "degreesOffered": [
+        "BSc (Agri)",
+        "BCom",
+        "BBA",
+        "BCA",
+        "LLB",
+        "BSc",
+        "BA",
+        "MSc",
+        "MCom",
+        "MBA",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Agriculture",
+        "Commerce",
+        "Management",
+        "IT",
+        "Law",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-25",
+      "name": "Amity University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2016,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences",
+        "Humanities"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-26",
+      "name": "Arka Jain University, Seraikela Kharsawan",
+      "type": "State Private University",
+      "district": "Seraikela Kharsawan",
+      "established": 2017,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences",
+        "Media & Communication"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-27",
+      "name": "Babu Dinesh Singh University, Garhwa",
+      "type": "State Private University",
+      "district": "Garhwa",
+      "established": 2024,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BPharm",
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Health Sciences",
+        "Pharmacy",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-28",
+      "name": "Capital University, Koderma",
+      "type": "State Private University",
+      "district": "Koderma",
+      "established": 2018,
+      "degreesOffered": [
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Physiotherapy",
+        "Management",
+        "Commerce",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-29",
+      "name": "Durga Soren University, Deoghar",
+      "type": "State Private University",
+      "district": "Deoghar",
+      "established": 2023,
+      "degreesOffered": [
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Tribal Studies",
+        "Arts",
+        "Science",
+        "Commerce",
+        "Management"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-30",
+      "name": "ICFAI University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2008,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BCom",
+        "BA",
+        "BSc",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "IT",
+        "Law",
+        "Finance"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-31",
+      "name": "Jharkhand Rai University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2011,
+      "degreesOffered": [
+        "BPharm",
+        "BPT",
+        "BSc (Nursing)",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Pharmacy",
+        "Physiotherapy",
+        "Nursing",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-32",
+      "name": "Netaji Subhas University, Jamshedpur",
+      "type": "State Private University",
+      "district": "East Singhbhum",
+      "established": 2018,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BPT",
+        "BPharm",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MPharm",
+        "PhD"
+      ],
+      "specializations": [
+        "Health Sciences",
+        "Management",
+        "Commerce",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-33",
+      "name": "Pragyan International University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2016,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences",
+        "Education"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-34",
+      "name": "Radha Govind University, Ramgarh",
+      "type": "State Private University",
+      "district": "Ramgarh",
+      "established": 2018,
+      "degreesOffered": [
+        "BPharm",
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Pharmacy",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-35",
+      "name": "Ram Krishna Dharmarth Foundation (RKDF) University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2018,
+      "degreesOffered": [
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Management",
+        "Vocational"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-36",
+      "name": "Ramchandra Chandravansi University, Palamu",
+      "type": "State Private University",
+      "district": "Palamu",
+      "established": 2018,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Nursing",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-37",
+      "name": "Sai Nath University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2012,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BPT",
+        "BPharm",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Nursing",
+        "Pharmacy",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-38",
+      "name": "Sarala Birla University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2017,
+      "degreesOffered": [
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MCA",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences",
+        "Media"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-39",
+      "name": "Sona Devi University, East Singhbhum",
+      "type": "State Private University",
+      "district": "East Singhbhum",
+      "established": 2023,
+      "degreesOffered": [
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MCom",
+        "PhD"
+      ],
+      "specializations": [
+        "Arts",
+        "Science",
+        "Commerce",
+        "Management",
+        "Vocational"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-40",
+      "name": "Srinath University, Jamshedpur",
+      "type": "State Private University",
+      "district": "East Singhbhum",
+      "established": 2021,
+      "degreesOffered": [
+        "B.Tech",
+        "BPharm",
+        "BPT",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MPharm",
+        "MSc",
+        "PhD"
+      ],
+      "specializations": [
+        "Engineering",
+        "Pharmacy",
+        "Physiotherapy",
+        "Management",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-41",
+      "name": "Usha Martin University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2014,
+      "degreesOffered": [
+        "BSc (Agri)",
+        "B.Tech",
+        "BBA",
+        "BCA",
+        "BSc",
+        "BA",
+        "BCom",
+        "LLB",
+        "MBA",
+        "M.Tech",
+        "MSc",
+        "LLM",
+        "PhD"
+      ],
+      "specializations": [
+        "Agriculture",
+        "Engineering",
+        "Management",
+        "Law",
+        "Sciences"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": true,
+      "previousProjects": []
+    },
+    {
+      "id": "UNI-42",
+      "name": "YBN University, Ranchi",
+      "type": "State Private University",
+      "district": "Ranchi",
+      "established": 2017,
+      "degreesOffered": [
+        "BSc (Nursing)",
+        "BEd",
+        "BSc",
+        "BA",
+        "BCom",
+        "BBA",
+        "BCA",
+        "MBA",
+        "MSc",
+        "MEd",
+        "PhD"
+      ],
+      "specializations": [
+        "Nursing",
+        "Education",
+        "Management",
+        "Sciences",
+        "Arts"
+      ],
+      "labsInfrastructure": [],
+      "incubationFacility": null,
+      "previousProjects": []
+    }
+  ],
+  "industryStartupNgoPartners": [
+    {
+      "id": "IND-01",
+      "name": "TataTech Rural Innovations",
+      "type": "Industry (Corporate CSR arm)",
+      "sector": "Water & Sanitation Tech",
+      "technologyExpertise": [
+        "IoT sensors",
+        "solar hardware"
+      ],
+      "csrInterests": [
+        "Water access",
+        "rural livelihood"
+      ],
+      "fundingCapacity": "₹5L–₹20L per project",
+      "mentorshipCapacity": "10 hrs/month"
+    },
+    {
+      "id": "IND-02",
+      "name": "GreenFlow Environmental Solutions",
+      "type": "Startup",
+      "sector": "Environmental Engineering",
+      "technologyExpertise": [
+        "Effluent treatment systems",
+        "water quality sensors"
+      ],
+      "csrInterests": [
+        "Pollution control"
+      ],
+      "fundingCapacity": "₹2L–₹8L per project",
+      "mentorshipCapacity": "6 hrs/month"
+    },
+    {
+      "id": "IND-03",
+      "name": "Jharkhand Forest & Wildlife CSR Trust",
+      "type": "CSR Trust",
+      "sector": "Conservation / CSR",
+      "technologyExpertise": [
+        "GIS",
+        "acoustic/thermal deterrents"
+      ],
+      "csrInterests": [
+        "Human-wildlife conflict"
+      ],
+      "fundingCapacity": "₹3L–₹10L per project",
+      "mentorshipCapacity": "8 hrs/month"
+    },
+    {
+      "id": "IND-04",
+      "name": "Jharkhand Rural Livelihoods NGO Consortium",
+      "type": "NGO",
+      "sector": "Rural Livelihoods & Skilling",
+      "technologyExpertise": [
+        "Skill training delivery",
+        "market linkage"
+      ],
+      "csrInterests": [
+        "Employment generation",
+        "artisan support"
+      ],
+      "fundingCapacity": "₹1L–₹5L per project",
+      "mentorshipCapacity": "12 hrs/month"
+    },
+    {
+      "id": "IND-05",
+      "name": "EduBridge Foundation",
+      "type": "NGO",
+      "sector": "Education Infrastructure",
+      "technologyExpertise": [
+        "Digital classroom kits",
+        "teacher training"
+      ],
+      "csrInterests": [
+        "STEM access",
+        "school infrastructure"
+      ],
+      "fundingCapacity": "₹2L–₹6L per project",
+      "mentorshipCapacity": "8 hrs/month"
+    },
+    {
+      "id": "IND-06",
+      "name": "Jamshedpur Steel & Allied Industries CSR Cell",
+      "type": "Industry (Corporate CSR arm)",
+      "sector": "Manufacturing / Infrastructure",
+      "technologyExpertise": [
+        "Civil construction",
+        "materials engineering"
+      ],
+      "csrInterests": [
+        "Urban infrastructure",
+        "drainage systems"
+      ],
+      "fundingCapacity": "₹5L–₹25L per project",
+      "mentorshipCapacity": "5 hrs/month"
+    },
+    {
+      "id": "IND-07",
+      "name": "SolarSprint Energy Startup",
+      "type": "Startup",
+      "sector": "Renewable Energy",
+      "technologyExpertise": [
+        "Solar microgrids",
+        "battery storage"
+      ],
+      "csrInterests": [
+        "Rural electrification"
+      ],
+      "fundingCapacity": "₹3L–₹12L per project",
+      "mentorshipCapacity": "6 hrs/month"
+    }
+  ],
+  "problems": [
+    {
+      "id": "JH-WAT-2026-04021",
+      "submitterId": "CIT-IND-001",
+      "submitterType": "individualCitizens",
+      "description": "Hand pump near the primary school has been dry for 3 months, women and children walking 2km daily for water.",
+      "district": "Ranchi",
+      "domainAI": "Water Resources",
+      "status": "university_assigned",
+      "linkedGovDeptId": "GOVDEPT-01",
+      "linkedUniversityId": "UNI-01",
+      "linkedIndustryId": "IND-01",
+      "title": "Dry handpump near primary school",
+      "reportedOn": "2026-08-10"
+    },
+    {
+      "id": "JH-EDU-2026-04022",
+      "submitterId": "CIT-PRI-001",
+      "submitterType": "panchayatiRajInstitutions",
+      "description": "Government middle school has no functional science lab; students cannot do practicals for board prep.",
+      "district": "Ranchi",
+      "domainAI": "Education",
+      "status": "gov_verified",
+      "linkedGovDeptId": "GOVDEPT-02",
+      "linkedUniversityId": null,
+      "linkedIndustryId": "IND-05",
+      "title": "No functional science lab in middle school",
+      "reportedOn": "2026-08-15"
+    },
+    {
+      "id": "JH-AGR-2026-04023",
+      "submitterId": "CIT-IND-002",
+      "submitterType": "individualCitizens",
+      "description": "Paddy crops damaged repeatedly by wild elephant herds crossing from the forest, no early warning system exists.",
+      "district": "Dumka",
+      "domainAI": "Agriculture",
+      "status": "in_progress",
+      "linkedGovDeptId": "GOVDEPT-04",
+      "linkedUniversityId": "UNI-14",
+      "linkedIndustryId": "IND-03",
+      "title": "Elephant herds destroying paddy crops",
+      "reportedOn": "2026-08-01"
+    },
+    {
+      "id": "JH-ENV-2026-04024",
+      "submitterId": "CIT-CG-001",
+      "submitterType": "communityGroups",
+      "description": "Untreated dyeing-unit wastewater is being released into the local stream, contaminating irrigation water downstream.",
+      "district": "Gumla",
+      "domainAI": "Environment",
+      "status": "ai_processed",
+      "linkedGovDeptId": "GOVDEPT-05",
+      "linkedUniversityId": "UNI-08",
+      "linkedIndustryId": "IND-02",
+      "title": "Wastewater contamination in local stream",
+      "reportedOn": "2026-09-02"
+    },
+    {
+      "id": "JH-URB-2026-04025",
+      "submitterId": "CIT-ULB-001",
+      "submitterType": "urbanLocalBodies",
+      "description": "Waterlogging on Station Road every monsoon due to blocked and undersized stormwater drains.",
+      "district": "Deoghar",
+      "domainAI": "Urban Infrastructure",
+      "status": "submitted",
+      "linkedGovDeptId": "GOVDEPT-07",
+      "linkedUniversityId": null,
+      "linkedIndustryId": "IND-06",
+      "title": "Severe waterlogging on Station Road",
+      "reportedOn": "2026-09-05"
+    }
+  ],
+  "projects": [
+    {
+      "id": "PRJ-501",
+      "problemId": "JH-WAT-2026-04021",
+      "universityId": "UNI-01",
+      "industryPartnerId": "IND-01",
+      "governmentDeptId": "GOVDEPT-01",
+      "title": "Solar IoT-monitored community water ATM, Ormanjhi",
+      "status": "prototyping",
+      "fundingCommitted": 650000,
+      "fundingDisbursed": 260000
+    },
+    {
+      "id": "PRJ-502",
+      "problemId": "JH-AGR-2026-04023",
+      "universityId": "UNI-14",
+      "industryPartnerId": "IND-03",
+      "governmentDeptId": "GOVDEPT-04",
+      "title": "IoT-based elephant early-warning system, Shikaripara corridor",
+      "status": "field_testing",
+      "fundingCommitted": 420000,
+      "fundingDisbursed": 420000
+    }
+  ],
+  "jharkhandIndustriesAndStartups": [
+    {
+      "id": "INDDS-001",
+      "name": "Tata Steel",
+      "location": "Jamshedpur",
+      "type": "Large Industry",
+      "sector": "Iron & Steel"
+    }
+  ],
+  "jharkhandNgoFunders": [
+    {
+      "id": "NGOF-01",
+      "name": "PRADAN",
+      "focusAreas": ["Livelihood promotion"],
+      "fundingType": "Grants"
+    }
+  ]
+}

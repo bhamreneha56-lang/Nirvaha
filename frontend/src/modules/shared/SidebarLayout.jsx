@@ -1,13 +1,17 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 
-export default function SidebarLayout({ children, activeTab, setActiveTab, roleTitle, userName }) {
+export default function SidebarLayout({ children, activeTab, setActiveTab, roleTitle, userName, tabs: customTabs }) {
   const { dispatch } = useContext(AppContext);
-  const tabs = [
+  const tabs = customTabs || [
     { id: 'dashboard', label: 'Dashboard', icon: '⊞' },
+    { id: 'vote', label: 'Vote', icon: '👍' },
     { id: 'challenges', label: 'Challenges', icon: '📄' },
     { id: 'proposals', label: 'Proposals', icon: '📋' },
-    { id: 'analytics', label: 'Analytics', icon: '📊' },
+    { id: 'volunteer', label: 'Volunteer', icon: '🤝' },
+    { id: 'community', label: 'Community', icon: '🗣️' },
+    { id: 'alerts', label: 'Local Alerts', icon: '📣' },
+    { id: 'analytics', label: 'Impact & Karma', icon: '🏆' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
   ];
 
@@ -66,9 +70,15 @@ export default function SidebarLayout({ children, activeTab, setActiveTab, roleT
             </div>
             <div className="text-left flex-1 min-w-0">
               <div className="text-sm font-bold text-slate-900 truncate">{userName}</div>
-              <button onClick={() => dispatch({ type: 'SET_ROLE', role: null })} className="text-[11px] text-orange-600 font-bold hover:underline">
-                Switch Role
-              </button>
+              <div className="flex gap-2">
+                <button onClick={() => window.localStorage.removeItem('nirvaha_token') || window.location.reload()} className="text-[11px] text-slate-500 hover:text-slate-900 font-bold hover:underline">
+                  Logout
+                </button>
+                <span className="text-slate-300 text-[10px]">|</span>
+                <button onClick={() => dispatch({ type: 'SET_ROLE', role: null })} className="text-[11px] text-orange-600 font-bold hover:underline">
+                  Exit Role
+                </button>
+              </div>
             </div>
           </div>
         </div>

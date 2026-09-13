@@ -24,7 +24,7 @@ export default function CaseDrawer() {
         <>
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[90]"
+            className="fixed inset-0 bg-blue-600/40 backdrop-blur-sm z-[90]"
             onClick={handleClose}
           />
           <motion.div 
@@ -32,43 +32,43 @@ export default function CaseDrawer() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0.5 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-[100] flex flex-col border-l border-slate-200"
+            className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-[100] flex flex-col border-l border-blue-100"
           >
             {/* Header */}
-            <div className="bg-slate-50 border-b border-slate-200 text-slate-900 p-5 flex justify-between items-start">
+            <div className="bg-white border-b border-blue-100 text-black p-5 flex justify-between items-start">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-black text-slate-500 uppercase tracking-widest">{caseData.id}</span>
+                  <span className="text-xs font-black text-black uppercase tracking-widest">{caseData.id}</span>
                   {caseData.severity === 'Critical' && (
-                    <span className="bg-red-100 text-red-700 border border-red-200 px-2 py-0.5 rounded text-[10px] font-black uppercase flex items-center gap-1">
-                      <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div> Critical
+                    <span className="bg-orange-100 text-orange-700 border border-orange-200 px-2 py-0.5 rounded text-[10px] font-black uppercase flex items-center gap-1">
+                      <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></div> Critical
                     </span>
                   )}
                 </div>
-                <h2 className="font-serif text-xl font-bold tracking-tight text-slate-900">{caseData.title}</h2>
-                <div className="flex items-center gap-4 mt-2 text-xs font-medium text-slate-500">
+                <h2 className="font-serif text-xl font-bold tracking-tight text-black">{caseData.title}</h2>
+                <div className="flex items-center gap-4 mt-2 text-xs font-medium text-black">
                   <span className="flex items-center gap-1"><MapPin size={12} /> {caseData.location}</span>
                   <span className="flex items-center gap-1"><Building2 size={12} /> {caseData.category}</span>
                 </div>
               </div>
-              <button onClick={handleClose} className="text-slate-400 hover:text-slate-700 transition-colors bg-white border border-slate-200 hover:bg-slate-100 p-1.5 rounded shadow-sm">
+              <button onClick={handleClose} className="text-black hover:text-black transition-colors bg-white border border-blue-100 hover:bg-white p-1.5 rounded shadow-sm">
                 <X size={18} />
               </button>
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-3 divide-x divide-slate-100 border-b border-slate-100 bg-slate-50">
+            <div className="grid grid-cols-3 divide-x divide-slate-100 border-b border-blue-100 bg-white">
               <div className="p-3 text-center">
-                <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Priority</div>
-                <div className="text-lg font-black text-red-600">{caseData.priorityScore}<span className="text-[10px]">/100</span></div>
+                <div className="text-[9px] font-black uppercase tracking-widest text-black mb-0.5">Priority</div>
+                <div className="text-lg font-black text-orange-600">{caseData.priorityScore}<span className="text-[10px]">/100</span></div>
               </div>
               <div className="p-3 text-center">
-                <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Reports</div>
-                <div className="text-lg font-black text-slate-800">{caseData.reportsCount}</div>
+                <div className="text-[9px] font-black uppercase tracking-widest text-black mb-0.5">Reports</div>
+                <div className="text-lg font-black text-black">{caseData.reportsCount}</div>
               </div>
               <div className="p-3 text-center">
-                <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">SLA Risk</div>
-                <div className="text-lg font-black text-amber-600">81%</div>
+                <div className="text-[9px] font-black uppercase tracking-widest text-black mb-0.5">SLA Risk</div>
+                <div className="text-lg font-black text-orange-600">81%</div>
               </div>
             </div>
 
@@ -76,11 +76,11 @@ export default function CaseDrawer() {
             <div className="flex-1 overflow-y-auto p-5 space-y-6">
               
               <div className="space-y-4">
-                <h4 className="text-xs font-black text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-1">Current Status</h4>
+                <h4 className="text-xs font-black text-black uppercase tracking-widest border-b border-blue-100 pb-1">Current Status</h4>
                 <div className="flex items-center justify-between bg-blue-50 border border-blue-100 p-3 rounded-lg">
                   <div className="font-bold text-blue-900">{caseData.status.replace(/_/g, ' ')}</div>
                   {caseData.assignedOfficer ? (
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 bg-white px-2 py-1 rounded shadow-sm">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-black bg-white px-2 py-1 rounded shadow-sm">
                       <UserCircle size={14} className="text-blue-500" /> {caseData.assignedOfficer}
                     </div>
                   ) : (
@@ -90,22 +90,22 @@ export default function CaseDrawer() {
               </div>
 
               <div className="space-y-4">
-                <h4 className="text-xs font-black text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-1 flex items-center justify-between">
+                <h4 className="text-xs font-black text-black uppercase tracking-widest border-b border-blue-100 pb-1 flex items-center justify-between">
                   Activity Timeline
-                  <Activity size={14} className="text-slate-400"/>
+                  <Activity size={14} className="text-black"/>
                 </h4>
-                <div className="relative pl-4 space-y-4 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-100">
-                  {caseData.timeline.map((event, i) => (
+                <div className="relative pl-4 space-y-4 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[2px] before:bg-white">
+                  {(caseData.timeline || []).map((event, i) => (
                     <div key={i} className="relative z-10 flex flex-col">
                       <div className="absolute -left-[21px] top-0.5 w-3 h-3 rounded-full border-2 border-white bg-blue-500 shadow-sm"></div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{event.time}</span>
-                      <span className="text-sm font-bold text-slate-800">{event.state}</span>
+                      <span className="text-[10px] font-bold text-black uppercase tracking-wider">{event.time}</span>
+                      <span className="text-sm font-bold text-black">{event.state}</span>
                     </div>
                   ))}
                   <div className="relative z-10 flex flex-col opacity-50">
-                    <div className="absolute -left-[21px] top-0.5 w-3 h-3 rounded-full border-2 border-slate-200 bg-white"></div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">PENDING NEXT</span>
-                    <span className="text-sm font-bold text-slate-500">{caseData.status === 'NEW' ? 'Field Verification' : 'Resolution'}</span>
+                    <div className="absolute -left-[21px] top-0.5 w-3 h-3 rounded-full border-2 border-blue-100 bg-white"></div>
+                    <span className="text-[10px] font-bold text-black uppercase tracking-wider">PENDING NEXT</span>
+                    <span className="text-sm font-bold text-black">{caseData.status === 'NEW' ? 'Field Verification' : 'Resolution'}</span>
                   </div>
                 </div>
               </div>
@@ -113,12 +113,12 @@ export default function CaseDrawer() {
             </div>
 
             {/* Sticky Action Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-200 space-y-2">
-              <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center mb-2">Required Actions</div>
+            <div className="p-4 bg-white border-t border-blue-100 space-y-2">
+              <div className="text-[10px] font-black text-black uppercase tracking-widest text-center mb-2">Requiorange Actions</div>
               
               {caseData.status === 'NEW' && (
                 <div className="grid grid-cols-1 gap-2">
-                  <button onClick={() => startWorkflow('START_AI_ANALYSIS')} className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-2">
+                  <button onClick={() => startWorkflow('START_AI_ANALYSIS')} className="w-full bg-blue-200 hover:bg-blue-200 text-white font-bold text-xs py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-2">
                     Start AI Analysis
                   </button>
                 </div>
@@ -126,10 +126,10 @@ export default function CaseDrawer() {
 
               {caseData.status === 'VERIFICATION_PENDING' && (
                 <div className="grid grid-cols-2 gap-2">
-                  <button onClick={() => startWorkflow('VERIFY_EVIDENCE')} className="w-full bg-slate-900 hover:bg-black text-white font-bold text-xs py-2.5 rounded-lg shadow-sm transition-all">
+                  <button onClick={() => startWorkflow('VERIFY_EVIDENCE')} className="w-full bg-blue-600 hover:bg-blue-600 text-white font-bold text-xs py-2.5 rounded-lg shadow-sm transition-all">
                     Verify Problem
                   </button>
-                  <button onClick={() => startWorkflow('REJECT_CASE')} className="w-full bg-white border border-red-200 text-red-600 hover:bg-red-50 font-bold text-xs py-2.5 rounded-lg transition-all">
+                  <button onClick={() => startWorkflow('REJECT_CASE')} className="w-full bg-white border border-orange-200 text-orange-600 hover:bg-orange-50 font-bold text-xs py-2.5 rounded-lg transition-all">
                     Reject Case
                   </button>
                 </div>
@@ -137,10 +137,10 @@ export default function CaseDrawer() {
 
               {caseData.status === 'VERIFIED' && (
                 <div className="grid grid-cols-2 gap-2">
-                  <button onClick={() => startWorkflow('ASSIGN_OFFICER')} className="w-full bg-slate-900 hover:bg-black text-white font-bold text-xs py-2.5 rounded-lg shadow-md transition-all flex items-center justify-center gap-1">
+                  <button onClick={() => startWorkflow('ASSIGN_OFFICER')} className="w-full bg-blue-600 hover:bg-blue-600 text-white font-bold text-xs py-2.5 rounded-lg shadow-md transition-all flex items-center justify-center gap-1">
                     <UserCircle size={14} /> Assign Officer
                   </button>
-                  <button onClick={() => startWorkflow('CREATE_MASTER_CHALLENGE')} className="w-full bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100 font-bold text-xs py-2.5 rounded-lg transition-all">
+                  <button onClick={() => startWorkflow('CREATE_MASTER_CHALLENGE')} className="w-full bg-blue-200 text-blue-600 border border-blue-300 hover:bg-blue-200 font-bold text-xs py-2.5 rounded-lg transition-all">
                     Create Challenge
                   </button>
                 </div>
@@ -167,7 +167,7 @@ export default function CaseDrawer() {
 
               <button 
                   onClick={() => startWorkflow('OVERRIDE_AI')} 
-                  className="w-full mt-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs py-2 rounded-lg transition-all"
+                  className="w-full mt-2 bg-white hover:bg-white text-black font-bold text-xs py-2 rounded-lg transition-all"
               >
                 Manual Override / Edit
               </button>

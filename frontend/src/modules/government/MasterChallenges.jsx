@@ -31,8 +31,8 @@ export default function MasterChallenges({ onSelectChallenge }) {
     >
       <div className="flex justify-between items-end mb-4">
         <div>
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight">MASTER CHALLENGES</h2>
-          <p className="text-slate-500 font-medium mt-1">Similar citizen reports automatically merged into actionable challenges</p>
+          <h2 className="text-3xl font-black text-black tracking-tight">MASTER CHALLENGES</h2>
+          <p className="text-black font-medium mt-1">Similar citizen reports automatically merged into actionable challenges</p>
         </div>
       </div>
 
@@ -44,8 +44,8 @@ export default function MasterChallenges({ onSelectChallenge }) {
         </h3>
         <div className="bg-white border border-blue-100 rounded-xl p-4 flex justify-between items-center shadow-sm">
           <div>
-            <div className="font-black text-slate-900">Cluster: Illegal Dumping at Market</div>
-            <div className="text-xs font-bold text-slate-500 mt-1">18 verified citizen reports identified with 89% similarity.</div>
+            <div className="font-black text-black">Cluster: Illegal Dumping at Market</div>
+            <div className="text-xs font-bold text-black mt-1">18 verified citizen reports identified with 89% similarity.</div>
           </div>
           <button 
             onClick={() => handleCreateChallenge('CLUSTER-902')}
@@ -56,10 +56,10 @@ export default function MasterChallenges({ onSelectChallenge }) {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-blue-100 shadow-sm overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">
+            <tr className="border-b border-blue-100 bg-white/80 text-black text-[10px] font-black uppercase tracking-[0.2em]">
               <th className="p-5 w-40">Challenge ID</th>
               <th className="p-5">Problem Cluster</th>
               <th className="p-5 w-48">AI Priority</th>
@@ -76,30 +76,30 @@ export default function MasterChallenges({ onSelectChallenge }) {
             <motion.tr 
               variants={rowVariants}
               whileHover={{ scale: 1.005, backgroundColor: 'rgba(248, 250, 252, 1)' }}
-              className="border-b border-slate-100 group transition-colors cursor-pointer"
+              className="border-b border-blue-100 group transition-colors cursor-pointer"
               onClick={() => onSelectChallenge('MC-1024')}
             >
               <td className="p-5">
-                <span className="font-black text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs">MC-1024</span>
+                <span className="font-black text-black bg-white px-2.5 py-1.5 rounded-lg border border-blue-100 text-xs">MC-1024</span>
               </td>
               <td className="p-5">
-                <div className="font-black text-slate-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Safe Drinking Water — Ward 12</div>
-                <div className="text-xs text-slate-500 font-medium">Water contamination, dirty pipelines, foul smell</div>
+                <div className="font-black text-black text-base mb-1 group-hover:text-blue-600 transition-colors">Safe Drinking Water — Ward 12</div>
+                <div className="text-xs text-black font-medium">Water contamination, dirty pipelines, foul smell</div>
               </td>
               <td className="p-5">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-red-50 text-red-700 rounded-lg font-black text-xs border border-red-200 shadow-sm">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-orange-50 text-orange-700 rounded-lg font-black text-xs border border-orange-200 shadow-sm">
                   <AlertCircle size={12}/> 94/100 (CRITICAL)
                 </div>
               </td>
               <td className="p-5">
-                <div className="flex items-center gap-2 font-bold text-slate-700">
-                  <FileStack size={14} className="text-slate-400" /> 47 linked
+                <div className="flex items-center gap-2 font-bold text-black">
+                  <FileStack size={14} className="text-black" /> 47 linked
                 </div>
               </td>
               <td className="p-5 text-right">
                 <button 
                   onClick={(e) => { e.stopPropagation(); onSelectChallenge('MC-1024'); }} 
-                  className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-900 hover:text-white transition-all shadow-sm flex items-center gap-1 ml-auto"
+                  className="bg-white border border-blue-100 text-black px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-600 hover:text-white transition-all shadow-sm flex items-center gap-1 ml-auto"
                 >
                   Digital Twin <ChevronRight size={14} />
                 </button>
@@ -109,15 +109,15 @@ export default function MasterChallenges({ onSelectChallenge }) {
             <motion.tr 
               variants={rowVariants}
               whileHover={{ scale: 1.005, backgroundColor: 'rgba(248, 250, 252, 1)' }}
-              className="border-b border-slate-100 group transition-colors cursor-pointer"
+              className="border-b border-blue-100 group transition-colors cursor-pointer"
               onClick={() => onSelectChallenge('MC-1025')}
             >
               <td className="p-5">
-                <span className="font-black text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs">MC-1025</span>
+                <span className="font-black text-black bg-white px-2.5 py-1.5 rounded-lg border border-blue-100 text-xs">MC-1025</span>
               </td>
               <td className="p-5">
-                <div className="font-black text-slate-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Pothole Repair — Main Road</div>
-                <div className="text-xs text-slate-500 font-medium">Deep potholes, traffic blockage, vehicle damage reports</div>
+                <div className="font-black text-black text-base mb-1 group-hover:text-blue-600 transition-colors">Pothole Repair — Main Road</div>
+                <div className="text-xs text-black font-medium">Deep potholes, traffic blockage, vehicle damage reports</div>
               </td>
               <td className="p-5">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-orange-50 text-orange-700 rounded-lg font-black text-xs border border-orange-200 shadow-sm">
@@ -125,14 +125,14 @@ export default function MasterChallenges({ onSelectChallenge }) {
                 </div>
               </td>
               <td className="p-5">
-                <div className="flex items-center gap-2 font-bold text-slate-700">
-                  <FileStack size={14} className="text-slate-400" /> 22 linked
+                <div className="flex items-center gap-2 font-bold text-black">
+                  <FileStack size={14} className="text-black" /> 22 linked
                 </div>
               </td>
               <td className="p-5 text-right">
                 <button 
                   onClick={(e) => { e.stopPropagation(); onSelectChallenge('MC-1025'); }} 
-                  className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-900 hover:text-white transition-all shadow-sm flex items-center gap-1 ml-auto"
+                  className="bg-white border border-blue-100 text-black px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-600 hover:text-white transition-all shadow-sm flex items-center gap-1 ml-auto"
                 >
                   Digital Twin <ChevronRight size={14} />
                 </button>

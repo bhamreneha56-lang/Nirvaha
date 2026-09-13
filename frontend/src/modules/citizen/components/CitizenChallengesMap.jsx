@@ -99,7 +99,7 @@ export default function CitizenChallengesMap({ problems = [] }) {
   const center = [23.6102, 85.2799]; // Jharkhand centre
 
   return (
-    <div className="relative w-full rounded-xl overflow-hidden border border-slate-200 shadow-sm" style={{ height: '100%' }}>
+    <div className="relative w-full rounded-xl overflow-hidden border border-blue-100 shadow-sm" style={{ height: '100%' }}>
       {/* Filter chips */}
       <div className="absolute top-3 left-3 z-[400] flex flex-wrap gap-1.5 pointer-events-auto">
         {PRIORITIES.map((p) => {
@@ -111,8 +111,8 @@ export default function CitizenChallengesMap({ problems = [] }) {
               onClick={() => setFilter(p)}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border transition-all shadow-sm ${
                 active
-                  ? 'bg-slate-900 text-white border-slate-900'
-                  : 'bg-white/95 text-slate-600 border-slate-200 hover:border-slate-400'
+                  ? 'bg-blue-600 text-white border-slate-900'
+                  : 'bg-white/95 text-black border-blue-100 hover:border-slate-400'
               }`}
             >
               {col && (
@@ -128,7 +128,7 @@ export default function CitizenChallengesMap({ problems = [] }) {
       </div>
 
       {/* Issue count badge */}
-      <div className="absolute bottom-10 left-3 z-[400] bg-white/95 backdrop-blur-sm border border-slate-200 rounded-lg px-3 py-1.5 shadow-sm text-[11px] font-semibold text-slate-700">
+      <div className="absolute bottom-10 left-3 z-[400] bg-white/95 backdrop-blur-sm border border-blue-100 rounded-lg px-3 py-1.5 shadow-sm text-[11px] font-semibold text-black">
         {visibleResolved.length} issue{visibleResolved.length !== 1 ? 's' : ''} shown
       </div>
 
@@ -165,13 +165,13 @@ export default function CitizenChallengesMap({ problems = [] }) {
               />
               <Marker position={p._coords} icon={icon}>
                 <Popup>
-                  <div className="w-48 text-slate-800 text-xs font-sans p-0.5">
+                  <div className="w-48 text-black text-xs font-sans p-0.5">
                     <div className="flex items-center gap-1.5 mb-1">
                       <span
                         className="w-2 h-2 rounded-full flex-shrink-0"
                         style={{ background: col.dot }}
                       />
-                      <span className="font-mono text-[10px] text-slate-500">{p.id}</span>
+                      <span className="font-mono text-[10px] text-black">{p.id}</span>
                       <span
                         className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded text-white"
                         style={{ background: col.dot }}
@@ -179,10 +179,10 @@ export default function CitizenChallengesMap({ problems = [] }) {
                         {p.priority}
                       </span>
                     </div>
-                    <div className="font-bold text-[13px] text-slate-900 mb-0.5 leading-snug">{p.title}</div>
-                    <div className="text-[11px] text-slate-500 mb-2">{p.district} · {p.domain || p.category}</div>
-                    <div className="text-[11px] text-slate-600 border-t border-slate-100 pt-1.5">
-                      Status: <span className="font-semibold text-slate-800">{p.status}</span>
+                    <div className="font-bold text-[13px] text-black mb-0.5 leading-snug">{p.title}</div>
+                    <div className="text-[11px] text-black mb-2">{p.district} · {p.domain || p.category}</div>
+                    <div className="text-[11px] text-black border-t border-blue-100 pt-1.5">
+                      Status: <span className="font-semibold text-black">{p.status}</span>
                     </div>
                   </div>
                 </Popup>

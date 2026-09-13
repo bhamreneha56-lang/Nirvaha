@@ -18,11 +18,11 @@ const ALL_OFFICERS = [
 ];
 
 const DEPT_CLS = {
-  'PHED Water':'bg-blue-100 text-blue-700 border-blue-200','Health':'bg-emerald-100 text-emerald-700 border-emerald-200','Roads':'bg-orange-100 text-orange-700 border-orange-200',
-  'Education':'bg-purple-100 text-purple-700 border-purple-200','Waste':'bg-amber-100 text-amber-700 border-amber-200','JBVNL Electricity':'bg-yellow-100 text-yellow-700 border-yellow-200',
-  'Agriculture':'bg-lime-100 text-lime-700 border-lime-200','Revenue':'bg-red-100 text-red-700 border-red-200',
+  'PHED Water':'bg-blue-100 text-blue-700 border-blue-200','Health':'bg-green-100 text-green-700 border-green-200','Roads':'bg-orange-100 text-orange-700 border-orange-200',
+  'Education':'bg-blue-200 text-blue-600 border-blue-300','Waste':'bg-orange-100 text-orange-700 border-orange-200','JBVNL Electricity':'bg-yellow-100 text-yellow-700 border-yellow-200',
+  'Agriculture':'bg-lime-100 text-lime-700 border-lime-200','Revenue':'bg-orange-100 text-orange-700 border-orange-200',
 };
-const STATUS_CLS = { ACTIVE:'bg-green-50 text-green-700 border-green-200', OVERLOADED:'bg-red-50 text-red-700 border-red-200' };
+const STATUS_CLS = { ACTIVE:'bg-green-50 text-green-700 border-green-200', OVERLOADED:'bg-orange-50 text-orange-700 border-orange-200' };
 
 export default function Officers() {
   const { dispatch } = useSimulation();
@@ -48,46 +48,46 @@ export default function Officers() {
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)] space-y-4">
       <div className="flex items-center justify-between">
-        <div><h1 className="text-2xl font-black text-slate-900 tracking-tight">Field Officers Command</h1><p className="text-sm text-slate-500">Manage deployment, workload, and performance of {ALL_OFFICERS.length} government officers.</p></div>
+        <div><h1 className="text-2xl font-black text-black tracking-tight">Field Officers Command</h1><p className="text-sm text-black">Manage deployment, workload, and performance of {ALL_OFFICERS.length} government officers.</p></div>
         <div className="flex items-center gap-3">
           <button onClick={()=>dispatch({type:'ADD_TOAST',payload:{title:'Smart Deployment Activated',message:'AI optimising officer routes across Jharkhand.',type:'success'}})} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 shadow-sm"><Zap size={14}/> Smart Deployment</button>
-          <button onClick={()=>dispatch({type:'ADD_TOAST',payload:{title:'Report Exported',message:'Officer performance report generated.',type:'info'}})} className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg text-sm font-bold hover:bg-black shadow-sm"><Download size={14}/> Export</button>
+          <button onClick={()=>dispatch({type:'ADD_TOAST',payload:{title:'Report Exported',message:'Officer performance report generated.',type:'info'}})} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-600 shadow-sm"><Download size={14}/> Export</button>
         </div>
       </div>
       <div className="grid grid-cols-4 gap-4 shrink-0">
-        {[{l:'Active Officers',v:totActive,icon:<CheckCircle2 size={18} className="text-green-500"/>,sub:'Online & available'},{l:'Overloaded Officers',v:overloaded,icon:<AlertTriangle size={18} className="text-red-500"/>,sub:'Workload > 85%',red:true},{l:'Avg Workload',v:avgWorkload+'%',icon:<RefreshCw size={18} className="text-blue-500"/>,sub:'State average'},{l:'Total Resolved',v:totResolved.toLocaleString(),icon:<Award size={18} className="text-amber-500"/>,sub:'All-time cases resolved'}].map(k=>(
-          <div key={k.l} className={`p-5 rounded-2xl border shadow-sm ${k.red?'bg-red-50/40 border-red-200':'bg-white border-slate-200'}`}>
-            <div className="flex items-center justify-between mb-3">{k.icon}<span className="text-[10px] font-black text-slate-500 uppercase tracking-widest text-right leading-tight">{k.l}</span></div>
-            <div className={`text-3xl font-black ${k.red?'text-red-600':'text-slate-900'}`}>{k.v}</div>
-            <div className="text-[10px] text-slate-400 mt-1">{k.sub}</div>
+        {[{l:'Active Officers',v:totActive,icon:<CheckCircle2 size={18} className="text-green-500"/>,sub:'Online & available'},{l:'Overloaded Officers',v:overloaded,icon:<AlertTriangle size={18} className="text-orange-500"/>,sub:'Workload > 85%',orange:true},{l:'Avg Workload',v:avgWorkload+'%',icon:<RefreshCw size={18} className="text-blue-500"/>,sub:'State average'},{l:'Total Resolved',v:totResolved.toLocaleString(),icon:<Award size={18} className="text-orange-500"/>,sub:'All-time cases resolved'}].map(k=>(
+          <div key={k.l} className={`p-5 rounded-2xl border shadow-sm ${k.orange?'bg-orange-50/40 border-orange-200':'bg-white border-blue-100'}`}>
+            <div className="flex items-center justify-between mb-3">{k.icon}<span className="text-[10px] font-black text-black uppercase tracking-widest text-right leading-tight">{k.l}</span></div>
+            <div className={`text-3xl font-black ${k.orange?'text-orange-600':'text-black'}`}>{k.v}</div>
+            <div className="text-[10px] text-black mt-1">{k.sub}</div>
           </div>
         ))}
       </div>
-      <div className="flex-1 min-h-0 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
-        <div className="px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center gap-3 flex-wrap shrink-0">
-          <div className="relative flex-1 min-w-[180px]"><Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"/><input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search name, ID, district..." className="pl-8 pr-3 py-2 border border-slate-200 rounded-lg text-sm bg-white shadow-sm outline-none focus:border-blue-400 w-full"/></div>
-          <select value={deptF} onChange={e=>setDeptF(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold text-slate-700 bg-white shadow-sm outline-none">{depts.map(d=><option key={d}>{d}</option>)}</select>
-          <select value={statF} onChange={e=>setStatF(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold text-slate-700 bg-white shadow-sm outline-none">{['All','ACTIVE','OVERLOADED'].map(s=><option key={s}>{s}</option>)}</select>
-          <select value={sortBy} onChange={e=>setSortBy(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold text-slate-700 bg-white shadow-sm outline-none">
+      <div className="flex-1 min-h-0 bg-white rounded-xl border border-blue-100 shadow-sm flex flex-col overflow-hidden">
+        <div className="px-5 py-3 border-b border-blue-100 bg-white flex items-center gap-3 flex-wrap shrink-0">
+          <div className="relative flex-1 min-w-[180px]"><Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-black"/><input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search name, ID, district..." className="pl-8 pr-3 py-2 border border-blue-100 rounded-lg text-sm bg-white shadow-sm outline-none focus:border-blue-400 w-full"/></div>
+          <select value={deptF} onChange={e=>setDeptF(e.target.value)} className="border border-blue-100 rounded-lg px-3 py-2 text-sm font-bold text-black bg-white shadow-sm outline-none">{depts.map(d=><option key={d}>{d}</option>)}</select>
+          <select value={statF} onChange={e=>setStatF(e.target.value)} className="border border-blue-100 rounded-lg px-3 py-2 text-sm font-bold text-black bg-white shadow-sm outline-none">{['All','ACTIVE','OVERLOADED'].map(s=><option key={s}>{s}</option>)}</select>
+          <select value={sortBy} onChange={e=>setSortBy(e.target.value)} className="border border-blue-100 rounded-lg px-3 py-2 text-sm font-bold text-black bg-white shadow-sm outline-none">
             <option value="workload">Sort: Workload</option><option value="rating">Sort: Rating</option><option value="cases">Sort: Cases</option>
           </select>
-          <span className="text-[11px] font-bold text-slate-400 ml-auto">{filtered.length}/{ALL_OFFICERS.length}</span>
+          <span className="text-[11px] font-bold text-black ml-auto">{filtered.length}/{ALL_OFFICERS.length}</span>
         </div>
         <div className="flex-1 overflow-auto">
           <table className="w-full text-left">
-            <thead className="bg-white sticky top-0 z-10 shadow-sm"><tr>{['Officer','Department','District','Workload','Cases','Resolved','Rating','Status','Action'].map(h=><th key={h} className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">{h}</th>)}</tr></thead>
+            <thead className="bg-white sticky top-0 z-10 shadow-sm"><tr>{['Officer','Department','District','Workload','Cases','Resolved','Rating','Status','Action'].map(h=><th key={h} className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-black whitespace-nowrap">{h}</th>)}</tr></thead>
             <tbody className="divide-y divide-slate-100">
               {filtered.map(o=>(
-                <tr key={o.id} onClick={()=>setSel(o)} className="hover:bg-slate-50 cursor-pointer transition-colors">
-                  <td className="px-4 py-3"><div className="flex items-center gap-3"><div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-sm shrink-0">{o.name[0]}</div><div><div className="text-sm font-bold text-slate-900">{o.name}</div><div className="text-[10px] font-bold text-slate-400 uppercase">{o.id} - {o.rank}</div></div></div></td>
-                  <td className="px-4 py-3"><span className={`px-2 py-1 text-[10px] font-bold rounded border ${DEPT_CLS[o.dept]||'bg-slate-100 text-slate-700 border-slate-200'}`}>{o.dept}</span></td>
-                  <td className="px-4 py-3"><div className="flex items-center gap-1 text-xs font-bold text-slate-700"><MapPin size={10} className="text-slate-400"/>{o.district}</div></td>
-                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="w-16 h-2 bg-slate-100 rounded-full overflow-hidden"><div className={`h-full rounded-full ${o.workload>85?'bg-red-500':o.workload>60?'bg-orange-400':'bg-green-500'}`} style={{width:o.workload+'%'}}/></div><span className={`text-xs font-black ${o.workload>85?'text-red-600':'text-slate-700'}`}>{o.workload}%</span></div></td>
-                  <td className="px-4 py-3 font-bold text-slate-800">{o.cases}</td>
+                <tr key={o.id} onClick={()=>setSel(o)} className="hover:bg-white cursor-pointer transition-colors">
+                  <td className="px-4 py-3"><div className="flex items-center gap-3"><div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-sm shrink-0">{o.name[0]}</div><div><div className="text-sm font-bold text-black">{o.name}</div><div className="text-[10px] font-bold text-black uppercase">{o.id} - {o.rank}</div></div></div></td>
+                  <td className="px-4 py-3"><span className={`px-2 py-1 text-[10px] font-bold rounded border ${DEPT_CLS[o.dept]||'bg-white text-black border-blue-100'}`}>{o.dept}</span></td>
+                  <td className="px-4 py-3"><div className="flex items-center gap-1 text-xs font-bold text-black"><MapPin size={10} className="text-black"/>{o.district}</div></td>
+                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="w-16 h-2 bg-white rounded-full overflow-hidden"><div className={`h-full rounded-full ${o.workload>85?'bg-orange-500':o.workload>60?'bg-orange-400':'bg-green-500'}`} style={{width:o.workload+'%'}}/></div><span className={`text-xs font-black ${o.workload>85?'text-orange-600':'text-black'}`}>{o.workload}%</span></div></td>
+                  <td className="px-4 py-3 font-bold text-black">{o.cases}</td>
                   <td className="px-4 py-3 font-bold text-green-700">{o.resolved.toLocaleString()}</td>
-                  <td className="px-4 py-3"><div className="flex items-center gap-1"><span className="text-amber-400 text-sm">&#9733;</span><span className="text-sm font-black text-slate-800">{o.rating}</span></div></td>
+                  <td className="px-4 py-3"><div className="flex items-center gap-1"><span className="text-orange-400 text-sm">&#9733;</span><span className="text-sm font-black text-black">{o.rating}</span></div></td>
                   <td className="px-4 py-3"><span className={`px-2 py-1 text-[10px] font-black uppercase rounded border ${STATUS_CLS[o.status]}`}>{o.status}</span></td>
-                  <td className="px-4 py-3"><div className="flex gap-1"><button onClick={e=>{e.stopPropagation();setSel(o);}} className="px-2 py-1 text-[10px] font-bold rounded border border-slate-200 text-slate-700 bg-white hover:bg-slate-50">View</button><button onClick={e=>{e.stopPropagation();dispatch({type:'ADD_TOAST',payload:{title:'Officer Assigned',message:o.name+' dispatched to new case.',type:'success'}});}} className="px-2 py-1 text-[10px] font-bold rounded border border-blue-200 text-blue-700 bg-blue-50 hover:bg-blue-100">Assign</button></div></td>
+                  <td className="px-4 py-3"><div className="flex gap-1"><button onClick={e=>{e.stopPropagation();setSel(o);}} className="px-2 py-1 text-[10px] font-bold rounded border border-blue-100 text-black bg-white hover:bg-white">View</button><button onClick={e=>{e.stopPropagation();dispatch({type:'ADD_TOAST',payload:{title:'Officer Assigned',message:o.name+' dispatched to new case.',type:'success'}});}} className="px-2 py-1 text-[10px] font-bold rounded border border-blue-200 text-blue-700 bg-blue-50 hover:bg-blue-100">Assign</button></div></td>
                 </tr>
               ))}
             </tbody>
@@ -95,50 +95,50 @@ export default function Officers() {
         </div>
       </div>
       {sel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm" onClick={()=>setSel(null)}>
-          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg mx-4 max-h-[90vh] overflow-auto" onClick={e=>e.stopPropagation()}>
-            <div className="p-6 border-b border-slate-100 bg-gradient-to-r from-blue-50 to-indigo-50 relative">
-              <button onClick={()=>setSel(null)} className="absolute top-4 right-4 p-1 hover:bg-slate-100 rounded-full text-slate-400 text-lg font-bold"><X size={18}/></button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-blue-600/40 backdrop-blur-sm" onClick={()=>setSel(null)}>
+          <div className="bg-white rounded-2xl shadow-2xl border border-blue-100 w-full max-w-lg mx-4 max-h-[90vh] overflow-auto" onClick={e=>e.stopPropagation()}>
+            <div className="p-6 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 relative">
+              <button onClick={()=>setSel(null)} className="absolute top-4 right-4 p-1 hover:bg-white rounded-full text-black text-lg font-bold"><X size={18}/></button>
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-2xl shadow-md">{sel.name[0]}</div>
                 <div>
-                  <div className="text-xl font-black text-slate-900">{sel.name}</div>
-                  <div className="text-xs text-slate-500">{sel.id} - {sel.rank} - {sel.exp}</div>
+                  <div className="text-xl font-black text-black">{sel.name}</div>
+                  <div className="text-xs text-black">{sel.id} - {sel.rank} - {sel.exp}</div>
                   <div className="flex items-center gap-2 mt-2">
                     <span className={`px-2 py-0.5 text-[10px] font-black rounded border ${STATUS_CLS[sel.status]}`}>{sel.status}</span>
-                    <span className={`px-2 py-0.5 text-[10px] font-bold rounded border ${DEPT_CLS[sel.dept]||'bg-slate-100 text-slate-700 border-slate-200'}`}>{sel.dept}</span>
+                    <span className={`px-2 py-0.5 text-[10px] font-bold rounded border ${DEPT_CLS[sel.dept]||'bg-white text-black border-blue-100'}`}>{sel.dept}</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="p-6 space-y-5">
-              <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Contact</div>
+              <div className="bg-white rounded-xl p-4 border border-blue-100">
+                <div className="text-[10px] font-black uppercase tracking-widest text-black mb-2">Contact</div>
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-xs text-slate-600"><Phone size={11}/> {sel.phone}</div>
-                  <div className="flex items-center gap-2 text-xs text-slate-600"><Mail size={11}/> {sel.email}</div>
-                  <div className="flex items-center gap-2 text-xs text-slate-600"><MapPin size={11}/> {sel.district} District</div>
+                  <div className="flex items-center gap-2 text-xs text-black"><Phone size={11}/> {sel.phone}</div>
+                  <div className="flex items-center gap-2 text-xs text-black"><Mail size={11}/> {sel.email}</div>
+                  <div className="flex items-center gap-2 text-xs text-black"><MapPin size={11}/> {sel.district} District</div>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3">
-                {[{l:'Current Cases',v:sel.cases,c:'text-slate-900'},{l:'Total Resolved',v:sel.resolved.toLocaleString(),c:'text-green-600'},{l:'Rating',v:'&#9733; '+sel.rating,c:'text-amber-500'}].map(s=>(
-                  <div key={s.l} className="bg-slate-50 rounded-xl p-3 border border-slate-100 text-center"><div className={`text-xl font-black ${s.c}`} dangerouslySetInnerHTML={{__html:s.v}}/><div className="text-[9px] font-bold text-slate-400 uppercase mt-1">{s.l}</div></div>
+                {[{l:'Current Cases',v:sel.cases,c:'text-black'},{l:'Total Resolved',v:sel.resolved.toLocaleString(),c:'text-green-600'},{l:'Rating',v:'&#9733; '+sel.rating,c:'text-orange-500'}].map(s=>(
+                  <div key={s.l} className="bg-white rounded-xl p-3 border border-blue-100 text-center"><div className={`text-xl font-black ${s.c}`} dangerouslySetInnerHTML={{__html:s.v}}/><div className="text-[9px] font-bold text-black uppercase mt-1">{s.l}</div></div>
                 ))}
               </div>
               <div>
-                <div className="flex justify-between text-xs font-bold text-slate-600 mb-2"><span>Workload</span><span className={sel.workload>85?'text-red-600':'text-green-600'}>{sel.workload}%</span></div>
-                <div className="h-3 bg-slate-100 rounded-full overflow-hidden"><div className={`h-full rounded-full ${sel.workload>85?'bg-red-500':sel.workload>60?'bg-orange-400':'bg-green-500'}`} style={{width:sel.workload+'%'}}/></div>
-                {sel.workload>85 && <p className="text-[10px] text-red-600 font-bold mt-1">Officer capacity exceeded - reassignment recommended.</p>}
+                <div className="flex justify-between text-xs font-bold text-black mb-2"><span>Workload</span><span className={sel.workload>85?'text-orange-600':'text-green-600'}>{sel.workload}%</span></div>
+                <div className="h-3 bg-white rounded-full overflow-hidden"><div className={`h-full rounded-full ${sel.workload>85?'bg-orange-500':sel.workload>60?'bg-orange-400':'bg-green-500'}`} style={{width:sel.workload+'%'}}/></div>
+                {sel.workload>85 && <p className="text-[10px] text-orange-600 font-bold mt-1">Officer capacity exceeded - reassignment recommended.</p>}
               </div>
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
                 <div className="text-[10px] font-black uppercase tracking-widest text-blue-500 mb-1">Expertise</div>
-                <div className="text-sm font-bold text-slate-900">{sel.skill}</div>
+                <div className="text-sm font-bold text-black">{sel.skill}</div>
               </div>
-              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
+              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-blue-100">
                 <button onClick={()=>dispatch({type:'ADD_TOAST',payload:{title:'Officer Assigned',message:sel.name+' assigned to selected case.',type:'success'}})} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-blue-200 text-sm font-bold text-blue-700 bg-blue-50 hover:bg-blue-100"><Target size={14}/> Assign to Case</button>
                 <button onClick={()=>dispatch({type:'ADD_TOAST',payload:{title:'Route Optimised',message:'Optimal route calculated for '+sel.name+'.',type:'info'}})} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-green-200 text-sm font-bold text-green-700 bg-green-50 hover:bg-green-100"><MapPin size={14}/> View on Map</button>
-                <button onClick={()=>dispatch({type:'ADD_TOAST',payload:{title:'Performance Report',message:'Generating report for '+sel.name+'...',type:'info'}})} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-slate-200 text-sm font-bold text-slate-700 bg-slate-50 hover:bg-slate-100"><FileText size={14}/> Performance</button>
-                <button onClick={()=>{setSel(null);dispatch({type:'ADD_TOAST',payload:{title:'Escalation Raised',message:'Workload concern for '+sel.name+' escalated.',type:'warning'}});}} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-red-200 text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100"><AlertTriangle size={14}/> Escalate</button>
+                <button onClick={()=>dispatch({type:'ADD_TOAST',payload:{title:'Performance Report',message:'Generating report for '+sel.name+'...',type:'info'}})} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-blue-100 text-sm font-bold text-black bg-white hover:bg-white"><FileText size={14}/> Performance</button>
+                <button onClick={()=>{setSel(null);dispatch({type:'ADD_TOAST',payload:{title:'Escalation Raised',message:'Workload concern for '+sel.name+' escalated.',type:'warning'}});}} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-orange-200 text-sm font-bold text-orange-700 bg-orange-50 hover:bg-orange-100"><AlertTriangle size={14}/> Escalate</button>
               </div>
             </div>
           </div>

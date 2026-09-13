@@ -51,10 +51,10 @@ export default function CitizenSubmission({ onBack }) {
     return (
       <div className="max-w-2xl mx-auto p-6 bg-white rounded shadow text-center mt-10 border-t-4" style={{ borderColor: theme.colors.secondary }}>
         <h2 className="text-2xl font-bold mb-4" style={{ color: theme.colors.secondary }}>Submission Successful!</h2>
-        <p className="text-gray-600 mb-6">Your problem has been recorded. Thank you for your contribution!</p>
+        <p className="text-black mb-6">Your problem has been recorded. Thank you for your contribution!</p>
         <button 
           onClick={onBack}
-          className="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded"
+          className="bg-white text-black font-bold py-2 px-6 rounded"
         >
           Back to Dashboard
         </button>
@@ -66,12 +66,12 @@ export default function CitizenSubmission({ onBack }) {
     <div className="max-w-3xl mx-auto p-4 mt-6 bg-white rounded shadow-md">
       <div className="flex justify-between items-center mb-6 border-b pb-2">
         <h2 className="text-xl font-bold" style={{ color: theme.colors.textNavy }}>Report a Problem</h2>
-        <button onClick={onBack} className="text-sm font-semibold text-gray-500 hover:text-gray-800">
+        <button onClick={onBack} className="text-sm font-semibold text-black hover:text-black">
           Cancel
         </button>
       </div>
 
-      {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>}
+      {error && <div className="bg-orange-100 text-orange-700 p-3 rounded mb-4">{error}</div>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

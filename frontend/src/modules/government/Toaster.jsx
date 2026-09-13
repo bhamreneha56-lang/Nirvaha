@@ -31,7 +31,7 @@ export default function Toaster() {
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
             className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl shadow-lg border min-w-[300px] max-w-sm ${
               t.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' :
-              t.type === 'error' ? 'bg-red-50 border-red-200 text-red-800' :
+              t.type === 'error' ? 'bg-orange-50 border-orange-200 text-orange-800' :
               'bg-blue-50 border-blue-200 text-blue-800'
             }`}
           >

@@ -11,12 +11,12 @@ export default function KnowledgeGraph() {
     >
       <div className="flex justify-between items-end shrink-0">
         <div>
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight">GOVERNANCE KNOWLEDGE GRAPH</h2>
-          <p className="text-slate-500 font-medium mt-1">Explore connections between problems, departments, experts, and solutions</p>
+          <h2 className="text-3xl font-black text-black tracking-tight">GOVERNANCE KNOWLEDGE GRAPH</h2>
+          <p className="text-black font-medium mt-1">Explore connections between problems, departments, experts, and solutions</p>
         </div>
       </div>
 
-      <div className="flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm p-8 flex items-center justify-center relative overflow-hidden min-h-[500px]">
+      <div className="flex-1 bg-white rounded-2xl border border-blue-100 shadow-sm p-8 flex items-center justify-center relative overflow-hidden min-h-[500px]">
         {/* Background Grid */}
         <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'radial-gradient(circle at center, #0f172a 2px, transparent 2px)', backgroundSize: '40px 40px'}}></div>
 
@@ -39,10 +39,10 @@ export default function KnowledgeGraph() {
           whileHover={{ scale: 1.1 }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
         >
-           <div className="w-36 h-36 bg-white border-4 border-red-500 rounded-full flex flex-col items-center justify-center shadow-[0_0_30px_rgba(239,68,68,0.3)] cursor-pointer group">
-              <div className="bg-red-50 w-full h-full rounded-full absolute inset-0 -z-10 group-hover:bg-red-100 transition-colors"></div>
-              <Droplet size={32} className="text-red-500 mb-2 fill-red-100" />
-              <span className="font-black text-[10px] text-red-800 text-center leading-tight uppercase tracking-widest">Water<br/>Contamination</span>
+           <div className="w-36 h-36 bg-white border-4 border-orange-500 rounded-full flex flex-col items-center justify-center shadow-[0_0_30px_rgba(239,68,68,0.3)] cursor-pointer group">
+              <div className="bg-orange-50 w-full h-full rounded-full absolute inset-0 -z-10 group-hover:bg-orange-100 transition-colors"></div>
+              <Droplet size={32} className="text-orange-500 mb-2 fill-orange-100" />
+              <span className="font-black text-[10px] text-orange-800 text-center leading-tight uppercase tracking-widest">Water<br/>Contamination</span>
            </div>
         </motion.div>
         
@@ -55,9 +55,9 @@ export default function KnowledgeGraph() {
           className="absolute top-[20%] left-[30%] z-20"
         >
            <div className="w-24 h-24 bg-white border-2 border-slate-400 rounded-full flex flex-col items-center justify-center shadow-lg cursor-pointer group">
-              <div className="bg-slate-50 w-full h-full rounded-full absolute inset-0 -z-10 group-hover:bg-slate-100 transition-colors"></div>
-              <MapPin size={20} className="text-slate-500 mb-1" />
-              <span className="font-black text-[10px] text-slate-700 uppercase tracking-widest">Ranchi</span>
+              <div className="bg-white w-full h-full rounded-full absolute inset-0 -z-10 group-hover:bg-white transition-colors"></div>
+              <MapPin size={20} className="text-black mb-1" />
+              <span className="font-black text-[10px] text-black uppercase tracking-widest">Ranchi</span>
            </div>
         </motion.div>
         
@@ -114,12 +114,12 @@ export default function KnowledgeGraph() {
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ delay: 1.5 }}
-          className="absolute bottom-8 right-8 bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-slate-200 shadow-2xl z-30 max-w-xs"
+          className="absolute bottom-8 right-8 bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-blue-100 shadow-2xl z-30 max-w-xs"
         >
-          <h4 className="font-black text-slate-900 mb-2 flex items-center gap-2"><GraduationCap size={16} className="text-green-600"/> Node: University XYZ</h4>
-          <p className="text-xs text-slate-500 font-medium mb-4 leading-relaxed">Click on a node to explore related problems, experts, and past solutions within the state.</p>
-          <div className="space-y-2 pt-3 border-t border-slate-100">
-            <div className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Connections Found</div>
+          <h4 className="font-black text-black mb-2 flex items-center gap-2"><GraduationCap size={16} className="text-green-600"/> Node: University XYZ</h4>
+          <p className="text-xs text-black font-medium mb-4 leading-relaxed">Click on a node to explore related problems, experts, and past solutions within the state.</p>
+          <div className="space-y-2 pt-3 border-t border-blue-100">
+            <div className="text-[10px] text-black font-black uppercase tracking-widest mb-1">Connections Found</div>
             <div className="text-xs text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded flex items-center gap-1.5"><FileStack size={12}/> Solved 3 similar challenges</div>
             <div className="text-xs text-green-700 font-bold bg-green-50 px-2 py-1 rounded flex items-center gap-1.5"><Building2 size={12}/> 2 active prototypes</div>
           </div>

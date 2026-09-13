@@ -183,14 +183,14 @@ export const problems: any[] = [
 
 
 export const faculty = [
-  { id: "f1", name: "Dr. Rajan Sharma", department: "Civil Engineering", expertise: ["Water Resources","Structural Analysis","GIS Mapping","Environmental Engineering"], projects: 8, hoursMentored: 340, outcomes: "7 Successful, 1 Discontinued" },
-  { id: "f2", name: "Prof. Anjali Mishra", department: "Environmental Science", expertise: ["Water Quality","Air Pollution","Waste Management","Remote Sensing"], projects: 6, hoursMentored: 280, outcomes: "6 Successful" },
-  { id: "f3", name: "Dr. Suresh Kumar Patel", department: "Electronics & Communication", expertise: ["IoT Systems","Sensor Networks","Embedded Systems","Signal Processing"], projects: 9, hoursMentored: 420, outcomes: "8 Successful, 1 Discontinued" },
-  { id: "f4", name: "Prof. Priya Nair", department: "Computer Science & Engineering", expertise: ["Mobile App Development","Offline-First Systems","AI/ML","NLP"], projects: 11, hoursMentored: 510, outcomes: "10 Successful, 1 In-Progress" },
-  { id: "f5", name: "Dr. Amit Verma", department: "Electrical Engineering", expertise: ["Solar Power Systems","Smart Grids","Power Electronics","Renewable Energy"], projects: 5, hoursMentored: 210, outcomes: "5 Successful" },
-  { id: "f6", name: "Prof. Kavitha Reddy", department: "Computer Science & Engineering", expertise: ["Data Analytics","Dashboard Development","Cloud Computing","React.js"], projects: 7, hoursMentored: 310, outcomes: "7 Successful" },
-  { id: "f7", name: "Dr. Mohan Oraon", department: "Environmental Science", expertise: ["Tribal Ecology","Biodiversity","Forest Management","Community Engagement"], projects: 4, hoursMentored: 190, outcomes: "4 Successful" },
-  { id: "f8", name: "Prof. Deepak Singh", department: "Mechanical Engineering", expertise: ["Manufacturing","Fabrication","Product Design","Materials Science"], projects: 3, hoursMentored: 140, outcomes: "2 Successful, 1 In-Progress" },
+  { id: "f1", name: "Dr. Rajan Sharma", department: "Civil Engineering", expertise: ["Water Resources","Structural Analysis","GIS Mapping","Environmental Engineering"], projects: 8, hoursMentoorange: 340, outcomes: "7 Successful, 1 Discontinued" },
+  { id: "f2", name: "Prof. Anjali Mishra", department: "Environmental Science", expertise: ["Water Quality","Air Pollution","Waste Management","Remote Sensing"], projects: 6, hoursMentoorange: 280, outcomes: "6 Successful" },
+  { id: "f3", name: "Dr. Suresh Kumar Patel", department: "Electronics & Communication", expertise: ["IoT Systems","Sensor Networks","Embedded Systems","Signal Processing"], projects: 9, hoursMentoorange: 420, outcomes: "8 Successful, 1 Discontinued" },
+  { id: "f4", name: "Prof. Priya Nair", department: "Computer Science & Engineering", expertise: ["Mobile App Development","Offline-First Systems","AI/ML","NLP"], projects: 11, hoursMentoorange: 510, outcomes: "10 Successful, 1 In-Progress" },
+  { id: "f5", name: "Dr. Amit Verma", department: "Electrical Engineering", expertise: ["Solar Power Systems","Smart Grids","Power Electronics","Renewable Energy"], projects: 5, hoursMentoorange: 210, outcomes: "5 Successful" },
+  { id: "f6", name: "Prof. Kavitha Reddy", department: "Computer Science & Engineering", expertise: ["Data Analytics","Dashboard Development","Cloud Computing","React.js"], projects: 7, hoursMentoorange: 310, outcomes: "7 Successful" },
+  { id: "f7", name: "Dr. Mohan Oraon", department: "Environmental Science", expertise: ["Tribal Ecology","Biodiversity","Forest Management","Community Engagement"], projects: 4, hoursMentoorange: 190, outcomes: "4 Successful" },
+  { id: "f8", name: "Prof. Deepak Singh", department: "Mechanical Engineering", expertise: ["Manufacturing","Fabrication","Product Design","Materials Science"], projects: 3, hoursMentoorange: 140, outcomes: "2 Successful, 1 In-Progress" },
 ];
 
 export const students = [
@@ -274,19 +274,19 @@ export const PROBLEM_STATUSES: ProblemStatus[] = ["Submitted","AI Processed","Go
 
 export function getSuccessColor(score: number): string {
   if (score >= 70) return "text-green-600";
-  if (score >= 40) return "text-amber-500";
-  return "text-red-500";
+  if (score >= 40) return "text-orange-500";
+  return "text-orange-500";
 }
 export function getSuccessBg(score: number): string {
   if (score >= 70) return "bg-green-100 text-green-700 border-green-200";
-  if (score >= 40) return "bg-amber-100 text-amber-700 border-amber-200";
-  return "bg-red-100 text-red-700 border-red-200";
+  if (score >= 40) return "bg-orange-100 text-orange-700 border-orange-200";
+  return "bg-orange-100 text-orange-700 border-orange-200";
 }
 export function getPriorityColor(p: Priority): string {
-  const map: Record<Priority,string> = { Critical:"bg-red-100 text-red-700 border-red-300", High:"bg-orange-100 text-orange-700 border-orange-300", Medium:"bg-yellow-100 text-yellow-700 border-yellow-300", Low:"bg-green-100 text-green-700 border-green-300" };
+  const map: Record<Priority,string> = { Critical:"bg-orange-100 text-orange-700 border-orange-300", High:"bg-orange-100 text-orange-700 border-orange-300", Medium:"bg-yellow-100 text-yellow-700 border-yellow-300", Low:"bg-green-100 text-green-700 border-green-300" };
   return map[p];
 }
 export function getStageColor(stage: string): string {
-  const map: Record<string,string> = { Proposal:"bg-slate-100 text-slate-600", Approved:"bg-blue-100 text-blue-700", Prototyping:"bg-violet-100 text-violet-700", Testing:"bg-amber-100 text-amber-700", Pilot:"bg-orange-100 text-orange-700", Deployed:"bg-green-100 text-green-700" };
-  return map[stage] || "bg-gray-100 text-gray-600";
+  const map: Record<string,string> = { Proposal:"bg-white text-black", Approved:"bg-blue-100 text-blue-700", Prototyping:"bg-violet-100 text-violet-700", Testing:"bg-orange-100 text-orange-700", Pilot:"bg-orange-100 text-orange-700", Deployed:"bg-green-100 text-green-700" };
+  return map[stage] || "bg-white text-black";
 }

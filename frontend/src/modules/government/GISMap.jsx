@@ -282,31 +282,31 @@ export default function GISMap({
 
   return (
     <div 
-      className="relative w-full rounded-2xl overflow-hidden border border-slate-200 shadow-xl z-0 bg-slate-50"
+      className="relative w-full rounded-2xl overflow-hidden border border-blue-100 shadow-xl z-0 bg-white"
       style={{ height: height }}
     >
       {/* 3D Radar Wave Scanning Overlay in top right */}
-      <div className="absolute top-4 right-4 z-[400] pointer-events-none hidden sm:flex items-center gap-3 bg-white/95 backdrop-blur-md border border-slate-200 px-3 py-1.5 rounded-xl shadow-lg">
+      <div className="absolute top-4 right-4 z-[400] pointer-events-none hidden sm:flex items-center gap-3 bg-white/95 backdrop-blur-md border border-blue-100 px-3 py-1.5 rounded-xl shadow-lg">
         <div className="relative w-4 h-4 flex items-center justify-center">
-          <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-          <div className="radar-pulse-ring !border-emerald-500/50"></div>
+          <div className="w-2 h-2 rounded-full bg-green-500"></div>
+          <div className="radar-pulse-ring !border-green-500/50"></div>
         </div>
         <div className="text-left font-mono">
-          <div className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">GIS RADAR SWEEP</div>
-          <div className="text-[11px] text-emerald-700 font-bold tracking-wider">SCANNING JHARKHAND</div>
+          <div className="text-[9px] text-black font-bold uppercase tracking-widest">GIS RADAR SWEEP</div>
+          <div className="text-[11px] text-green-700 font-bold tracking-wider">SCANNING JHARKHAND</div>
         </div>
       </div>
 
       {/* Top Left: District Selector & Coordinate HUD */}
       <div className="absolute top-4 left-4 z-[400] flex flex-col gap-2 max-w-[340px] pointer-events-none">
         {/* District Selector Card */}
-        <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl p-3 shadow-xl text-slate-800 pointer-events-auto">
+        <div className="bg-white/95 backdrop-blur-md border border-blue-100 rounded-xl p-3 shadow-xl text-black pointer-events-auto">
           <div className="flex items-center justify-between gap-2 mb-2">
-            <span className="flex items-center gap-1.5 text-[10px] font-mono font-bold tracking-widest text-amber-700 uppercase">
-              <Compass size={13} className="text-amber-600 animate-spin" style={{ animationDuration: '10s' }} />
+            <span className="flex items-center gap-1.5 text-[10px] font-mono font-bold tracking-widest text-orange-700 uppercase">
+              <Compass size={13} className="text-orange-600 animate-spin" style={{ animationDuration: '10s' }} />
               DISTRICT RADAR SELECTOR
             </span>
-            <span className="px-1.5 py-0.2 rounded bg-amber-50 text-amber-800 border border-amber-200 font-mono text-[9px] font-bold">
+            <span className="px-1.5 py-0.2 rounded bg-orange-50 text-orange-800 border border-orange-200 font-mono text-[9px] font-bold">
               24 COUNCILS
             </span>
           </div>
@@ -314,7 +314,7 @@ export default function GISMap({
           <select
             value={selectedDistrictName}
             onChange={handleDistrictChange}
-            className="w-full bg-slate-50 border border-slate-300 text-slate-800 font-semibold text-xs rounded-lg px-2.5 py-1.5 outline-none focus:border-amber-500 transition-colors cursor-pointer"
+            className="w-full bg-white border border-slate-300 text-black font-semibold text-xs rounded-lg px-2.5 py-1.5 outline-none focus:border-orange-500 transition-colors cursor-pointer"
           >
             {JHARKHAND_DISTRICTS.map((d) => (
               <option key={d.name} value={d.name}>
@@ -324,26 +324,26 @@ export default function GISMap({
           </select>
 
           {/* Coordinate Telemetry readout */}
-          <div className="mt-2 pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] font-mono text-slate-500">
+          <div className="mt-2 pt-2 border-t border-blue-100 flex items-center justify-between text-[10px] font-mono text-black">
             <div>
-              <span className="text-slate-400">LAT:</span>{' '}
-              <span className="text-amber-700 font-bold">{activeDistrict.lat.toFixed(4)}°N</span>
+              <span className="text-black">LAT:</span>{' '}
+              <span className="text-orange-700 font-bold">{activeDistrict.lat.toFixed(4)}°N</span>
             </div>
             <div>
-              <span className="text-slate-400">LNG:</span>{' '}
-              <span className="text-amber-700 font-bold">{activeDistrict.lng.toFixed(4)}°E</span>
+              <span className="text-black">LNG:</span>{' '}
+              <span className="text-orange-700 font-bold">{activeDistrict.lng.toFixed(4)}°E</span>
             </div>
             <div>
-              <span className="text-slate-400">ZOOM:</span>{' '}
-              <span className="text-emerald-700 font-bold">{activeDistrict.zoom}x</span>
+              <span className="text-black">ZOOM:</span>{' '}
+              <span className="text-green-700 font-bold">{activeDistrict.zoom}x</span>
             </div>
           </div>
         </div>
 
         {/* 6 Toggleable Layer Chips */}
         {showExpandedControls && (
-          <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl p-2.5 shadow-xl text-slate-800 pointer-events-auto">
-            <div className="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest mb-1.5 flex items-center justify-between">
+          <div className="bg-white/95 backdrop-blur-md border border-blue-100 rounded-xl p-2.5 shadow-xl text-black pointer-events-auto">
+            <div className="text-[9px] font-mono font-bold text-black uppercase tracking-widest mb-1.5 flex items-center justify-between">
               <span className="flex items-center gap-1"><Layers size={11} className="text-blue-600"/> INTELLIGENCE LAYERS</span>
               <span className="text-blue-600 font-bold">TOGGLE ON/OFF</span>
             </div>
@@ -354,11 +354,11 @@ export default function GISMap({
                 onClick={() => toggleLayer('grievances')}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold border transition-all ${
                   layers.grievances 
-                    ? 'bg-red-50 border-red-300 text-red-700 shadow-sm' 
-                    : 'bg-slate-100 border-slate-200 text-slate-400 opacity-60'
+                    ? 'bg-orange-50 border-orange-300 text-orange-700 shadow-sm' 
+                    : 'bg-white border-blue-100 text-black opacity-60'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                <span className="w-2 h-2 rounded-full bg-orange-500"></span>
                 <span>Grievances ({problems.length})</span>
               </button>
 
@@ -367,11 +367,11 @@ export default function GISMap({
                 onClick={() => toggleLayer('clusters')}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold border transition-all ${
                   layers.clusters 
-                    ? 'bg-rose-50 border-rose-300 text-rose-700 shadow-sm' 
-                    : 'bg-slate-100 border-slate-200 text-slate-400 opacity-60'
+                    ? 'bg-orange-50 border-orange-300 text-orange-700 shadow-sm' 
+                    : 'bg-white border-blue-100 text-black opacity-60'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-rose-500"></span>
+                <span className="w-2 h-2 rounded-full bg-orange-500"></span>
                 <span>Clusters ({systemicClusters.length})</span>
               </button>
 
@@ -380,11 +380,11 @@ export default function GISMap({
                 onClick={() => toggleLayer('risks')}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold border transition-all ${
                   layers.risks 
-                    ? 'bg-indigo-50 border-indigo-300 text-indigo-700 shadow-sm' 
-                    : 'bg-slate-100 border-slate-200 text-slate-400 opacity-60'
+                    ? 'bg-blue-500 border-blue-400 text-blue-600 shadow-sm' 
+                    : 'bg-white border-blue-100 text-black opacity-60'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                 <span>Risks ({predictiveRisks.length})</span>
               </button>
 
@@ -393,11 +393,11 @@ export default function GISMap({
                 onClick={() => toggleLayer('disputed')}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold border transition-all ${
                   layers.disputed 
-                    ? 'bg-amber-50 border-amber-300 text-amber-800 shadow-sm' 
-                    : 'bg-slate-100 border-slate-200 text-slate-400 opacity-60'
+                    ? 'bg-orange-50 border-orange-300 text-orange-800 shadow-sm' 
+                    : 'bg-white border-blue-100 text-black opacity-60'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span className="w-2 h-2 rounded-full bg-orange-500"></span>
                 <span>Disputed ({disputedCases.length})</span>
               </button>
 
@@ -406,11 +406,11 @@ export default function GISMap({
                 onClick={() => toggleLayer('challenges')}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold border transition-all ${
                   layers.challenges 
-                    ? 'bg-purple-50 border-purple-300 text-purple-700 shadow-sm' 
-                    : 'bg-slate-100 border-slate-200 text-slate-400 opacity-60'
+                    ? 'bg-blue-200 border-blue-300 text-blue-600 shadow-sm' 
+                    : 'bg-white border-blue-100 text-black opacity-60'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+                <span className="w-2 h-2 rounded-full bg-blue-200"></span>
                 <span>Challenges ({challenges.length})</span>
               </button>
 
@@ -419,11 +419,11 @@ export default function GISMap({
                 onClick={() => toggleLayer('projects')}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold border transition-all ${
                   layers.projects 
-                    ? 'bg-emerald-50 border-emerald-300 text-emerald-700 shadow-sm' 
-                    : 'bg-slate-100 border-slate-200 text-slate-400 opacity-60'
+                    ? 'bg-green-50 border-green-300 text-green-700 shadow-sm' 
+                    : 'bg-white border-blue-100 text-black opacity-60'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span className="w-2 h-2 rounded-full bg-green-500"></span>
                 <span>Projects ({activeProjects.length})</span>
               </button>
             </div>
@@ -453,32 +453,32 @@ export default function GISMap({
           return (
             <Marker key={p.id} position={[p.lat, p.lng]} icon={icon}>
               <Popup className="custom-popup">
-                <div className="text-slate-900 w-52 p-1 font-sans">
+                <div className="text-black w-52 p-1 font-sans">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[9px] font-mono font-black text-red-600 uppercase tracking-widest">{p.id}</span>
-                    <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded text-white ${p.severity === 'Critical' ? 'bg-red-600' : 'bg-orange-600'}`}>
+                    <span className="text-[9px] font-mono font-black text-orange-600 uppercase tracking-widest">{p.id}</span>
+                    <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded text-white ${p.severity === 'Critical' ? 'bg-orange-600' : 'bg-orange-600'}`}>
                       {p.severity}
                     </span>
                   </div>
-                  <div className="font-extrabold text-sm text-slate-900 mb-1 leading-snug">{p.title}</div>
-                  <div className="text-[11px] text-slate-500 mb-2">{p.district} • {p.category}</div>
+                  <div className="font-extrabold text-sm text-black mb-1 leading-snug">{p.title}</div>
+                  <div className="text-[11px] text-black mb-2">{p.district} • {p.category}</div>
                   
-                  <div className="bg-slate-100 p-2 rounded-lg border border-slate-200 mb-2.5 text-[10px] space-y-1">
+                  <div className="bg-white p-2 rounded-lg border border-blue-100 mb-2.5 text-[10px] space-y-1">
                     <div className="flex justify-between">
-                      <span className="text-slate-500 font-bold">Priority Score:</span>
-                      <span className="font-mono font-black text-red-600">{p.priorityScore}/100</span>
+                      <span className="text-black font-bold">Priority Score:</span>
+                      <span className="font-mono font-black text-orange-600">{p.priorityScore}/100</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500 font-bold">AI Confidence:</span>
+                      <span className="text-black font-bold">AI Confidence:</span>
                       <span className="font-mono font-black text-sky-600">{p.aiConfidence || 89}%</span>
                     </div>
                   </div>
 
                   <button
                     onClick={() => dispatch({ type: 'OPEN_CASE_DRAWER', payload: p.id })}
-                    className="w-full bg-slate-900 hover:bg-black text-white text-[10px] font-bold py-1.5 rounded-lg shadow transition-colors flex items-center justify-center gap-1"
+                    className="w-full bg-blue-600 hover:bg-blue-600 text-white text-[10px] font-bold py-1.5 rounded-lg shadow transition-colors flex items-center justify-center gap-1"
                   >
-                    <Crosshair size={12} className="text-amber-400" />
+                    <Crosshair size={12} className="text-orange-400" />
                     Open Case Drawer
                   </button>
                 </div>
@@ -503,12 +503,12 @@ export default function GISMap({
             />
             <Marker position={[c.lat, c.lng]} icon={iconCluster}>
               <Popup className="custom-popup">
-                <div className="text-slate-900 w-52 p-1">
-                  <div className="text-[9px] font-mono font-black text-rose-600 uppercase tracking-widest mb-1">
+                <div className="text-black w-52 p-1">
+                  <div className="text-[9px] font-mono font-black text-orange-600 uppercase tracking-widest mb-1">
                     DBSCAN CLUSTER · {c.id}
                   </div>
-                  <div className="font-extrabold text-sm text-slate-900 mb-1">{c.title}</div>
-                  <div className="text-[10px] text-slate-600 mb-2">
+                  <div className="font-extrabold text-sm text-black mb-1">{c.title}</div>
+                  <div className="text-[10px] text-black mb-2">
                     {c.cases} linked citizen grievances detected within {(c.radius/1000).toFixed(1)}km radius.
                   </div>
                   <button
@@ -516,7 +516,7 @@ export default function GISMap({
                       type: 'START_WORKFLOW',
                       payload: { action: 'CREATE_MASTER_CHALLENGE', clusterId: c.id, title: c.title, location: c.district }
                     })}
-                    className="w-full bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white text-[10px] font-bold py-1.5 rounded-lg shadow transition-all"
+                    className="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-500 hover:to-orange-600 text-white text-[10px] font-bold py-1.5 rounded-lg shadow transition-all"
                   >
                     Convert to Master Challenge
                   </button>
@@ -541,13 +541,13 @@ export default function GISMap({
             />
             <Marker position={[r.lat, r.lng]} icon={iconRisk}>
               <Popup className="custom-popup">
-                <div className="text-slate-900 w-52 p-1">
-                  <div className="flex items-center gap-1 text-[9px] font-mono font-black text-indigo-600 uppercase tracking-widest mb-1">
+                <div className="text-black w-52 p-1">
+                  <div className="flex items-center gap-1 text-[9px] font-mono font-black text-blue-600 uppercase tracking-widest mb-1">
                     <Zap size={10} /> PREDICTIVE EARLY WARNING
                   </div>
-                  <div className="font-extrabold text-sm text-slate-900 mb-1">{r.title}</div>
-                  <div className="text-[10px] text-slate-600 mb-2">
-                    Threat: <span className="font-bold text-indigo-700">{r.threat}</span> ({r.timeHorizon})
+                  <div className="font-extrabold text-sm text-black mb-1">{r.title}</div>
+                  <div className="text-[10px] text-black mb-2">
+                    Threat: <span className="font-bold text-blue-600">{r.threat}</span> ({r.timeHorizon})
                   </div>
                   <button
                     onClick={() => dispatch({
@@ -558,7 +558,7 @@ export default function GISMap({
                         type: 'warning'
                       }
                     })}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold py-1.5 rounded-lg transition-colors"
+                    className="w-full bg-blue-500 hover:bg-blue-500 text-white text-[10px] font-bold py-1.5 rounded-lg transition-colors"
                   >
                     Deploy Preventive Protocol
                   </button>
@@ -572,12 +572,12 @@ export default function GISMap({
         {layers.disputed && disputedCases.map((d) => (
           <Marker key={d.id} position={[d.lat, d.lng]} icon={iconDisputed}>
             <Popup className="custom-popup">
-              <div className="text-slate-900 w-52 p-1">
-                <div className="text-[9px] font-mono font-black text-amber-600 uppercase tracking-widest mb-1">
+              <div className="text-black w-52 p-1">
+                <div className="text-[9px] font-mono font-black text-orange-600 uppercase tracking-widest mb-1">
                   OUTCOME DISPUTED · {d.id}
                 </div>
-                <div className="font-extrabold text-sm text-slate-900 mb-1">{d.title}</div>
-                <div className="text-[10px] text-amber-900 bg-amber-50 p-2 rounded border border-amber-200 mb-2">
+                <div className="font-extrabold text-sm text-black mb-1">{d.title}</div>
+                <div className="text-[10px] text-orange-900 bg-orange-50 p-2 rounded border border-orange-200 mb-2">
                   "{d.citizenComment}"
                 </div>
                 <button
@@ -589,7 +589,7 @@ export default function GISMap({
                       type: 'error'
                     }
                   })}
-                  className="w-full bg-amber-600 hover:bg-amber-700 text-white text-[10px] font-bold py-1.5 rounded-lg transition-colors"
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white text-[10px] font-bold py-1.5 rounded-lg transition-colors"
                 >
                   Order Physical Re-Audit
                 </button>
@@ -602,18 +602,18 @@ export default function GISMap({
         {layers.challenges && challenges.map((ch) => (
           <Marker key={ch.id} position={[ch.lat, ch.lng]} icon={iconChallenge}>
             <Popup className="custom-popup">
-              <div className="text-slate-900 w-52 p-1">
-                <div className="text-[9px] font-mono font-black text-purple-600 uppercase tracking-widest mb-1">
+              <div className="text-black w-52 p-1">
+                <div className="text-[9px] font-mono font-black text-blue-600 uppercase tracking-widest mb-1">
                   MASTER CHALLENGE · {ch.id}
                 </div>
-                <div className="font-extrabold text-sm text-slate-900 mb-1">{ch.title}</div>
-                <div className="text-[10px] text-slate-500 mb-2">{ch.location} • Status: {ch.status}</div>
+                <div className="font-extrabold text-sm text-black mb-1">{ch.title}</div>
+                <div className="text-[10px] text-black mb-2">{ch.location} • Status: {ch.status}</div>
                 <button
                   onClick={() => dispatch({
                     type: 'START_WORKFLOW',
                     payload: { action: 'INVITE_UNIVERSITY', challengeId: ch.id }
                   })}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white text-[10px] font-bold py-1.5 rounded-lg transition-colors"
+                  className="w-full bg-blue-200 hover:bg-blue-200 text-white text-[10px] font-bold py-1.5 rounded-lg transition-colors"
                 >
                   Invite University/CSR Proposal
                 </button>
@@ -626,16 +626,16 @@ export default function GISMap({
         {layers.projects && activeProjects.map((pj) => (
           <Marker key={pj.id} position={[pj.lat, pj.lng]} icon={iconProject}>
             <Popup className="custom-popup">
-              <div className="text-slate-900 w-52 p-1">
-                <div className="text-[9px] font-mono font-black text-emerald-600 uppercase tracking-widest mb-1">
+              <div className="text-black w-52 p-1">
+                <div className="text-[9px] font-mono font-black text-green-600 uppercase tracking-widest mb-1">
                   PROJECT IN FLIGHT · {pj.id}
                 </div>
-                <div className="font-extrabold text-sm text-slate-900 mb-1">{pj.title}</div>
-                <div className="text-[10px] text-slate-600 mb-2">Partner: {pj.partner}</div>
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mb-2">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${pj.completion}%` }}></div>
+                <div className="font-extrabold text-sm text-black mb-1">{pj.title}</div>
+                <div className="text-[10px] text-black mb-2">Partner: {pj.partner}</div>
+                <div className="w-full bg-white h-1.5 rounded-full overflow-hidden mb-2">
+                  <div className="bg-green-500 h-full rounded-full" style={{ width: `${pj.completion}%` }}></div>
                 </div>
-                <div className="text-[9px] font-mono text-emerald-700 font-bold mb-2">{pj.completion}% Completed</div>
+                <div className="text-[9px] font-mono text-green-700 font-bold mb-2">{pj.completion}% Completed</div>
                 <button
                   onClick={() => dispatch({
                     type: 'ADD_TOAST',
@@ -645,7 +645,7 @@ export default function GISMap({
                       type: 'success'
                     }
                   })}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold py-1.5 rounded-lg transition-colors"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white text-[10px] font-bold py-1.5 rounded-lg transition-colors"
                 >
                   Verify Deployment Metrics
                 </button>
